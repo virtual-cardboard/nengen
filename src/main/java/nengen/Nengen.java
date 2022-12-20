@@ -1,5 +1,7 @@
 package nengen;
 
+import context.GameContext;
+
 public class Nengen {
 
 	private final NengenConfiguration configuration;
@@ -16,7 +18,7 @@ public class Nengen {
 		return configuration;
 	}
 
-	public void startNengen() {
+	public void startNengen(GameContext context) {
 	}
 
 }
