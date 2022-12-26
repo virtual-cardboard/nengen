@@ -45,11 +45,13 @@ public class NengenConfiguration {
 	}
 
 	public NengenConfiguration setFrameRate(int frameRate) {
+		assert frameRate > 0 : "Frame rate must be greater than 0";
 		this.frameRate = frameRate;
 		return this;
 	}
 
 	public NengenConfiguration setTickRate(int tickRate) {
+		assert tickRate > 0 : "Tick rate must be greater than 0";
 		this.tickRate = tickRate;
 		return this;
 	}

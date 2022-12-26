@@ -1,6 +1,7 @@
 package nengen;
 
 import common.math.Vector2i;
+import lwjgl.GameWindowUpdater;
 
 /**
  * Internal configuration class for Nengen. This class is used to run the engine.
@@ -14,6 +15,8 @@ public class EngineConfiguration {
 	protected boolean resizable = false;
 	protected boolean fullscreen = false;
 	protected String windowTitle;
+
+	protected boolean shouldClose = false;
 
 	protected static boolean debug = false;
 
@@ -63,6 +66,16 @@ public class EngineConfiguration {
 		return this;
 	}
 
+	/**
+	 * Signals to the engine that it should close.
+	 * <br>
+	 * Currently, this is called by the {@link GameWindowUpdater} when the GLFW window is closed. The
+	 * {@link GameWindowUpdater} sees the flag and closes the tick thread.
+	 */
+	public void setShouldClose() {
+		this.shouldClose = true;
+	}
+
 	public static void DEBUG(String message) {
 		if (debug) {
 			System.out.println(message);
@@ -99,6 +112,10 @@ public class EngineConfiguration {
 
 	public Vector2i windowDim() {
 		return new Vector2i(width, height);
+	}
+
+	public boolean shouldClose() {
+		return shouldClose;
 	}
 
 }

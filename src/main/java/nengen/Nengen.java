@@ -2,6 +2,7 @@ package nengen;
 
 import context.GameContext;
 import context.GameContextWrapper;
+import lwjgl.GameTickUpdater;
 import lwjgl.GameWindowUpdater;
 
 /**
@@ -45,7 +46,9 @@ public class Nengen {
 		GameContextWrapper wrapper = new GameContextWrapper(context);
 
 		Thread renderThread = new Thread(new GameWindowUpdater(config, wrapper));
+		Thread tickThread = new Thread(new GameTickUpdater(config, wrapper));
 		renderThread.start();
+		tickThread.start();
 	}
 
 }
