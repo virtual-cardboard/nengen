@@ -1,6 +1,6 @@
 package math;
 
-import static engine.common.math.MathSerializationFormats.VECTOR_3F;
+import static math.MathSerializationFormats.VECTOR_3F;
 
 import java.util.Objects;
 

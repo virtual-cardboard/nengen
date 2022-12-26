@@ -13,7 +13,7 @@
  */
 package math;
 
-import static engine.common.math.MathSerializationFormats.MATRIX_3F;
+import static math.MathSerializationFormats.MATRIX_3F;
 
 import java.nio.FloatBuffer;
 

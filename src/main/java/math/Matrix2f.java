@@ -13,7 +13,7 @@
  */
 package math;
 
-import static engine.common.math.MathSerializationFormats.MATRIX_2F;
+import static math.MathSerializationFormats.MATRIX_2F;
 
 import java.nio.FloatBuffer;
 
