@@ -2,16 +2,17 @@ package lwjgl;
 
 import static org.lwjgl.glfw.GLFW.glfwGetWindowSize;
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
+import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 
+import common.time.TimestepTimer;
 import context.GameContext;
 import context.GameContextWrapper;
 import nengen.EngineConfiguration;
-import nengen.common.time.TimestepTimer;
 
 public class GameWindowUpdater extends TimestepTimer implements Runnable {
 
 	private final GameWindow window;
-	private GameContextWrapper wrapper;
+	private final GameContextWrapper wrapper;
 	private final EngineConfiguration configuration;
 
 	/**
@@ -23,11 +24,13 @@ public class GameWindowUpdater extends TimestepTimer implements Runnable {
 	public GameWindowUpdater(EngineConfiguration configuration, GameContextWrapper wrapper) {
 		super(1000 / configuration.frameRate());
 		this.configuration = configuration;
-		window = new GameWindow(configuration);
+		this.window = new GameWindow(configuration);
+		this.wrapper = wrapper;
 	}
 
 	@Override
 	protected void startActions() {
+		System.out.println("Creating window...");
 		window.createDisplay();
 		window.attachCallbacks();
 		window.createSharedContextWindow();
@@ -35,6 +38,7 @@ public class GameWindowUpdater extends TimestepTimer implements Runnable {
 
 	@Override
 	protected void update() {
+		System.out.println("Updating...");
 		GameContext context = wrapper.context();
 		glfwPollEvents();
 		int[] width = new int[1];
@@ -45,12 +49,13 @@ public class GameWindowUpdater extends TimestepTimer implements Runnable {
 
 	@Override
 	protected void endActions() {
+		System.out.println("Destroying window...");
 		window.destroy();
 	}
 
 	@Override
 	protected boolean endCondition() {
-		return false;
+		return glfwWindowShouldClose(window.windowId());
 	}
 
 }

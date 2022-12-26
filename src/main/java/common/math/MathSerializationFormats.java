@@ -1,4 +1,4 @@
-package math;
+package common.math;
 
 import static derealizer.SerializationClassGenerator.generate;
 import static derealizer.datatype.SerializationDataType.FLOAT;

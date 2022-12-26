@@ -1,4 +1,4 @@
-package math;
+package common.math;
 
 public class PosDim {
 

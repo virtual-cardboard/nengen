@@ -1,6 +1,4 @@
-package math;
-
-import static math.MathSerializationFormats.VECTOR_2L;
+package common.math;
 
 import java.util.Objects;
 
@@ -107,7 +105,7 @@ public class Vector2l implements Derealizable {
 
 	@Override
 	public MathSerializationFormats formatEnum() {
-		return VECTOR_2L;
+		return MathSerializationFormats.VECTOR_2L;
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 package nengen;
 
-import math.Vector2i;
+import common.math.Vector2i;
 
 /**
  * Internal configuration class for Nengen. This class is used to run the engine.

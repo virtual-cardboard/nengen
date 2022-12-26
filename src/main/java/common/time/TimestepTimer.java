@@ -1,4 +1,4 @@
-package nengen.common.time;
+package common.time;
 
 /**
  * A runnable timer that ticks at a fixed rate. In the Nengen engine, this class is used to time the tick logic and the

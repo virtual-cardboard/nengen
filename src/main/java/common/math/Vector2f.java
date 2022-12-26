@@ -1,6 +1,4 @@
-package math;
-
-import static math.MathSerializationFormats.VECTOR_2F;
+package common.math;
 
 import java.util.Objects;
 
@@ -12,8 +10,8 @@ import derealizer.format.Derealizable;
  * <p>
  * An immutable vector of two floats.
  * </p>
- * This is immutable so that a programmer can pass a <code>Vector2f</code> into
- * a function without needing to worry about being mutated.
+ * This is immutable so that a programmer can pass a <code>Vector2f</code> into a function without needing to worry
+ * about being mutated.
  *
  * @author Jay
  */
@@ -161,7 +159,7 @@ public class Vector2f implements Derealizable {
 
 	@Override
 	public MathSerializationFormats formatEnum() {
-		return VECTOR_2F;
+		return MathSerializationFormats.VECTOR_2F;
 	}
 
 	@Override

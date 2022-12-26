@@ -43,7 +43,7 @@ import static org.lwjgl.opengl.GL43.GL_DEBUG_OUTPUT_SYNCHRONOUS;
 import static org.lwjgl.opengl.GLUtil.setupDebugMessageCallback;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
-import math.Vector2i;
+import common.math.Vector2i;
 import nengen.EngineConfiguration;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.system.Callback;

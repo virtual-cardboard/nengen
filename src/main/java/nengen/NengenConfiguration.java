@@ -1,6 +1,6 @@
 package nengen;
 
-import math.Vector2i;
+import common.math.Vector2i;
 
 /**
  * External-facing configuration class for Nengen.

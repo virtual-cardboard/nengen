@@ -1,4 +1,4 @@
-package nengen.common.time;
+package common.time;
 
 import static java.lang.System.currentTimeMillis;
 
@@ -107,6 +107,7 @@ public class TimeAccumulator {
 	 * @return true if the accumulation is greater than or equal to the frame duration, false otherwise
 	 */
 	public boolean ready() {
+		syncTime();
 		return accumulation >= frameDuration;
 	}
 

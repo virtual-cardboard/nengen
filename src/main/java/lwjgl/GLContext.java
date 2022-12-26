@@ -1,6 +1,6 @@
 package lwjgl;
 
-import math.Vector2i;
+import common.math.Vector2i;
 
 public class GLContext {
 

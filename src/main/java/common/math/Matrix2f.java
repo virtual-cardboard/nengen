@@ -11,9 +11,9 @@
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package math;
+package common.math;
 
-import static math.MathSerializationFormats.MATRIX_2F;
+import static common.math.MathSerializationFormats.MATRIX_2F;
 
 import java.nio.FloatBuffer;
 
@@ -77,8 +77,7 @@ public class Matrix2f implements Derealizable {
 	}
 
 	/**
-	 * Load from a float buffer. The buffer stores the matrix in column major
-	 * (OpenGL) order.
+	 * Load from a float buffer. The buffer stores the matrix in column major (OpenGL) order.
 	 *
 	 * @param buf A float buffer to read from
 	 * @return this
@@ -92,8 +91,7 @@ public class Matrix2f implements Derealizable {
 	}
 
 	/**
-	 * Load from a float buffer. The buffer stores the matrix in row major
-	 * (mathematical) order.
+	 * Load from a float buffer. The buffer stores the matrix in row major (mathematical) order.
 	 *
 	 * @param buf A float buffer to read from
 	 * @return this
@@ -107,8 +105,7 @@ public class Matrix2f implements Derealizable {
 	}
 
 	/**
-	 * Store this matrix in a float buffer. The matrix is stored in column major
-	 * (openGL) order.
+	 * Store this matrix in a float buffer. The matrix is stored in column major (openGL) order.
 	 *
 	 * @param buf The buffer to store this matrix in
 	 */
@@ -121,8 +118,7 @@ public class Matrix2f implements Derealizable {
 	}
 
 	/**
-	 * Store this matrix in a float buffer. The matrix is stored in row major
-	 * (maths) order.
+	 * Store this matrix in a float buffer. The matrix is stored in row major (maths) order.
 	 *
 	 * @param buf The buffer to store this matrix in
 	 */
@@ -155,8 +151,7 @@ public class Matrix2f implements Derealizable {
 	}
 
 	/**
-	 * Subtract the right matrix from the left and place the result in a third
-	 * matrix.
+	 * Subtract the right matrix from the left and place the result in a third matrix.
 	 *
 	 * @param left  The left source matrix
 	 * @param right The right source matrix

@@ -1,6 +1,6 @@
-package math;
+package common.math;
 
-import static math.MathSerializationFormats.SERIALIZABLE_RANDOM;
+import static common.math.MathSerializationFormats.SERIALIZABLE_RANDOM;
 
 import java.util.concurrent.atomic.AtomicLong;
 

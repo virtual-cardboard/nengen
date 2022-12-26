@@ -1,6 +1,6 @@
-package math;
+package common.math;
 
-import static math.MathSerializationFormats.VECTOR_2I;
+import static common.math.MathSerializationFormats.VECTOR_2I;
 
 import java.util.Objects;
 
