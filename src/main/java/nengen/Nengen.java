@@ -41,9 +41,11 @@ public class Nengen {
 	}
 
 	public void startNengen(GameContext context) {
-		EngineConfiguration config = configuration.build();
+		assert context != null : "Context cannot be null";
 
+		EngineConfiguration config = configuration.build();
 		GameContextWrapper wrapper = new GameContextWrapper(context);
+		context.init();
 
 		Thread renderThread = new Thread(new GameWindowUpdater(config, wrapper));
 		Thread tickThread = new Thread(new GameTickUpdater(config, wrapper));
