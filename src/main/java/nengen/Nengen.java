@@ -45,7 +45,7 @@ public class Nengen {
 
 		EngineConfiguration config = configuration.build();
 		GameContextWrapper wrapper = new GameContextWrapper(context);
-		context.init();
+		context.init(); // Explicitly initialize the first context.
 
 		Thread renderThread = new Thread(new GameWindowUpdater(config, wrapper));
 		Thread tickThread = new Thread(new GameTickUpdater(config, wrapper));

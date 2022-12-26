@@ -19,7 +19,7 @@ public class GameContextWrapper {
 	/**
 	 * Context that is being wrapped.
 	 */
-	private final GameContext context;
+	private GameContext context;
 
 	/**
 	 * This read-write lock is not a lock on the context itself. The read and write lock is on the accessibility of the
@@ -33,7 +33,17 @@ public class GameContextWrapper {
 	 * @param context the context to wrap
 	 */
 	public GameContextWrapper(GameContext context) {
+		setContext(context);
+	}
+
+	/**
+	 * Links the context to this wrapper. Also sets the wrapper for the context.
+	 *
+	 * @param context
+	 */
+	public void setContext(GameContext context) {
 		this.context = context;
+		context.setWrapper(this);
 	}
 
 	/**
