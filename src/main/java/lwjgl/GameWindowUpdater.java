@@ -1,5 +1,6 @@
 package lwjgl;
 
+import static nengen.EngineConfiguration.DEBUG;
 import static org.lwjgl.glfw.GLFW.glfwGetWindowSize;
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
@@ -30,7 +31,7 @@ public class GameWindowUpdater extends TimestepTimer implements Runnable {
 
 	@Override
 	protected void startActions() {
-		System.out.println("Creating window...");
+		DEBUG("Creating window...");
 		window.createDisplay();
 		window.attachCallbacks();
 		window.createSharedContextWindow();
@@ -38,7 +39,6 @@ public class GameWindowUpdater extends TimestepTimer implements Runnable {
 
 	@Override
 	protected void update() {
-		System.out.println("Updating...");
 		GameContext context = wrapper.context();
 		glfwPollEvents();
 		int[] width = new int[1];
@@ -49,7 +49,7 @@ public class GameWindowUpdater extends TimestepTimer implements Runnable {
 
 	@Override
 	protected void endActions() {
-		System.out.println("Destroying window...");
+		DEBUG("Destroying window...");
 		window.destroy();
 	}
 

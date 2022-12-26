@@ -15,7 +15,7 @@ public class EngineConfiguration {
 	protected boolean fullscreen = false;
 	protected String windowTitle;
 
-	public boolean debug = false;
+	protected static boolean debug = false;
 
 	protected EngineConfiguration(NengenConfiguration configuration) {
 		this.width = configuration.width;
@@ -25,7 +25,7 @@ public class EngineConfiguration {
 		this.resizable = configuration.resizable;
 		this.fullscreen = configuration.fullscreen;
 		this.windowTitle = configuration.windowName;
-		this.debug = configuration.debug;
+		debug = NengenConfiguration.debug;
 	}
 
 	public EngineConfiguration setWindowDim(Vector2i dim) {
@@ -63,9 +63,10 @@ public class EngineConfiguration {
 		return this;
 	}
 
-	public EngineConfiguration debug() {
-		debug = true;
-		return this;
+	public static void DEBUG(String message) {
+		if (debug) {
+			System.out.println(message);
+		}
 	}
 
 	public int frameRate() {
