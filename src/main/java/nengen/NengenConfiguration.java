@@ -1,16 +1,36 @@
 package nengen;
 
+import math.Vector2i;
+
+/**
+ * External-facing configuration class for Nengen.
+ * <br>
+ * <br>
+ * This write-only class is used to configure the Nengen engine before starting it. Once the engine is started, the
+ * configuration is converted to an internal configuration class, which is used to run the engine.
+ * <br>
+ * <br>
+ * The main purpose of the separation between the external-facing configuration class and the internal-facing
+ * configuration class is to prevent the user from manually changing the configuration of the engine while it is
+ * running.
+ */
 public class NengenConfiguration {
 
-	protected int width;
-	protected int height;
-	protected int frameRate;
-	protected int tickRate;
+	protected int width = 800;
+	protected int height = 600;
+	protected int frameRate = 30;
+	protected int tickRate = 10;
+	protected boolean resizable = false;
+	protected boolean fullscreen = false;
 	protected String windowName;
 
 	public boolean debug = false;
 
 	protected NengenConfiguration() {
+	}
+
+	public NengenConfiguration setWindowDim(Vector2i dim) {
+		return setWindowDim(dim.x(), dim.y());
 	}
 
 	public NengenConfiguration setWindowDim(int width, int height) {
@@ -34,9 +54,23 @@ public class NengenConfiguration {
 		return this;
 	}
 
+	public NengenConfiguration setResizable(boolean resizable) {
+		this.resizable = resizable;
+		return this;
+	}
+
+	public NengenConfiguration setFullscreen(boolean fullscreen) {
+		this.fullscreen = fullscreen;
+		return this;
+	}
+
 	public NengenConfiguration debug() {
 		debug = true;
 		return this;
+	}
+
+	protected EngineConfiguration build() {
+		return new EngineConfiguration(this);
 	}
 
 }
