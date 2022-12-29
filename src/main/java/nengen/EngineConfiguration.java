@@ -1,7 +1,6 @@
 package nengen;
 
 import common.math.Vector2i;
-import lwjgl.GameWindowUpdater;
 
 /**
  * Internal configuration class for Nengen. This class is used to run the engine.

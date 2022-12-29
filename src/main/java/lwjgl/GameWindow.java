@@ -24,6 +24,7 @@ import static org.lwjgl.glfw.GLFW.glfwShowWindow;
 import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
 import static org.lwjgl.glfw.GLFW.glfwTerminate;
 import static org.lwjgl.glfw.GLFW.glfwWindowHint;
+import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 import static org.lwjgl.glfw.GLFWErrorCallback.createPrint;
 import static org.lwjgl.opengl.GL.createCapabilities;
 import static org.lwjgl.opengl.GL11.GL_BLEND;
@@ -143,6 +144,10 @@ public class GameWindow {
 
 	public long windowId() {
 		return windowId;
+	}
+
+	public boolean shouldClose() {
+		return glfwWindowShouldClose(windowId);
 	}
 
 	public long getSharedContextWindowHandle() {

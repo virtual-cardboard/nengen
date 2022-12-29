@@ -1,14 +1,13 @@
-package lwjgl;
+package nengen;
 
 import static nengen.EngineConfiguration.DEBUG;
 import static org.lwjgl.glfw.GLFW.glfwGetWindowSize;
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
-import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 
 import common.time.TimestepTimer;
 import context.GameContext;
 import context.GameContextWrapper;
-import nengen.EngineConfiguration;
+import lwjgl.GameWindow;
 
 public class GameWindowUpdater extends TimestepTimer implements Runnable {
 
@@ -56,7 +55,7 @@ public class GameWindowUpdater extends TimestepTimer implements Runnable {
 
 	@Override
 	protected boolean endCondition() {
-		return glfwWindowShouldClose(window.windowId());
+		return window.shouldClose();
 	}
 
 }

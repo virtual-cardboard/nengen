@@ -2,8 +2,6 @@ package nengen;
 
 import context.GameContext;
 import context.GameContextWrapper;
-import lwjgl.GameTickUpdater;
-import lwjgl.GameWindowUpdater;
 
 /**
  * The main class for the Nengen game engine.

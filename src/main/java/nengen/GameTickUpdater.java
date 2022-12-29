@@ -1,11 +1,10 @@
-package lwjgl;
+package nengen;
 
 import static nengen.EngineConfiguration.DEBUG;
 
 import common.time.TimestepTimer;
 import context.GameContext;
 import context.GameContextWrapper;
-import nengen.EngineConfiguration;
 
 public class GameTickUpdater extends TimestepTimer implements Runnable {
 
