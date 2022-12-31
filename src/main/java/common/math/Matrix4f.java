@@ -15,9 +15,9 @@ package common.math;
 
 import java.nio.FloatBuffer;
 
+import derealizer.Derealizable;
 import derealizer.SerializationReader;
 import derealizer.SerializationWriter;
-import derealizer.format.Derealizable;
 
 /**
  * Holds a 4x4 float matrix.
@@ -849,11 +849,6 @@ public class Matrix4f implements Derealizable {
 
 	public Matrix4f copy() {
 		return new Matrix4f(this);
-	}
-
-	@Override
-	public MathSerializationFormats formatEnum() {
-		return MathSerializationFormats.MATRIX_4F;
 	}
 
 	@Override

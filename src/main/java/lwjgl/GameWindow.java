@@ -18,7 +18,12 @@ import static org.lwjgl.glfw.GLFW.glfwGetPrimaryMonitor;
 import static org.lwjgl.glfw.GLFW.glfwGetVideoMode;
 import static org.lwjgl.glfw.GLFW.glfwInit;
 import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
+import static org.lwjgl.glfw.GLFW.glfwSetCursorPosCallback;
 import static org.lwjgl.glfw.GLFW.glfwSetErrorCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetFramebufferSizeCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetKeyCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetMouseButtonCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetScrollCallback;
 import static org.lwjgl.glfw.GLFW.glfwSetWindowPos;
 import static org.lwjgl.glfw.GLFW.glfwShowWindow;
 import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
@@ -45,6 +50,12 @@ import static org.lwjgl.opengl.GLUtil.setupDebugMessageCallback;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 import common.math.Vector2i;
+import context.GameContextWrapper;
+import lwjgl.callback.KeyCallback;
+import lwjgl.callback.MouseButtonCallback;
+import lwjgl.callback.MouseMovementCallback;
+import lwjgl.callback.MouseScrollCallback;
+import lwjgl.callback.WindowResizeCallback;
 import nengen.EngineConfiguration;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.system.Callback;
@@ -69,11 +80,14 @@ public class GameWindow {
 
 	private final GLContext glContext = new GLContext();
 
-	public GameWindow(EngineConfiguration configuration) {
+	private final GameContextWrapper wrapper;
+
+	public GameWindow(EngineConfiguration configuration, GameContextWrapper wrapper) {
 		this.windowTitle = configuration.windowTitle();
 		this.resizable = configuration.resizable();
 		this.fullScreen = configuration.fullscreen();
 		this.windowDimensions = configuration.windowDim();
+		this.wrapper = requireNonNull(wrapper);
 	}
 
 	public void createDisplay() {
@@ -125,11 +139,11 @@ public class GameWindow {
 		if (DEBUG) {
 			debugMessageCallback = setupDebugMessageCallback();
 		}
-//		glfwSetKeyCallback(windowId, new KeyCallback(inputEventBuffer));
-//		glfwSetMouseButtonCallback(windowId, new MouseButtonCallback(inputEventBuffer));
-//		glfwSetScrollCallback(windowId, new MouseScrollCallback(inputEventBuffer));
-//		glfwSetCursorPosCallback(windowId, new MouseMovementCallback(inputEventBuffer));
-//		glfwSetFramebufferSizeCallback(windowId, new WindowResizeCallback(glContext, inputEventBuffer));
+		glfwSetKeyCallback(windowId, new KeyCallback(wrapper));
+		glfwSetMouseButtonCallback(windowId, new MouseButtonCallback(wrapper));
+		glfwSetScrollCallback(windowId, new MouseScrollCallback(wrapper));
+		glfwSetCursorPosCallback(windowId, new MouseMovementCallback(wrapper));
+		glfwSetFramebufferSizeCallback(windowId, new WindowResizeCallback(wrapper, glContext));
 	}
 
 	public void destroy() {

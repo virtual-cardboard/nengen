@@ -24,7 +24,7 @@ public class GameWindowUpdater extends TimestepTimer implements Runnable {
 	public GameWindowUpdater(EngineConfiguration configuration, GameContextWrapper wrapper) {
 		super(1000 / configuration.frameRate());
 		this.configuration = configuration;
-		this.window = new GameWindow(configuration);
+		this.window = new GameWindow(configuration, wrapper);
 		this.wrapper = wrapper;
 	}
 
@@ -39,7 +39,7 @@ public class GameWindowUpdater extends TimestepTimer implements Runnable {
 	@Override
 	protected void update() {
 		GameContext context = wrapper.context();
-		glfwPollEvents();
+		glfwPollEvents(); // Triggers callbacks, forwards input events to the context
 		int[] width = new int[1];
 		int[] height = new int[1];
 		glfwGetWindowSize(window.windowId(), width, height);

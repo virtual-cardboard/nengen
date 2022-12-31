@@ -13,13 +13,11 @@
  */
 package common.math;
 
-import static common.math.MathSerializationFormats.MATRIX_2F;
-
 import java.nio.FloatBuffer;
 
+import derealizer.Derealizable;
 import derealizer.SerializationReader;
 import derealizer.SerializationWriter;
-import derealizer.format.Derealizable;
 
 /**
  * Holds a 2x2 matrix
@@ -360,11 +358,6 @@ public class Matrix2f implements Derealizable {
 	 */
 	public float determinant() {
 		return m00 * m11 - m01 * m10;
-	}
-
-	@Override
-	public MathSerializationFormats formatEnum() {
-		return MATRIX_2F;
 	}
 
 	@Override

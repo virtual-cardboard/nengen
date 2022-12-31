@@ -2,9 +2,9 @@ package common.math;
 
 import java.util.Objects;
 
+import derealizer.Derealizable;
 import derealizer.SerializationReader;
 import derealizer.SerializationWriter;
-import derealizer.format.Derealizable;
 
 /**
  * An immutable vector of four floats.
@@ -122,11 +122,6 @@ public class Vector4f implements Derealizable {
 			return false;
 		Vector4f other = (Vector4f) obj;
 		return x == other.x && y == other.y && z == other.z && w == other.w;
-	}
-
-	@Override
-	public MathSerializationFormats formatEnum() {
-		return MathSerializationFormats.VECTOR_4F;
 	}
 
 	@Override

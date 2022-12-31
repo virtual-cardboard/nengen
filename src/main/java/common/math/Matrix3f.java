@@ -13,13 +13,11 @@
  */
 package common.math;
 
-import static common.math.MathSerializationFormats.MATRIX_3F;
-
 import java.nio.FloatBuffer;
 
+import derealizer.Derealizable;
 import derealizer.SerializationReader;
 import derealizer.SerializationWriter;
-import derealizer.format.Derealizable;
 
 /**
  * Holds a 3x3 matrix.
@@ -384,11 +382,6 @@ public class Matrix3f implements Derealizable {
 		m21 = 0.0f;
 		m22 = 0.0f;
 		return this;
-	}
-
-	@Override
-	public MathSerializationFormats formatEnum() {
-		return MATRIX_3F;
 	}
 
 	@Override
