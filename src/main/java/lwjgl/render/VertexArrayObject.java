@@ -36,6 +36,7 @@ public class VertexArrayObject extends GLContainerObject {
 
 	public VertexArrayObject load() {
 		this.id = glGenVertexArrays();
+		glBindVertexArray(id);
 		initialize();
 		enableVertexAttribArrays();
 		return this;

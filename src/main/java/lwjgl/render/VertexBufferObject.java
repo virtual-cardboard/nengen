@@ -46,9 +46,8 @@ public class VertexBufferObject extends GLRegularObject {
 
 	public VertexBufferObject load() {
 		id = glGenBuffers();
+		glBindBuffer(GL_ARRAY_BUFFER, id);
 		glBufferData(GL_ARRAY_BUFFER, data, GL_STATIC_DRAW);
-		glVertexAttribPointer(index, components, GL_FLOAT, false, components * Float.BYTES, 0);
-		glEnableVertexAttribArray(index);
 		return this;
 	}
 
