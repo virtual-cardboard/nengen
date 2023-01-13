@@ -1,5 +1,14 @@
 package context;
 
+import static common.colour.Colour.normalizedA;
+import static common.colour.Colour.normalizedB;
+import static common.colour.Colour.normalizedG;
+import static common.colour.Colour.normalizedR;
+import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL11.glClearColor;
+
 import context.input.event.FrameResizedInputEvent;
 import context.input.event.KeyPressedInputEvent;
 import context.input.event.KeyReleasedInputEvent;
@@ -78,6 +87,11 @@ public class GameContext {
 
 	protected boolean initialized() {
 		return initialized;
+	}
+
+	protected final void background(int colour) {
+		glClearColor(normalizedR(colour), normalizedG(colour), normalizedB(colour), normalizedA(colour));
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
 	/**
