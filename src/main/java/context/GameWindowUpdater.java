@@ -3,6 +3,7 @@ package context;
 import static nengen.EngineConfiguration.DEBUG;
 import static org.lwjgl.glfw.GLFW.glfwGetWindowSize;
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
+import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
 
 import common.time.TimestepTimer;
 import lwjgl.GameWindow;
@@ -46,6 +47,7 @@ public class GameWindowUpdater extends TimestepTimer implements Runnable {
 		int[] height = new int[1];
 		glfwGetWindowSize(window.windowId(), width, height);
 		context.render();
+		glfwSwapBuffers(window.windowId());
 	}
 
 	@Override
