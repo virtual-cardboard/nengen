@@ -3,6 +3,8 @@ package context;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import lwjgl.GLContext;
+
 /**
  * A container for a game context to make switching game contexts thread-safe.
  * <p>
@@ -21,6 +23,8 @@ public class GameContextWrapper {
 	 */
 	private GameContext context;
 
+	private final GLContext glContext;
+
 	/**
 	 * This read-write lock is not a lock on the context itself. The read and write lock is on the accessibility of the
 	 * context reference.
@@ -32,8 +36,9 @@ public class GameContextWrapper {
 	 *
 	 * @param context the context to wrap
 	 */
-	public GameContextWrapper(GameContext context) {
+	public GameContextWrapper(GameContext context, GLContext glContext) {
 		setContext(context);
+		this.glContext = glContext;
 	}
 
 	/**
@@ -58,6 +63,10 @@ public class GameContextWrapper {
 		} finally {
 			contextLock.readLock().unlock();
 		}
+	}
+
+	public GLContext glContext() {
+		return glContext;
 	}
 
 }

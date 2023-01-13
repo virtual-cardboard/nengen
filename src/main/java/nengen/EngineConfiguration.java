@@ -1,6 +1,7 @@
 package nengen;
 
 import common.math.Vector2i;
+import context.GameWindowUpdater;
 
 /**
  * Internal configuration class for Nengen. This class is used to run the engine.
@@ -17,7 +18,8 @@ public class EngineConfiguration {
 
 	protected boolean shouldClose = false;
 
-	protected static boolean debug = false;
+	public static boolean DEBUG = false;
+	public static boolean AUTO_GL = true;
 
 	protected EngineConfiguration(NengenConfiguration configuration) {
 		this.width = configuration.width;
@@ -27,7 +29,8 @@ public class EngineConfiguration {
 		this.resizable = configuration.resizable;
 		this.fullscreen = configuration.fullscreen;
 		this.windowTitle = configuration.windowName;
-		debug = NengenConfiguration.debug;
+		DEBUG = NengenConfiguration.DEBUG;
+		AUTO_GL = NengenConfiguration.AUTO_GL;
 	}
 
 	public EngineConfiguration setWindowDim(Vector2i dim) {
@@ -76,7 +79,7 @@ public class EngineConfiguration {
 	}
 
 	public static void DEBUG(String message) {
-		if (debug) {
+		if (DEBUG) {
 			System.out.println(message);
 		}
 	}

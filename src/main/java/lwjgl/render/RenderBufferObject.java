@@ -9,7 +9,6 @@ import lwjgl.GLContext;
 
 public class RenderBufferObject extends GLRegularObject {
 
-	private int id;
 	private final int format;
 	private final int formatType;
 
@@ -18,6 +17,7 @@ public class RenderBufferObject extends GLRegularObject {
 		this.formatType = formatType;
 	}
 
+	@Override
 	public void genID() {
 		this.id = glGenRenderbuffers();
 		initialize();

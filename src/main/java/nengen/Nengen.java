@@ -2,6 +2,9 @@ package nengen;
 
 import context.GameContext;
 import context.GameContextWrapper;
+import context.GameTickUpdater;
+import context.GameWindowUpdater;
+import lwjgl.GLContext;
 
 /**
  * The main class for the Nengen game engine.
@@ -16,19 +19,8 @@ public class Nengen {
 	 */
 	private final NengenConfiguration configuration;
 
-	/**
-	 * A paradigm for the entire engine is to never allow the user to instantiate any objects using the <code>new</code>
-	 * keyword. This is why the constructor is private.
-	 * <br>
-	 * <br>
-	 * The user should use the static method {@link #newNengen()} to instantiate a new Nengen engine.
-	 */
-	private Nengen() {
+	public Nengen() {
 		configuration = new NengenConfiguration();
-	}
-
-	public static Nengen newNengen() {
-		return new Nengen();
 	}
 
 	/**
@@ -40,10 +32,10 @@ public class Nengen {
 
 	public void startNengen(GameContext context) {
 		assert context != null : "Context cannot be null";
+		GLContext glContext = new GLContext();
 
 		EngineConfiguration config = configuration.build();
-		GameContextWrapper wrapper = new GameContextWrapper(context);
-		context.init(); // Explicitly initialize the first context.
+		GameContextWrapper wrapper = new GameContextWrapper(context, glContext);
 
 		Thread renderThread = new Thread(new GameWindowUpdater(config, wrapper));
 		Thread tickThread = new Thread(new GameTickUpdater(config, wrapper));

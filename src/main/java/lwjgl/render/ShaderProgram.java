@@ -1,9 +1,6 @@
 package lwjgl.render;
 
-import static common.colour.Colour.normalizedA;
-import static common.colour.Colour.normalizedB;
-import static common.colour.Colour.normalizedG;
-import static common.colour.Colour.normalizedR;
+import static nengen.EngineConfiguration.DEBUG;
 import static org.lwjgl.opengl.GL20.glAttachShader;
 import static org.lwjgl.opengl.GL20.glCreateProgram;
 import static org.lwjgl.opengl.GL20.glDeleteProgram;
@@ -19,8 +16,9 @@ import static org.lwjgl.opengl.GL20.glUniform4f;
 import static org.lwjgl.opengl.GL20.glUniformMatrix4fv;
 import static org.lwjgl.opengl.GL20.glUseProgram;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.ArrayDeque;
+import java.util.Collections;
+import java.util.Queue;
 
 import common.math.Matrix4f;
 import common.math.Vector2f;
@@ -31,52 +29,57 @@ import lwjgl.ResourcePack;
 
 public class ShaderProgram extends GLRegularObject {
 
-	private int id;
-	private final List<Shader> toAttach = new ArrayList<>(3);
-	private final List<Integer> toDelete = new ArrayList<>(3);
+	private final Queue<Shader> toAttach = new ArrayDeque<>(3);
+	private final Queue<Integer> toDelete = new ArrayDeque<>(3);
 
-	public void genId() {
+	@Override
+	public void genID() {
 		id = glCreateProgram();
 		initialize();
 	}
 
 	/**
-	 * Adds a shader that will be attached in the next {@link ShaderProgram#attachShaders() attachShaders()} call.
+	 * Adds a shader that will be attached in the next {@link #load()} call.
 	 *
-	 * @param shader
+	 * @param shader The shader to attach.
 	 */
-	public void addShader(Shader shader) {
+	public ShaderProgram attach(Shader shader) {
 		toAttach.add(shader);
+		return this;
 	}
 
-	/**
-	 * Attaches all shaders added using {@link #addShader(Shader)}. Call this after {@link #genId()} and before
-	 * {@link #link()}.
-	 */
-	public void attachShaders() {
-		verifyInitialized();
-		for (int i = 0; i < toAttach.size(); i++) {
-			int shaderID = toAttach.get(i).id();
-			glAttachShader(id, shaderID);
-			toDelete.add(shaderID);
-		}
+	public ShaderProgram data(Shader... shaders) {
+		Collections.addAll(toAttach, shaders);
+		return this;
 	}
 
 	/**
 	 * Links the shader program to OpenGL. Should only be called once.
 	 */
-	public void link() {
-		verifyInitialized();
+	public ShaderProgram load() {
+		verifyNotInitialized();
+		genID();
+		for (int i = 0, m = toAttach.size(); i < m; i++) {
+			Shader shader = toAttach.poll();
+			if (DEBUG) {
+				toAttach.add(shader);
+			}
+			assert shader != null;
+			int shaderID = shader.id();
+			glAttachShader(id, shaderID);
+			toDelete.add(shaderID);
+		}
 		glLinkProgram(id);
+		return this;
 	}
 
 	/**
 	 * Uses the current shader program to handle any glDrawArrays() or glDrawElements() calls. This is likely to be
-	 * called multiple times. You must call {@link #link() link()} before using bind().
+	 * called multiple times. You must call {@link #load()} before using bind().
 	 *
 	 * @param glContext the <code>GLContext</code>
 	 */
-	public void bind(GLContext glContext) {
+	public void use(GLContext glContext) {
 		verifyInitialized();
 		if (glContext.shaderProgramID == id) {
 			return;
@@ -85,9 +88,6 @@ public class ShaderProgram extends GLRegularObject {
 		glContext.shaderProgramID = id;
 	}
 
-	/**
-	 * Unbinds the current shader program.
-	 */
 	public static void unbind() {
 		glUseProgram(0);
 	}
@@ -96,53 +96,51 @@ public class ShaderProgram extends GLRegularObject {
 		verifyInitialized();
 		glUseProgram(0);
 		for (int i = 0; i < toDelete.size(); i++) {
-			int shaderID = toDelete.get(i);
+			int shaderID = toDelete.poll();
+			if (DEBUG) {
+				toDelete.add(shaderID);
+			}
 			glDetachShader(id, shaderID);
 			glDeleteShader(shaderID);
 		}
 		glDeleteProgram(id);
 	}
 
-	public void setBoolean(String uniform, boolean value) {
+	public void set(String uniform, boolean value) {
 		verifyInitialized();
 		glUniform1f(glGetUniformLocation(id, uniform), value ? 1 : 0);
 	}
 
-	public void setInt(String uniform, int i) {
+	public void set(String uniform, int i) {
 		verifyInitialized();
 		glUniform1i(glGetUniformLocation(id, uniform), i);
 	}
 
-	public void setFloat(String uniform, float value) {
+	public void set(String uniform, float value) {
 		verifyInitialized();
 		glUniform1f(glGetUniformLocation(id, uniform), value);
 	}
 
-	public void setVec2(String uniform, Vector2f vec2) {
+	public void set(String uniform, Vector2f vec2) {
 		verifyInitialized();
 		glUniform2f(glGetUniformLocation(id, uniform), vec2.x(), vec2.y());
 	}
 
-	public void setVec3(String uniform, Vector3f vec3) {
+	public void set(String uniform, Vector3f vec3) {
 		verifyInitialized();
 		glUniform3f(glGetUniformLocation(id, uniform), vec3.x(), vec3.y(), vec3.z());
 	}
 
-	public void setVec4(String uniform, Vector4f vec4) {
+	public void set(String uniform, Vector4f vec4) {
 		verifyInitialized();
 		glUniform4f(glGetUniformLocation(id, uniform), vec4.x(), vec4.y(), vec4.z(), vec4.w());
 	}
 
-	public void setColour(String uniform, int colour) {
-		setVec4(uniform, new Vector4f(normalizedR(colour), normalizedG(colour), normalizedB(colour), normalizedA(colour)));
-	}
-
-	private static final float[] FLOAT_BUFFER = new float[16];
-
-	public void setMat4(String uniform, Matrix4f mat4) {
+	public void set(String uniform, Matrix4f mat4) {
 		verifyInitialized();
-		mat4.store(FLOAT_BUFFER);
-		glUniformMatrix4fv(glGetUniformLocation(id, uniform), false, FLOAT_BUFFER);
+		float[] buffer = new float[16];
+		mat4.store(buffer);
+		glUniformMatrix4fv(glGetUniformLocation(id, uniform), false, buffer);
 	}
 
 	@Override

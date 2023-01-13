@@ -1,7 +1,5 @@
 package lwjgl.render;
 
-import lwjgl.GLContext;
-
 /**
  * Contains a {@link VertexArrayObject} and a {@link Material}.
  */
@@ -21,12 +19,6 @@ public class Mesh {
 
 	public Material material() {
 		return material;
-	}
-
-	public void render(GLContext glContext) {
-		material.shaderProgram().bind(glContext);
-		// TODO set uniforms for diffuse texture, etc.
-		vao.draw(glContext);
 	}
 
 }

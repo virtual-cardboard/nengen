@@ -4,7 +4,7 @@ import common.math.Vector2i;
 
 public class GLContext {
 
-	public int vaoID = 0;
+	public int vertexArrayID = 0;
 	public int bufferID = 0;
 	public int framebufferID = 0;
 	public int renderBufferID = 0;

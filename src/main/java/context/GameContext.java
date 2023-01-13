@@ -9,26 +9,27 @@ import context.input.event.MousePressedInputEvent;
 import context.input.event.MouseReleasedInputEvent;
 import context.input.event.MouseScrolledInputEvent;
 import context.input.event.PacketReceivedInputEvent;
+import lwjgl.GLContext;
 
 public class GameContext {
 
+	private boolean initialized = false;
 	private GameContextWrapper wrapper;
 
-	public void init() {
+	protected void init() {
 	}
 
-	public void render() {
+	protected void render() {
 	}
 
-	public void update() {
+	protected void update() {
 	}
 
-	public void terminate() {
+	protected void terminate() {
 	}
 
-	public void transition(GameContext nextContext) {
+	protected void transition(GameContext nextContext) {
 		terminate();
-		nextContext.init();
 		wrapper.setContext(nextContext);
 	}
 
@@ -69,6 +70,23 @@ public class GameContext {
 	}
 
 	public void input(FrameResizedInputEvent event) {
+	}
+
+	protected GLContext glContext() {
+		return wrapper.glContext();
+	}
+
+	protected boolean initialized() {
+		return initialized;
+	}
+
+	/**
+	 * Initializes the context and sets the initialized flag for this context. This method can only be called by the
+	 * game engine and should only be called once.
+	 */
+	void doInit() {
+		init();
+		initialized = true;
 	}
 
 }

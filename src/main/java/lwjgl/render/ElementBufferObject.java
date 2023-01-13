@@ -17,17 +17,28 @@ import lwjgl.GLContext;
  */
 public class ElementBufferObject extends GLRegularObject {
 
-	private int id;
-	private final int[] data;
+	private int[] data;
 
-	public ElementBufferObject(final int[] indices) {
-		this.data = indices;
+	public ElementBufferObject() {
 	}
 
-	public void loadData(GLContext glContext) {
-		bind(glContext);
+	@Override
+	public void genID() {
+		this.id = glGenBuffers();
+		initialize();
+	}
+
+	public ElementBufferObject indices(final int[] indices) {
+		this.data = indices;
+		return this;
+	}
+
+	public ElementBufferObject load() {
+		this.id = glGenBuffers();
+		initialize();
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, data, GL_STATIC_DRAW);
-		glContext.bufferID = 0;
+		return this;
 	}
 
 	public void delete() {
@@ -41,11 +52,6 @@ public class ElementBufferObject extends GLRegularObject {
 		}
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id);
 		glContext.bufferID = id;
-	}
-
-	public void genID() {
-		this.id = glGenBuffers();
-		initialize();
 	}
 
 	public int size() {

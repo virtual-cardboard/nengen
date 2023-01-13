@@ -24,7 +24,8 @@ public class NengenConfiguration {
 	protected boolean fullscreen = false;
 	protected String windowName;
 
-	protected static boolean debug = false;
+	protected static boolean DEBUG = false;
+	protected static boolean AUTO_GL = false;
 
 	protected NengenConfiguration() {
 	}
@@ -67,7 +68,12 @@ public class NengenConfiguration {
 	}
 
 	public NengenConfiguration debug() {
-		debug = true;
+		DEBUG = true;
+		return this;
+	}
+
+	public NengenConfiguration autoGL() {
+		AUTO_GL = true;
 		return this;
 	}
 

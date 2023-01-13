@@ -20,37 +20,48 @@ import lwjgl.GLContext;
  */
 public class VertexBufferObject extends GLRegularObject {
 
-	private int id;
-	private final float[] data;
-	private final int numColumns;
+	private float[] data;
+	private int components;
+	private int index;
 
-	/**
-	 * Creates a {@link VertexBufferObject} with the data. The data is treated as having <code>x</code> rows and
-	 * <code>vertexDataSize</code> columns, where
-	 * <code>x = data.length / vertexDataSize</code>.
-	 *
-	 * @param data       float array of values
-	 * @param numColumns the number of columns in the data
-	 */
-	public VertexBufferObject(final float[] data, int numColumns) {
+	@Override
+	public void genID() {
+		// TODO: Delete
+	}
+
+	public VertexBufferObject data(float[] data) {
 		this.data = data;
-		this.numColumns = numColumns;
+		return this;
 	}
 
-	public void loadData(GLContext glContext) {
-		bind(glContext);
+	public VertexBufferObject components(int components) {
+		this.components = components;
+		return this;
+	}
+
+	public VertexBufferObject index(int index) {
+		this.index = index;
+		return this;
+	}
+
+	public VertexBufferObject load() {
+		id = glGenBuffers();
 		glBufferData(GL_ARRAY_BUFFER, data, GL_STATIC_DRAW);
-		glContext.bufferID = 0;
+		glVertexAttribPointer(index, components, GL_FLOAT, false, components * Float.BYTES, 0);
+		glEnableVertexAttribArray(index);
+		return this;
 	}
 
-	protected void enableVertexAttribArray(GLContext glContext, int i) {
+	protected void enableVertexAttribArray(GLContext glContext) {
 		bind(glContext);
-		glVertexAttribPointer(i, numColumns, GL_FLOAT, false, numColumns * Float.BYTES, 0);
-		glEnableVertexAttribArray(i);
+		glVertexAttribPointer(index, components, GL_FLOAT, false, components * Float.BYTES, 0);
+		glEnableVertexAttribArray(index);
 	}
 
-	public void delete() {
-		glDeleteBuffers(id);
+	protected void enableVertexAttribArray() {
+		glBindBuffer(GL_ARRAY_BUFFER, id);
+		glVertexAttribPointer(index, components, GL_FLOAT, false, components * Float.BYTES, 0);
+		glEnableVertexAttribArray(index);
 	}
 
 	private void bind(GLContext glContext) {
@@ -62,13 +73,8 @@ public class VertexBufferObject extends GLRegularObject {
 		glContext.bufferID = id;
 	}
 
-	public void genID() {
-		this.id = glGenBuffers();
-		initialize();
-	}
-
-	public int getNumColumns() {
-		return numColumns;
+	public void delete() {
+		glDeleteBuffers(id);
 	}
 
 }

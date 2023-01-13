@@ -15,28 +15,28 @@ import lwjgl.ResourcePack;
 
 public class FrameBufferObject extends GLContainerObject {
 
-	private int id;
 	private Texture texture;
 	private RenderBufferObject rbo;
 
+	@Override
 	public void genID() {
 		this.id = glGenFramebuffers();
 		initialize();
 	}
 
-	public void attachTexture(Texture texture) {
+	public void attach(Texture texture) {
 		verifyInitialized();
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.id(), 0);
 		this.texture = texture;
 	}
 
-	public void attachTexture(Texture texture, int attachmentType) {
+	public void attach(Texture texture, int attachmentType) {
 		verifyInitialized();
 		glFramebufferTexture2D(GL_FRAMEBUFFER, attachmentType, GL_TEXTURE_2D, texture.id(), 0);
 		this.texture = texture;
 	}
 
-	public void attachRenderBufferObject(RenderBufferObject rbo) {
+	public void attach(RenderBufferObject rbo) {
 		verifyInitialized();
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, rbo.formatType(), GL_RENDERBUFFER, rbo.id());
 		this.rbo = rbo;

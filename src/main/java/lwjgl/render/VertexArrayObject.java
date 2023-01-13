@@ -1,5 +1,6 @@
 package lwjgl.render;
 
+import static java.util.Collections.addAll;
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
 import static org.lwjgl.opengl.GL11.GL_UNSIGNED_INT;
 import static org.lwjgl.opengl.GL11.glDrawElements;
@@ -24,9 +25,21 @@ import lwjgl.ResourcePack;
  */
 public class VertexArrayObject extends GLContainerObject {
 
-	private int id;
 	private final List<VertexBufferObject> vbos = new ArrayList<>();
 	private ElementBufferObject ebo;
+
+	@Override
+	public void genID() {
+		this.id = glGenVertexArrays();
+		initialize();
+	}
+
+	public VertexArrayObject load() {
+		this.id = glGenVertexArrays();
+		initialize();
+		enableVertexAttribArrays();
+		return this;
+	}
 
 	public void draw(GLContext glContext) {
 		bind(glContext);
@@ -34,8 +47,10 @@ public class VertexArrayObject extends GLContainerObject {
 		glDrawElements(GL_TRIANGLES, ebo.size(), GL_UNSIGNED_INT, 0);
 	}
 
-	public void delete() {
-		glDeleteVertexArrays(id);
+	public void enableVertexAttribArrays() {
+		for (VertexBufferObject vbo : vbos) {
+			vbo.enableVertexAttribArray();
+		}
 	}
 
 	/**
@@ -45,31 +60,32 @@ public class VertexArrayObject extends GLContainerObject {
 	 */
 	public void enableVertexAttribArrays(GLContext glContext) {
 		bind(glContext);
-		for (int i = 0; i < vbos.size(); i++) {
-			vbos.get(i).enableVertexAttribArray(glContext, i);
+		for (VertexBufferObject vbo : vbos) {
+			vbo.enableVertexAttribArray(glContext);
 		}
 	}
 
 	protected void bind(GLContext glContext) {
 		verifyInitialized();
-		if (glContext.vaoID == id) {
+		if (glContext.vertexArrayID == id) {
 			return;
 		}
 		glBindVertexArray(id);
-		glContext.vaoID = id;
+		glContext.vertexArrayID = id;
 	}
 
-	public void attachVBO(VertexBufferObject vbo) {
-		vbos.add(vbo);
+	public VertexArrayObject vbos(VertexBufferObject... vbo) {
+		addAll(vbos, vbo);
+		return this;
 	}
 
-	public void genID() {
-		this.id = glGenVertexArrays();
-		initialize();
-	}
-
-	public void setEbo(ElementBufferObject ebo) {
+	public VertexArrayObject ebo(ElementBufferObject ebo) {
 		this.ebo = ebo;
+		return this;
+	}
+
+	public void delete() {
+		glDeleteVertexArrays(id);
 	}
 
 	@Override

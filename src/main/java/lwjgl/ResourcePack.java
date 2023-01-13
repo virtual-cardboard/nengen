@@ -5,14 +5,13 @@ import java.util.Map;
 
 import lwjgl.render.FrameBufferObject;
 import lwjgl.render.GLObject;
-import lwjgl.render.ScreenFrameBufferObject;
 import lwjgl.render.ShaderProgram;
 import lwjgl.render.Texture;
 import lwjgl.render.VertexArrayObject;
 
 /**
  * A nice leather pack of {@link VertexArrayObject VertexArrayObjects}, {@link ShaderProgram ShaderPrograms}, and other
- * objects that are likely to be used many times in many different contexts.
+ * objects that are likely to be used many times in many contexts.
  *
  * @author Jay
  */
@@ -25,7 +24,6 @@ public final class ResourcePack {
 	//	private final Map<String, GameFont> fonts = new HashMap<>(1);
 //	private final Map<String, AudioClip> audioClips = new HashMap<>(0);
 	private ShaderProgram defaultSP;
-	private ScreenFrameBufferObject screenFBO;
 
 	private final GLContext glContext;
 
@@ -33,9 +31,8 @@ public final class ResourcePack {
 		this.glContext = glContext;
 	}
 
-	public void init(ShaderProgram defaultSP, ScreenFrameBufferObject screenFBO) {
+	public void init(ShaderProgram defaultSP) {
 		this.defaultSP = defaultSP;
-		this.screenFBO = screenFBO;
 	}
 
 	public VertexArrayObject getVAO(String name) {
@@ -92,10 +89,6 @@ public final class ResourcePack {
 
 	public ShaderProgram defaultShaderProgram() {
 		return defaultSP;
-	}
-
-	public ScreenFrameBufferObject screenFrameBufferObject() {
-		return screenFBO;
 	}
 
 	public void terminate() {

@@ -7,13 +7,10 @@ import lwjgl.ResourcePack;
  */
 public abstract class GLObject {
 
+	protected int id;
 	private boolean initialized;
 
-	protected final void verifyInitialized() {
-		if (!initialized) {
-			throw new IllegalStateException("GLObject not initialized.");
-		}
-	}
+	public abstract void genID();
 
 	protected final void initialize() {
 		if (initialized) {
@@ -22,18 +19,19 @@ public abstract class GLObject {
 		initialized = true;
 	}
 
-	public boolean initialized() {
-		return initialized;
+	protected final void verifyInitialized() {
+		if (!initialized) {
+			throw new IllegalStateException("GLObject not initialized.");
+		}
 	}
 
-	protected void addTo(ResourcePack resourcePack) {
+	protected void verifyNotInitialized() {
+		if (initialized) {
+			throw new IllegalStateException("GLObject already initialized.");
+		}
 	}
 
 	public void putInto(String name, ResourcePack resourcePack) {
-		throw new RuntimeException("Tried to add " + name + " of type " + this.getClass().getName()
-				+ " into ResourcePack but the GLObject.putInto(String name, ResourcePack resourcePack)"
-				+ " method was not overrided. Override the method to insert the GLObject into the"
-				+ " resource pack.");
 	}
 
 }

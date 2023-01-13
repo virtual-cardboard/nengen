@@ -23,11 +23,16 @@ import lwjgl.ResourcePack;
  */
 public class Texture extends GLRegularObject {
 
-	private int id;
 	private int width, height;
 
+	@Override
+	public void genID() {
+		this.id = glGenTextures();
+		initialize();
+	}
+
 	/**
-	 * Binds the texture to texture unit 0.
+	 * Binds the texture to texture unit 0. Should only be called if this is the first texture to be bound.
 	 *
 	 * @param glContext the <code>GLContext</code>
 	 */
@@ -56,11 +61,6 @@ public class Texture extends GLRegularObject {
 	 */
 	public void delete() {
 		glDeleteTextures(id);
-	}
-
-	public void genID() {
-		this.id = glGenTextures();
-		initialize();
 	}
 
 	public void resize(GLContext glContext, int width2, int height2) {

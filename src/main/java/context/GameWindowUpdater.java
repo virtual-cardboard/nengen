@@ -1,13 +1,12 @@
-package nengen;
+package context;
 
 import static nengen.EngineConfiguration.DEBUG;
 import static org.lwjgl.glfw.GLFW.glfwGetWindowSize;
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 
 import common.time.TimestepTimer;
-import context.GameContext;
-import context.GameContextWrapper;
 import lwjgl.GameWindow;
+import nengen.EngineConfiguration;
 
 public class GameWindowUpdater extends TimestepTimer implements Runnable {
 
@@ -39,6 +38,9 @@ public class GameWindowUpdater extends TimestepTimer implements Runnable {
 	@Override
 	protected void update() {
 		GameContext context = wrapper.context();
+		if (!context.initialized()) {
+			context.doInit();
+		}
 		glfwPollEvents(); // Triggers callbacks, forwards input events to the context
 		int[] width = new int[1];
 		int[] height = new int[1];
