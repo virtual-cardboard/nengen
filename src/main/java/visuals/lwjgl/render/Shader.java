@@ -1,4 +1,4 @@
-package lwjgl.render;
+package visuals.lwjgl.render;
 
 import static nengen.EngineConfiguration.DEBUG;
 import static org.lwjgl.opengl.GL11.GL_FALSE;
@@ -10,7 +10,7 @@ import static org.lwjgl.opengl.GL20.glGetShaderInfoLog;
 import static org.lwjgl.opengl.GL20.glGetShaderi;
 import static org.lwjgl.opengl.GL20.glShaderSource;
 
-import lwjgl.ResourcePack;
+import visuals.lwjgl.ResourcePack;
 
 public class Shader extends GLRegularObject {
 

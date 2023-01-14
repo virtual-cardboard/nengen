@@ -18,7 +18,7 @@ import context.input.event.MousePressedInputEvent;
 import context.input.event.MouseReleasedInputEvent;
 import context.input.event.MouseScrolledInputEvent;
 import context.input.event.PacketReceivedInputEvent;
-import lwjgl.GLContext;
+import visuals.lwjgl.GLContext;
 
 public class GameContext {
 

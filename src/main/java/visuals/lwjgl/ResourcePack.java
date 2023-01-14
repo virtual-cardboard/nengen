@@ -1,13 +1,13 @@
-package lwjgl;
+package visuals.lwjgl;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import lwjgl.render.FrameBufferObject;
-import lwjgl.render.GLObject;
-import lwjgl.render.ShaderProgram;
-import lwjgl.render.Texture;
-import lwjgl.render.VertexArrayObject;
+import visuals.lwjgl.render.FrameBufferObject;
+import visuals.lwjgl.render.GLObject;
+import visuals.lwjgl.render.ShaderProgram;
+import visuals.lwjgl.render.Texture;
+import visuals.lwjgl.render.VertexArrayObject;
 
 /**
  * A nice leather pack of {@link VertexArrayObject VertexArrayObjects}, {@link ShaderProgram ShaderPrograms}, and other

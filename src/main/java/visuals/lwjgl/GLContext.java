@@ -1,4 +1,4 @@
-package lwjgl;
+package visuals.lwjgl;
 
 import common.math.Vector2i;
 

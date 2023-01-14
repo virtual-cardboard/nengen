@@ -1,4 +1,4 @@
-package lwjgl.render;
+package visuals.lwjgl.render;
 
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL30.GL_COLOR_ATTACHMENT0;
@@ -10,8 +10,8 @@ import static org.lwjgl.opengl.GL30.glFramebufferRenderbuffer;
 import static org.lwjgl.opengl.GL30.glFramebufferTexture2D;
 import static org.lwjgl.opengl.GL30.glGenFramebuffers;
 
-import lwjgl.GLContext;
-import lwjgl.ResourcePack;
+import visuals.lwjgl.GLContext;
+import visuals.lwjgl.ResourcePack;
 
 public class FrameBufferObject extends GLContainerObject {
 

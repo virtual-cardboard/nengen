@@ -1,8 +1,8 @@
-package lwjgl.render;
+package visuals.lwjgl.render;
 
 import java.util.List;
 
-import lwjgl.GLContext;
+import visuals.lwjgl.GLContext;
 
 /**
  * A 3D model consisting of one or more meshes.

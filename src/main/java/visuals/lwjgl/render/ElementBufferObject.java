@@ -1,4 +1,4 @@
-package lwjgl.render;
+package visuals.lwjgl.render;
 
 import static org.lwjgl.opengl.GL15.GL_ELEMENT_ARRAY_BUFFER;
 import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
@@ -7,7 +7,7 @@ import static org.lwjgl.opengl.GL15.glBufferData;
 import static org.lwjgl.opengl.GL15.glDeleteBuffers;
 import static org.lwjgl.opengl.GL15.glGenBuffers;
 
-import lwjgl.GLContext;
+import visuals.lwjgl.GLContext;
 
 /**
  * An object that tells OpenGL which vertices in a {@link VertexBufferObject} to display.

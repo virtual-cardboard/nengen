@@ -1,4 +1,4 @@
-package lwjgl.render;
+package visuals.lwjgl.render;
 
 /**
  * An OpenGL regular object is an object that can be shared between OpenGL contexts.

@@ -1,4 +1,4 @@
-package lwjgl.render;
+package visuals.lwjgl.render;
 
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
 import static org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER;
@@ -10,7 +10,7 @@ import static org.lwjgl.opengl.GL15.glGenBuffers;
 import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
 
-import lwjgl.GLContext;
+import visuals.lwjgl.GLContext;
 
 /**
  * An object that contains data about the available vertices able to be used in a {@link VertexArrayObject}. Use

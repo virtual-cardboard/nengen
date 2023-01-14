@@ -1,4 +1,4 @@
-package lwjgl.callback;
+package visuals.lwjgl.callback;
 
 import context.GameContextWrapper;
 import context.input.event.MouseScrolledInputEvent;

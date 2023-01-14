@@ -1,11 +1,11 @@
-package lwjgl.render;
+package visuals.lwjgl.render;
 
 import static org.lwjgl.opengl.GL30.GL_RENDERBUFFER;
 import static org.lwjgl.opengl.GL30.glBindRenderbuffer;
 import static org.lwjgl.opengl.GL30.glDeleteRenderbuffers;
 import static org.lwjgl.opengl.GL30.glGenRenderbuffers;
 
-import lwjgl.GLContext;
+import visuals.lwjgl.GLContext;
 
 public class RenderBufferObject extends GLRegularObject {
 

@@ -1,4 +1,4 @@
-package lwjgl.render;
+package visuals.lwjgl.render;
 
 import static nengen.EngineConfiguration.DEBUG;
 import static org.lwjgl.opengl.GL20.glAttachShader;
@@ -24,8 +24,8 @@ import common.math.Matrix4f;
 import common.math.Vector2f;
 import common.math.Vector3f;
 import common.math.Vector4f;
-import lwjgl.GLContext;
-import lwjgl.ResourcePack;
+import visuals.lwjgl.GLContext;
+import visuals.lwjgl.ResourcePack;
 
 public class ShaderProgram extends GLRegularObject {
 

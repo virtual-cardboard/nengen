@@ -3,7 +3,7 @@ package context;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import lwjgl.GLContext;
+import visuals.lwjgl.GLContext;
 
 /**
  * A container for a game context to make switching game contexts thread-safe.

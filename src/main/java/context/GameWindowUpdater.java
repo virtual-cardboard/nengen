@@ -6,7 +6,7 @@ import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
 
 import common.time.TimestepTimer;
-import lwjgl.GameWindow;
+import visuals.lwjgl.GameWindow;
 import nengen.EngineConfiguration;
 
 public class GameWindowUpdater extends TimestepTimer implements Runnable {

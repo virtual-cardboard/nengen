@@ -1,11 +1,11 @@
-package lwjgl.callback;
+package visuals.lwjgl.callback;
 
 import static org.lwjgl.opengl.GL11.glViewport;
 
 import common.math.Vector2i;
 import context.GameContextWrapper;
 import context.input.event.FrameResizedInputEvent;
-import lwjgl.GLContext;
+import visuals.lwjgl.GLContext;
 import org.lwjgl.glfw.GLFWFramebufferSizeCallback;
 
 /**

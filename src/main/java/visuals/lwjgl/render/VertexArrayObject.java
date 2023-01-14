@@ -1,4 +1,4 @@
-package lwjgl.render;
+package visuals.lwjgl.render;
 
 import static java.util.Collections.addAll;
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
@@ -11,8 +11,8 @@ import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 import java.util.ArrayList;
 import java.util.List;
 
-import lwjgl.GLContext;
-import lwjgl.ResourcePack;
+import visuals.lwjgl.GLContext;
+import visuals.lwjgl.ResourcePack;
 
 /**
  * An object that contains data about a group of vertices in OpenGL. Learn more about them here: <a href=

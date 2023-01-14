@@ -4,7 +4,7 @@ import context.GameContext;
 import context.GameContextWrapper;
 import context.GameTickUpdater;
 import context.GameWindowUpdater;
-import lwjgl.GLContext;
+import visuals.lwjgl.GLContext;
 
 /**
  * The main class for the Nengen game engine.

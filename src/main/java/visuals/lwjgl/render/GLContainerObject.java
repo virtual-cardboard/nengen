@@ -1,4 +1,4 @@
-package lwjgl.render;
+package visuals.lwjgl.render;
 
 /**
  * An OpenGL container object contains other OpenGL regular objects. These types of objects are not able to be shared

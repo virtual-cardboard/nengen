@@ -1,4 +1,4 @@
-package lwjgl.render;
+package visuals.lwjgl.render;
 
 /**
  * Contains a {@link VertexArrayObject} and a {@link Material}.

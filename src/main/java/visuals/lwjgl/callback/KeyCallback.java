@@ -1,4 +1,4 @@
-package lwjgl.callback;
+package visuals.lwjgl.callback;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_UNKNOWN;
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;

@@ -1,4 +1,4 @@
-package lwjgl.render;
+package visuals.lwjgl.render;
 
 import static org.lwjgl.opengl.GL11.GL_RGBA;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
@@ -13,8 +13,8 @@ import static org.lwjgl.opengl.GL30.glGenerateMipmap;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 import common.math.Vector2f;
-import lwjgl.GLContext;
-import lwjgl.ResourcePack;
+import visuals.lwjgl.GLContext;
+import visuals.lwjgl.ResourcePack;
 
 /**
  * An OpenGL object that represents a 2D image.

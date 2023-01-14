@@ -1,4 +1,4 @@
-package lwjgl.render;
+package visuals.lwjgl.render;
 
 /**
  * Describes what a {@link Mesh} looks like.

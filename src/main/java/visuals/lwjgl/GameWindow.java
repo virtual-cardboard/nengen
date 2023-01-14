@@ -1,4 +1,4 @@
-package lwjgl;
+package visuals.lwjgl;
 
 import static java.util.Objects.requireNonNull;
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
@@ -51,11 +51,11 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 
 import common.math.Vector2i;
 import context.GameContextWrapper;
-import lwjgl.callback.KeyCallback;
-import lwjgl.callback.MouseButtonCallback;
-import lwjgl.callback.MouseMovementCallback;
-import lwjgl.callback.MouseScrollCallback;
-import lwjgl.callback.WindowResizeCallback;
+import visuals.lwjgl.callback.KeyCallback;
+import visuals.lwjgl.callback.MouseButtonCallback;
+import visuals.lwjgl.callback.MouseMovementCallback;
+import visuals.lwjgl.callback.MouseScrollCallback;
+import visuals.lwjgl.callback.WindowResizeCallback;
 import nengen.EngineConfiguration;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.system.Callback;

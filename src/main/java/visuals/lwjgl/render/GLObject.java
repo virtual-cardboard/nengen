@@ -1,6 +1,6 @@
-package lwjgl.render;
+package visuals.lwjgl.render;
 
-import lwjgl.ResourcePack;
+import visuals.lwjgl.ResourcePack;
 
 /**
  * @author Lunkle
