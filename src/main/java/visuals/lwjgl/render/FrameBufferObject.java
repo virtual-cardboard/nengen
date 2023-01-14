@@ -24,19 +24,19 @@ public class FrameBufferObject extends GLContainerObject {
 		initialize();
 	}
 
-	public void attach(Texture texture) {
+	public void texture(Texture texture) {
 		verifyInitialized();
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.id(), 0);
 		this.texture = texture;
 	}
 
-	public void attach(Texture texture, int attachmentType) {
+	public void texture(Texture texture, int attachmentType) {
 		verifyInitialized();
 		glFramebufferTexture2D(GL_FRAMEBUFFER, attachmentType, GL_TEXTURE_2D, texture.id(), 0);
 		this.texture = texture;
 	}
 
-	public void attach(RenderBufferObject rbo) {
+	public void rbo(RenderBufferObject rbo) {
 		verifyInitialized();
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, rbo.formatType(), GL_RENDERBUFFER, rbo.id());
 		this.rbo = rbo;
@@ -49,6 +49,11 @@ public class FrameBufferObject extends GLContainerObject {
 		}
 		glBindFramebuffer(GL_FRAMEBUFFER, id);
 		glContext.framebufferID = id;
+	}
+
+
+	public void bind() {
+		glBindFramebuffer(GL_FRAMEBUFFER, id);
 	}
 
 	public static void unbind(GLContext glContext) {
@@ -68,7 +73,7 @@ public class FrameBufferObject extends GLContainerObject {
 		return texture;
 	}
 
-	public RenderBufferObject renderBufferObject() {
+	public RenderBufferObject rbo() {
 		return rbo;
 	}
 
