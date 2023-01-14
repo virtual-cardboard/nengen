@@ -21,7 +21,7 @@ import visuals.lwjgl.GLContext;
 public class VertexBufferObject extends GLRegularObject {
 
 	private float[] data;
-	private int components;
+	private int dimensions;
 	private int index;
 
 	@Override
@@ -34,8 +34,8 @@ public class VertexBufferObject extends GLRegularObject {
 		return this;
 	}
 
-	public VertexBufferObject components(int components) {
-		this.components = components;
+	public VertexBufferObject dimensions(int dimensions) {
+		this.dimensions = dimensions;
 		return this;
 	}
 
@@ -53,13 +53,13 @@ public class VertexBufferObject extends GLRegularObject {
 
 	protected void enableVertexAttribArray(GLContext glContext) {
 		bind(glContext);
-		glVertexAttribPointer(index, components, GL_FLOAT, false, components * Float.BYTES, 0);
+		glVertexAttribPointer(index, dimensions, GL_FLOAT, false, dimensions * Float.BYTES, 0);
 		glEnableVertexAttribArray(index);
 	}
 
 	protected void enableVertexAttribArray() {
 		glBindBuffer(GL_ARRAY_BUFFER, id);
-		glVertexAttribPointer(index, components, GL_FLOAT, false, components * Float.BYTES, 0);
+		glVertexAttribPointer(index, dimensions, GL_FLOAT, false, dimensions * Float.BYTES, 0);
 		glEnableVertexAttribArray(index);
 	}
 
