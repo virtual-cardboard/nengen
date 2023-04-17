@@ -81,4 +81,37 @@ public class NengenConfiguration {
 		return new EngineConfiguration(this);
 	}
 
+	// Design suggestion 1: Add getters for width, height, frameRate, tickRate, resizable, fullscreen, and windowName
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public int getFrameRate() {
+		return frameRate;
+	}
+
+	public int getTickRate() {
+		return tickRate;
+	}
+
+	public boolean isResizable() {
+		return resizable;
+	}
+
+	public boolean isFullscreen() {
+		return fullscreen;
+	}
+
+	public String getWindowName() {
+		return windowName;
+	}
+
+	// Design suggestion 2: Add a toString() method to print the configuration
+	public String toString() {
+		return "NengenConfiguration [width=" + width + ", height=" + height + ", frameRate=" + frameRate + ", tickRate=" + tickRate + ", resizable=" + resizable + ", fullscreen=" + fullscreen + ", windowName=" + windowName + "]";
+	}
 }
