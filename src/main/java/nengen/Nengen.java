@@ -8,6 +8,17 @@ import visuals.lwjgl.GLContext;
 
 /**
  * The main class for the Nengen game engine.
+ * <br>
+ * <br>
+ * To use Nengen, create a new instance of this class, configure it, and then call {@link #startNengen(GameContext)}.
+ * <br>
+ * <br>
+ * Example usage:<br>
+ * <code>
+ * Nengen nengen = new Nengen();<br>nengen.configure()<br>&nbsp;.setWindowDim(800, 600)<br>&nbsp;.setWindowName("My
+ * Game")<br>&nbsp;.setFrameRate(60)<br>&nbsp;.setTickRate(20)<br>&nbsp;.setResizable(false)<br>&nbsp;.setFullscreen(false);<br>
+ * nengen.startNengen(new MyGameContext());
+ * </code>
  *
  * @author Lunkle
  */

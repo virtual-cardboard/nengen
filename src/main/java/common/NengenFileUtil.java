@@ -19,9 +19,9 @@ import visuals.rendering.text.CharacterData;
 import visuals.rendering.text.GameFont;
 import visuals.rendering.texture.Image;
 
-public class NengenUtil {
+public class NengenFileUtil {
 
-	private NengenUtil() {
+	private NengenFileUtil() {
 	}
 
 	public static String readFileAsString(String path) {

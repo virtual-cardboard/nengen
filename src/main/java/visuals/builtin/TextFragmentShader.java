@@ -4,6 +4,9 @@ import static visuals.lwjgl.render.ShaderType.FRAGMENT;
 
 import visuals.lwjgl.render.Shader;
 
+/**
+ * A fragment {@link Shader} that renders text.
+ */
 public class TextFragmentShader {
 
 	private static Shader shader;

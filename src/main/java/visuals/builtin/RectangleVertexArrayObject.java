@@ -4,7 +4,12 @@ import visuals.lwjgl.render.ElementBufferObject;
 import visuals.lwjgl.render.VertexArrayObject;
 import visuals.lwjgl.render.VertexBufferObject;
 
-public class RectangleVertexArrayObject {
+/**
+ * A {@link VertexArrayObject} that represents a rectangle.
+ *
+ * @author Lunkle
+ */
+public class RectangleVertexArrayObject extends VertexArrayObject {
 
 	private static VertexArrayObject vao;
 

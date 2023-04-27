@@ -2,6 +2,18 @@ package visuals.lwjgl;
 
 import common.math.Vector2i;
 
+/**
+ * This class is used to store OpenGL context data.
+ * <br>
+ * This class is used internally by the engine and should not be modified by the user.
+ * <br>
+ * <br>
+ * OpenGL uses static variables to store context data. Static state is difficult to reason about and can lead to
+ * confusing bugs. The engine uses this class to store OpenGL context data in a non-static way so that the user does not
+ * have to worry about setting OpenGL context data correctly.
+ *
+ * @author Lunkle
+ */
 public class GLContext {
 
 	public int vertexArrayID = 0;

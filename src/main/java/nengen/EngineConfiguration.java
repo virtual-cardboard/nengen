@@ -5,6 +5,8 @@ import context.GameWindowUpdater;
 
 /**
  * Internal configuration class for Nengen. This class is used to run the engine.
+ *
+ * @author Lunkle
  */
 public class EngineConfiguration {
 
