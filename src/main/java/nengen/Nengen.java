@@ -37,10 +37,10 @@ public class Nengen {
 		EngineConfiguration config = configuration.build();
 		GameContextWrapper wrapper = new GameContextWrapper(context, glContext);
 
-		Thread renderThread = new Thread(new GameWindowUpdater(config, wrapper));
+		Thread renderThread = new Thread(new GameWindowUpdater(config, wrapper, glContext));
 		Thread tickThread = new Thread(new GameTickUpdater(config, wrapper));
-		renderThread.start();
 		tickThread.start();
+		renderThread.start();
 	}
 
 }

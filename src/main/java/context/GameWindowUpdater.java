@@ -6,8 +6,9 @@ import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
 
 import common.time.TimestepTimer;
-import visuals.lwjgl.GameWindow;
 import nengen.EngineConfiguration;
+import visuals.lwjgl.GLContext;
+import visuals.lwjgl.GameWindow;
 
 public class GameWindowUpdater extends TimestepTimer implements Runnable {
 
@@ -20,11 +21,12 @@ public class GameWindowUpdater extends TimestepTimer implements Runnable {
 	 *
 	 * @param configuration The configuration for the engine.
 	 * @param wrapper       The context wrapper.
+	 * @param glContext
 	 */
-	public GameWindowUpdater(EngineConfiguration configuration, GameContextWrapper wrapper) {
+	public GameWindowUpdater(EngineConfiguration configuration, GameContextWrapper wrapper, GLContext glContext) {
 		super(1000 / configuration.frameRate());
 		this.configuration = configuration;
-		this.window = new GameWindow(configuration, wrapper);
+		this.window = new GameWindow(configuration, wrapper, glContext);
 		this.wrapper = wrapper;
 	}
 

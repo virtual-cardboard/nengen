@@ -1,4 +1,4 @@
-package text;
+package visuals.rendering.text;
 
 import visuals.lwjgl.render.Texture;
 
@@ -6,8 +6,8 @@ public final class GameFont {
 
 	private final String name;
 	private final int fontSize;
-	private CharacterData[] characterDatas;
-	private Texture texture;
+	private final CharacterData[] characterDatas;
+	private final Texture texture;
 
 	public GameFont(String name, int fontSize, Texture texture) {
 		this.name = name;

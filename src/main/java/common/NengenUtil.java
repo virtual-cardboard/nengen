@@ -4,14 +4,20 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.readAllBytes;
 import static java.nio.file.Paths.get;
 import static nengen.EngineConfiguration.DEBUG;
+import static org.lwjgl.stb.STBImage.stbi_failure_reason;
+import static org.lwjgl.stb.STBImage.stbi_load;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
 
-import text.CharacterData;
-import text.GameFont;
+import org.lwjgl.system.MemoryStack;
 import visuals.lwjgl.render.Texture;
+import visuals.rendering.text.CharacterData;
+import visuals.rendering.text.GameFont;
+import visuals.rendering.texture.Image;
 
 public class NengenUtil {
 
@@ -36,8 +42,39 @@ public class NengenUtil {
 		return null;
 	}
 
-	public static GameFont loadFont(File source, Texture texture) throws IOException {
-		try (FileInputStream fis = new FileInputStream(source)) {
+	public static Image loadImage(File file) {
+		return loadImage(file.getAbsolutePath());
+	}
+
+	public static Image loadImage(String path) {
+		ByteBuffer data;
+		int width;
+		int height;
+		try (MemoryStack stack = MemoryStack.stackPush()) {
+			IntBuffer w = stack.mallocInt(1);
+			IntBuffer h = stack.mallocInt(1);
+			IntBuffer comp = stack.mallocInt(1);
+			data = stbi_load(path, w, h, comp, 4);
+			if (data == null) {
+				System.err.println("Failed to load texture at " + path + ".");
+				throw new RuntimeException(stbi_failure_reason());
+			}
+			width = w.get();
+			height = h.get();
+		}
+		return new Image().data(data).width(width).height(height);
+	}
+
+	public static GameFont loadFont(File font, File png) {
+		return loadFont(font, loadImage(png.getAbsolutePath()));
+	}
+
+	public static GameFont loadFont(File font, Image image) {
+		return loadFont(font, new Texture().image(image).load());
+	}
+
+	public static GameFont loadFont(File font, Texture texture) {
+		try (FileInputStream fis = new FileInputStream(font)) {
 			// Read header
 			int nameLength = fis.read();
 			byte[] nameBytes = new byte[nameLength];
@@ -59,7 +96,7 @@ public class NengenUtil {
 
 			// Read characters
 			CharacterData[] characters = gameFont.getCharacterDatas();
-			DEBUG(" Char | X | Y | Width | Height | X Offset | Y Offset | X Advance | Page ");
+//			DEBUG(" Char | X | Y | Width | Height | X Offset | Y Offset | X Advance | Page ");
 			for (int i = 0; i < numCharacters; i++) {
 				short c = readShort(fis);
 				short x = readShort(fis);
@@ -71,13 +108,15 @@ public class NengenUtil {
 				short xAdvance = readShort(fis);
 				short page = (short) fis.read();
 				CharacterData charData = new CharacterData(x, y, width, height, xOffset, yOffset, xAdvance, page);
-				DEBUG(c + " " + x + " " + y + " " + width + " " + height + " " + xOffset + " " + yOffset + " " + xAdvance + " " + page);
+//				DEBUG(c + " " + x + " " + y + " " + width + " " + height + " " + xOffset + " " + yOffset + " " + xAdvance + " " + page);
 				characters[c] = charData;
 			}
 			CharacterData space = characters[' '];
 			characters['\t'] = new CharacterData(space.x(), space.y(), space.width(), space.height(), space.xOffset(), space.yOffset(), (short) (space.xAdvance() * 4), space.getPage());
 
 			return gameFont;
+		} catch (IOException e) {
+			throw new RuntimeException(e);
 		}
 	}
 

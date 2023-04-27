@@ -1,4 +1,4 @@
-package text;
+package visuals.rendering.text;
 
 public final class CharacterData {
 

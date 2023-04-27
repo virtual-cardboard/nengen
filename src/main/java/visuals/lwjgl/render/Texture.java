@@ -1,12 +1,20 @@
 package visuals.lwjgl.render;
 
+import static org.lwjgl.opengl.GL11.GL_LINEAR;
+import static org.lwjgl.opengl.GL11.GL_LINEAR_MIPMAP_LINEAR;
 import static org.lwjgl.opengl.GL11.GL_RGBA;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_MAG_FILTER;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_MIN_FILTER;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_WRAP_S;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_WRAP_T;
 import static org.lwjgl.opengl.GL11.GL_UNSIGNED_BYTE;
 import static org.lwjgl.opengl.GL11.glBindTexture;
 import static org.lwjgl.opengl.GL11.glDeleteTextures;
 import static org.lwjgl.opengl.GL11.glGenTextures;
 import static org.lwjgl.opengl.GL11.glTexImage2D;
+import static org.lwjgl.opengl.GL11.glTexParameteri;
+import static org.lwjgl.opengl.GL12.GL_CLAMP_TO_EDGE;
 import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
 import static org.lwjgl.opengl.GL13.glActiveTexture;
 import static org.lwjgl.opengl.GL30.glGenerateMipmap;
@@ -15,6 +23,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 import common.math.Vector2f;
 import visuals.lwjgl.GLContext;
 import visuals.lwjgl.ResourcePack;
+import visuals.rendering.texture.Image;
 
 /**
  * An OpenGL object that represents a 2D image.
@@ -23,12 +32,21 @@ import visuals.lwjgl.ResourcePack;
  */
 public class Texture extends GLRegularObject {
 
+	private transient Image image;
+
 	private int width, height;
 
 	@Override
 	public void genID() {
 		this.id = glGenTextures();
 		initialize();
+	}
+
+	public Texture image(Image image) {
+		this.image = image;
+		this.width = image.width();
+		this.height = image.height();
+		return this;
 	}
 
 	/**
@@ -56,6 +74,28 @@ public class Texture extends GLRegularObject {
 		glContext.textureIDs[textureUnit] = id;
 	}
 
+	public void bind() {
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, id);
+	}
+
+	public Texture load() {
+		this.id = glGenTextures();
+		initialize();
+		glBindTexture(GL_TEXTURE_2D, id);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		if (image != null) {
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image.data());
+		} else {
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+		}
+		glGenerateMipmap(GL_TEXTURE_2D);
+		return this;
+	}
+
 	/**
 	 * Deletes the texture.
 	 */
@@ -63,9 +103,11 @@ public class Texture extends GLRegularObject {
 		glDeleteTextures(id);
 	}
 
-	public void resize(GLContext glContext, int width2, int height2) {
+	public void resize(GLContext glContext, int width, int height) {
 		bind(glContext);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width2, height2, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+		this.width = width;
+		this.height = height;
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 
@@ -73,7 +115,8 @@ public class Texture extends GLRegularObject {
 		return width;
 	}
 
-	public void setWidth(int width) {
+	public void width(int width) {
+		assert image == null : "Cannot set dimensions of texture with image";
 		this.width = width;
 	}
 
@@ -81,7 +124,8 @@ public class Texture extends GLRegularObject {
 		return height;
 	}
 
-	public void setHeight(int height) {
+	public void height(int height) {
+		assert image == null : "Cannot set dimensions of texture with image";
 		this.height = height;
 	}
 

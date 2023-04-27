@@ -51,14 +51,14 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 
 import common.math.Vector2i;
 import context.GameContextWrapper;
+import nengen.EngineConfiguration;
+import org.lwjgl.glfw.GLFWVidMode;
+import org.lwjgl.system.Callback;
 import visuals.lwjgl.callback.KeyCallback;
 import visuals.lwjgl.callback.MouseButtonCallback;
 import visuals.lwjgl.callback.MouseMovementCallback;
 import visuals.lwjgl.callback.MouseScrollCallback;
 import visuals.lwjgl.callback.WindowResizeCallback;
-import nengen.EngineConfiguration;
-import org.lwjgl.glfw.GLFWVidMode;
-import org.lwjgl.system.Callback;
 
 /**
  * @author Lunkle
@@ -78,16 +78,17 @@ public class GameWindow {
 	private Vector2i windowDimensions;
 	private long sharedContextWindowHandle;
 
-	private final GLContext glContext = new GLContext();
+	private final GLContext glContext;
 
 	private final GameContextWrapper wrapper;
 
-	public GameWindow(EngineConfiguration configuration, GameContextWrapper wrapper) {
+	public GameWindow(EngineConfiguration configuration, GameContextWrapper wrapper, GLContext glContext) {
 		this.windowTitle = configuration.windowTitle();
 		this.resizable = configuration.resizable();
 		this.fullScreen = configuration.fullscreen();
 		this.windowDimensions = configuration.windowDim();
 		this.wrapper = requireNonNull(wrapper);
+		this.glContext = requireNonNull(glContext);
 	}
 
 	public void createDisplay() {
@@ -111,6 +112,7 @@ public class GameWindow {
 		if (fullScreen)
 			windowDimensions = new Vector2i(vidmode.width(), vidmode.height());
 		windowId = glfwCreateWindow(windowDimensions.x(), windowDimensions.y(), windowTitle, fullScreen ? primaryMonitor : NULL, NULL); // Create the window
+		System.out.println(windowDimensions);
 		glContext.setWindowDim(windowDimensions);
 		assert windowId != NULL : "Failed to create the GLFW window";
 		glfwSetWindowPos(windowId, (vidmode.width() - windowDimensions.x()) / 2, (vidmode.height() - windowDimensions.y()) / 2); // Center the window

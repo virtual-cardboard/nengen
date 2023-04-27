@@ -1,5 +1,6 @@
 package visuals.lwjgl.render;
 
+import static java.util.Collections.addAll;
 import static nengen.EngineConfiguration.DEBUG;
 import static org.lwjgl.opengl.GL20.glAttachShader;
 import static org.lwjgl.opengl.GL20.glCreateProgram;
@@ -17,7 +18,6 @@ import static org.lwjgl.opengl.GL20.glUniformMatrix4fv;
 import static org.lwjgl.opengl.GL20.glUseProgram;
 
 import java.util.ArrayDeque;
-import java.util.Collections;
 import java.util.Queue;
 
 import common.math.Matrix4f;
@@ -48,8 +48,8 @@ public class ShaderProgram extends GLRegularObject {
 		return this;
 	}
 
-	public ShaderProgram data(Shader... shaders) {
-		Collections.addAll(toAttach, shaders);
+	public ShaderProgram attach(Shader... shaders) {
+		addAll(toAttach, shaders);
 		return this;
 	}
 
@@ -86,6 +86,11 @@ public class ShaderProgram extends GLRegularObject {
 		}
 		glUseProgram(id);
 		glContext.shaderProgramID = id;
+	}
+
+	public void use() {
+		verifyInitialized();
+		glUseProgram(id);
 	}
 
 	public static void unbind() {
