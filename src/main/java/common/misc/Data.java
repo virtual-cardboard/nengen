@@ -1,44 +1,61 @@
 package common.misc;
 
+import static nengen.EngineConfiguration.DEBUG;
+
 public class Data<T> {
 
-	public String name;
-	public Class<T> type;
-	public T value;
+	protected String name;
+	protected T value;
 
-	public Data(String name, Class<T> type) {
+	private transient String className;
+
+	public Data(String name) {
 		this.name = name;
-		this.type = type;
 	}
 
-	public Data(String name, Class<T> type, T value) {
-		this.name = name;
-		this.type = type;
-		this.value = value;
+	public Data(String name, T value) {
+		this(name);
+		safeSet(value);
+	}
+
+	public Data(String name, Class<T> clazz) {
+		this(name);
+		if (DEBUG) {
+			className = clazz.getName();
+		}
+	}
+
+	public Data(String name, T value, Class<T> clazz) {
+		this(name, clazz);
+		safeSet(value);
 	}
 
 	public String name() {
 		return name;
 	}
 
-	public Class<T> type() {
-		return type;
+	public Object get() {
+		return value;
 	}
 
-	public T get() {
-		return value;
+	public void safeSet(T value) {
+		this.value = value;
 	}
 
 	@SuppressWarnings("unchecked")
 	public void set(Object value) {
-		verifyType(value);
-		this.value = (T) value;
-	}
-
-	private void verifyType(Object value) {
-		if (!type.isInstance(value)) {
+		try {
+			this.value = (T) value;
+		} catch (Exception e) {
 			throw new IllegalArgumentException("Invalid type for " + name + ": " + value.getClass().getName());
 		}
+	}
+
+	@Override
+	public String toString() {
+		String valueString = value == null ? "" : (" = " + value);
+		String typeString = className == null ? "" : (" (" + className + ")");
+		return "[" + name + ":" + typeString + valueString + "]";
 	}
 
 }
