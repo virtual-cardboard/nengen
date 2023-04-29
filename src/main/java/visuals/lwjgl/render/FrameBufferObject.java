@@ -37,7 +37,7 @@ public class FrameBufferObject extends GLContainerObject {
 			glFramebufferRenderbuffer(GL_FRAMEBUFFER, rbo.formatType(), GL_RENDERBUFFER, rbo.id());
 		}
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-			throw new RuntimeException("FBO failed to initialize properly.");
+			throw new RuntimeException("FBO failed to initialize properly, glFramebufferStatus: " + glCheckFramebufferStatus(GL_FRAMEBUFFER));
 		}
 		return this;
 	}
