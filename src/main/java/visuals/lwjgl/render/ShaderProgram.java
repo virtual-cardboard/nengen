@@ -37,7 +37,7 @@ public class ShaderProgram extends GLRegularObject {
 	private final Queue<Shader> toAttach = new ArrayDeque<>(3);
 	private final Queue<Integer> toDelete = new ArrayDeque<>(3);
 
-	private DataList<ShaderUniformData> uniforms;
+	private DataList<ShaderUniformData<?>> uniforms;
 
 	@Override
 	public void genID() {
@@ -63,11 +63,10 @@ public class ShaderProgram extends GLRegularObject {
 	/**
 	 * Links the shader program to OpenGL. Should only be called once.
 	 */
-	@SuppressWarnings("rawtypes")
 	public ShaderProgram load() {
 		verifyNotInitialized();
 		genID();
-		List<ShaderUniformData> allUniforms = new ArrayList<>();
+		List<ShaderUniformData<?>> allUniforms = new ArrayList<>();
 		for (int i = 0, m = toAttach.size(); i < m; i++) {
 			Shader shader = toAttach.poll();
 			if (DEBUG) {
@@ -155,14 +154,12 @@ public class ShaderProgram extends GLRegularObject {
 		glUniformMatrix4fv(glGetUniformLocation(id, uniform), false, buffer);
 	}
 
-	@SuppressWarnings("rawtypes")
-	public InputDataList<ShaderUniformData, ShaderProgram> uniforms() {
+	public InputDataList<ShaderUniformData<?>, ShaderProgram> uniforms() {
 		return new InputDataList<>(uniforms, this, this::applyDataList);
 	}
 
-	@SuppressWarnings("rawtypes")
-	private void applyDataList(DataList<ShaderUniformData> dataList) {
-		for (ShaderUniformData data : dataList) {
+	private void applyDataList(DataList<ShaderUniformData<?>> dataList) {
+		for (ShaderUniformData<?> data : dataList) {
 			String name = data.name();
 			int location = glGetUniformLocation(id, name);
 			if (location == -1) {

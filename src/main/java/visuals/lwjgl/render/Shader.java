@@ -30,8 +30,7 @@ public abstract class Shader extends GLRegularObject {
 		this.shaderType = shaderType;
 	}
 
-	@SuppressWarnings("rawtypes")
-	protected List<ShaderUniformData> parameters = new ArrayList<>();
+	protected List<ShaderUniformData<?>> parameters = new ArrayList<>();
 
 	@Override
 	public void genID() {
@@ -92,16 +91,11 @@ public abstract class Shader extends GLRegularObject {
 		return id;
 	}
 
-	public ShaderType getShaderType() {
-		return shaderType;
-	}
-
 	@Override
 	public void putInto(String name, ResourcePack resourcePack) {
 	}
 
-	@SuppressWarnings("rawtypes")
-	public List<ShaderUniformData> uniforms() {
+	public List<ShaderUniformData<?>> uniforms() {
 		return parameters;
 	}
 
