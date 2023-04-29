@@ -1,12 +1,10 @@
 package visuals.builtin;
 
-import static visuals.lwjgl.render.ShaderType.VERTEX;
-
-import visuals.lwjgl.render.Shader;
+import visuals.lwjgl.render.VertexShader;
 
 public class TexturedTransformationVertexShader {
 
-	private static Shader shader;
+	private static VertexShader shader;
 
 	private TexturedTransformationVertexShader() {
 	}
@@ -21,10 +19,9 @@ public class TexturedTransformationVertexShader {
 			+ "    texCoord = textureCoord;"
 			+ "}";
 
-	public static Shader instance() {
+	public static VertexShader instance() {
 		if (shader == null) {
-			shader = new Shader()
-					.type(VERTEX)
+			shader = new VertexShader()
 					.source(TEXTURED_TRANSFORMATION_VERTEX_SHADER_SOURCE)
 					.load();
 		}

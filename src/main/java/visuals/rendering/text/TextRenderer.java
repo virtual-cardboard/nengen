@@ -72,7 +72,7 @@ public class TextRenderer {
 		Shader vertex = TexturedTransformationVertexShader.instance();
 		Shader fragment = TextFragmentShader.instance();
 		this.shaderProgram = new ShaderProgram().attach(vertex, fragment).load();
-		Texture texture = new Texture().load();
+		Texture texture = new Texture().dimensions(512, 512).load();
 		this.fbo = new FrameBufferObject().texture(texture).load();
 	}
 
@@ -110,10 +110,12 @@ public class TextRenderer {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		shaderProgram.use();
-		shaderProgram.set("textureSampler", 0);
-		shaderProgram.set("texWidth", font.texture().width());
-		shaderProgram.set("texHeight", font.texture().height());
-		shaderProgram.set("fill", toRangedVector(colour));
+		shaderProgram.uniforms()
+				.set("textureSampler", 0)
+				.set("texWidth", font.texture().width())
+				.set("texHeight", font.texture().height())
+				.set("fill", toRangedVector(colour))
+				.complete();
 
 		int numLines;
 		if (lineWidth == 0) {
@@ -163,7 +165,7 @@ public class TextRenderer {
 		CharacterData[] characterDataArray = font.getCharacterDatas();
 		for (char ch : chars) {
 			CharacterData c = characterDataArray[ch];
-			short xAdvance = c.xAdvance();
+			int xAdvance = c.xAdvance();
 			if (ch == ' ' || ch == '\t') {
 				xOffset += xAdvance * sizeMultiplier;
 				continue;
@@ -171,11 +173,13 @@ public class TextRenderer {
 			Matrix4f copy = transform.copy()
 					.translate(xOffset + c.xOffset() * sizeMultiplier, yOffset + c.yOffset() * sizeMultiplier)
 					.scale(c.width() * sizeMultiplier, c.height() * sizeMultiplier);
-			shaderProgram.set("matrix4f", copy);
-			shaderProgram.set("width", c.width());
-			shaderProgram.set("height", c.height());
-			shaderProgram.set("x", c.x());
-			shaderProgram.set("y", c.y());
+			shaderProgram.uniforms()
+					.set("matrix4f", copy)
+					.set("width", c.width())
+					.set("height", c.height())
+					.set("x", c.x())
+					.set("y", c.y())
+					.complete();
 			vao.draw(glContext);
 			xOffset += xAdvance * sizeMultiplier;
 		}

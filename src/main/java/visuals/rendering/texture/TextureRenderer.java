@@ -93,9 +93,11 @@ public class TextureRenderer {
 	public void render(Texture texture, Matrix4f matrix4f) {
 		program.use(glContext);
 		texture.bind(glContext, 0);
-		program.set("matrix4f", matrix4f);
-		program.set("textureSampler", 0);
-		program.set("diffuse", Colour.toRangedVector(diffuse));
+		program.uniforms()
+				.set("matrix4f", matrix4f)
+				.set("textureSampler", 0)
+				.set("diffuseColour", Colour.toRangedVector(diffuse))
+				.complete();
 		vao.draw(glContext);
 	}
 

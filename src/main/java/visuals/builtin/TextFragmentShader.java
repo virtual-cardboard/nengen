@@ -1,7 +1,6 @@
 package visuals.builtin;
 
-import static visuals.lwjgl.render.ShaderType.FRAGMENT;
-
+import visuals.lwjgl.render.FragmentShader;
 import visuals.lwjgl.render.Shader;
 
 /**
@@ -36,8 +35,7 @@ public class TextFragmentShader {
 
 	public static Shader instance() {
 		if (shader == null) {
-			shader = new Shader()
-					.type(FRAGMENT)
+			shader = new FragmentShader()
 					.source(TEXT_FRAGMENT_SHADER_SOURCE)
 					.load();
 		}

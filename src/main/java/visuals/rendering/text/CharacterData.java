@@ -2,16 +2,16 @@ package visuals.rendering.text;
 
 public final class CharacterData {
 
-	private final short x;
-	private final short y;
-	private final short width;
-	private final short height;
-	private final short xOffset;
-	private final short yOffset;
-	private final short xAdvance;
-	private final short page;
+	private final int x;
+	private final int y;
+	private final int width;
+	private final int height;
+	private final int xOffset;
+	private final int yOffset;
+	private final int xAdvance;
+	private final int page;
 
-	public CharacterData(short x, short y, short width, short height, short xOffset, short yOffset, short xAdvance, short page) {
+	public CharacterData(int x, int y, int width, int height, int xOffset, int yOffset, int xAdvance, int page) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
@@ -22,35 +22,39 @@ public final class CharacterData {
 		this.page = page;
 	}
 
-	public short x() {
+	public CharacterData(short x, short y, short width, short height, short xOffset, short yOffset, short xAdvance, short page) {
+		this(x, y, width, height, xOffset, yOffset, xAdvance, (int) page);
+	}
+
+	public int x() {
 		return x;
 	}
 
-	public short y() {
+	public int y() {
 		return y;
 	}
 
-	public short width() {
+	public int width() {
 		return width;
 	}
 
-	public short height() {
+	public int height() {
 		return height;
 	}
 
-	public short xOffset() {
+	public int xOffset() {
 		return xOffset;
 	}
 
-	public short yOffset() {
+	public int yOffset() {
 		return yOffset;
 	}
 
-	public short xAdvance() {
+	public int xAdvance() {
 		return xAdvance;
 	}
 
-	public short getPage() {
+	public int getPage() {
 		return page;
 	}
 

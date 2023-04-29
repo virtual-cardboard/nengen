@@ -18,19 +18,26 @@ import static org.lwjgl.opengl.GL20.glUniformMatrix4fv;
 import static org.lwjgl.opengl.GL20.glUseProgram;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
 
 import common.math.Matrix4f;
 import common.math.Vector2f;
 import common.math.Vector3f;
 import common.math.Vector4f;
+import common.misc.DataList;
+import common.misc.InputDataList;
 import visuals.lwjgl.GLContext;
 import visuals.lwjgl.ResourcePack;
+import visuals.lwjgl.render.shader.ShaderUniformData;
 
 public class ShaderProgram extends GLRegularObject {
 
 	private final Queue<Shader> toAttach = new ArrayDeque<>(3);
 	private final Queue<Integer> toDelete = new ArrayDeque<>(3);
+
+	private DataList<ShaderUniformData> uniforms;
 
 	@Override
 	public void genID() {
@@ -56,9 +63,11 @@ public class ShaderProgram extends GLRegularObject {
 	/**
 	 * Links the shader program to OpenGL. Should only be called once.
 	 */
+	@SuppressWarnings("rawtypes")
 	public ShaderProgram load() {
 		verifyNotInitialized();
 		genID();
+		List<ShaderUniformData> allUniforms = new ArrayList<>();
 		for (int i = 0, m = toAttach.size(); i < m; i++) {
 			Shader shader = toAttach.poll();
 			if (DEBUG) {
@@ -68,8 +77,10 @@ public class ShaderProgram extends GLRegularObject {
 			int shaderID = shader.id();
 			glAttachShader(id, shaderID);
 			toDelete.add(shaderID);
+			allUniforms.addAll(shader.uniforms());
 		}
 		glLinkProgram(id);
+		uniforms = new DataList<>(allUniforms);
 		return this;
 	}
 
@@ -81,11 +92,7 @@ public class ShaderProgram extends GLRegularObject {
 	 */
 	public void use(GLContext glContext) {
 		verifyInitialized();
-		if (glContext.shaderProgramID == id) {
-			return;
-		}
 		glUseProgram(id);
-		glContext.shaderProgramID = id;
 	}
 
 	public void use() {
@@ -146,6 +153,23 @@ public class ShaderProgram extends GLRegularObject {
 		float[] buffer = new float[16];
 		mat4.store(buffer);
 		glUniformMatrix4fv(glGetUniformLocation(id, uniform), false, buffer);
+	}
+
+	@SuppressWarnings("rawtypes")
+	public InputDataList<ShaderUniformData, ShaderProgram> uniforms() {
+		return new InputDataList<>(uniforms, this, this::applyDataList);
+	}
+
+	@SuppressWarnings("rawtypes")
+	private void applyDataList(DataList<ShaderUniformData> dataList) {
+		for (ShaderUniformData data : dataList) {
+			String name = data.name();
+			int location = glGetUniformLocation(id, name);
+			if (location == -1) {
+				throw new RuntimeException("Could not find uniform: " + name);
+			}
+			data.setForProgram(this);
+		}
 	}
 
 	@Override

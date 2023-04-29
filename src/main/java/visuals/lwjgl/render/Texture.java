@@ -21,6 +21,7 @@ import static org.lwjgl.opengl.GL30.glGenerateMipmap;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 import common.math.Vector2f;
+import common.math.Vector2i;
 import visuals.lwjgl.GLContext;
 import visuals.lwjgl.ResourcePack;
 import visuals.rendering.texture.Image;
@@ -40,6 +41,16 @@ public class Texture extends GLRegularObject {
 	public void genID() {
 		this.id = glGenTextures();
 		initialize();
+	}
+
+	public Texture dimensions(Vector2i dimensions) {
+		return dimensions(dimensions.x(), dimensions.y());
+	}
+
+	public Texture dimensions(int width, int height) {
+		this.width = width;
+		this.height = height;
+		return this;
 	}
 
 	public Texture image(Image image) {
