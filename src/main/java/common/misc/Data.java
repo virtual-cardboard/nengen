@@ -7,21 +7,12 @@ public class Data<T> {
 	protected String name;
 	protected T value;
 
-	private transient String className;
-
-	public Data(String name) {
-		this.name = name;
-	}
-
-	public Data(String name, T value) {
-		this(name);
-		safeSet(value);
-	}
+	private Class<T> clazz;
 
 	public Data(String name, Class<T> clazz) {
-		this(name);
+		this.name = name;
 		if (DEBUG) {
-			className = clazz.getName();
+			this.clazz = clazz;
 		}
 	}
 
@@ -45,16 +36,16 @@ public class Data<T> {
 	@SuppressWarnings("unchecked")
 	public void set(Object value) {
 		try {
-			this.value = (T) value;
+			this.value = clazz == null ? (T) value : clazz.cast(value);
 		} catch (Exception e) {
-			throw new IllegalArgumentException("Invalid type for " + name + ": " + value.getClass().getName());
+			throw new IllegalArgumentException(value.getClass().getName() + " is an invalid type for " + name + " of type " + clazz.getName());
 		}
 	}
 
 	@Override
 	public String toString() {
 		String valueString = value == null ? "" : (" = " + value);
-		String typeString = className == null ? "" : (" (" + className + ")");
+		String typeString = clazz == null ? "" : (" (" + clazz.getName() + ")");
 		return "[" + name + ":" + typeString + valueString + "]";
 	}
 

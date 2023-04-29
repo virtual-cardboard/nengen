@@ -24,11 +24,7 @@ public class InputDataList<T extends Data, R> {
 			throw new RuntimeException("Could not find parameter " + name + " in " + dataList);
 		}
 		Data<?> parameter = dataList.parameters.get(index);
-		try {
-			parameter.set(value);
-		} catch (Exception e) {
-			throw new RuntimeException("Could not set parameter " + name + " to " + value, e);
-		}
+		parameter.set(value);
 		completed[index] = true;
 		return this;
 	}
@@ -40,7 +36,7 @@ public class InputDataList<T extends Data, R> {
 	}
 
 	private void verifyCompleted() {
-		List<Data> incomplete = new ArrayList<>();
+		List<Data<?>> incomplete = new ArrayList<>();
 		for (int i = 0, m = completed.length; i < m; i++) {
 			if (!completed[i]) {
 				incomplete.add(dataList.parameters.get(i));

@@ -5,14 +5,6 @@ import visuals.lwjgl.render.ShaderProgram;
 
 public abstract class ShaderUniformData<T> extends Data<T> {
 
-	public ShaderUniformData(String name) {
-		super(name);
-	}
-
-	public ShaderUniformData(String name, T value) {
-		super(name, value);
-	}
-
 	public ShaderUniformData(String name, Class<T> clazz) {
 		super(name, clazz);
 	}
