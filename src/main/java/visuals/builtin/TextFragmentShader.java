@@ -8,7 +8,7 @@ import visuals.lwjgl.render.Shader;
  */
 public class TextFragmentShader {
 
-	private static Shader shader;
+	private static FragmentShader shader;
 
 	private TextFragmentShader() {
 	}
@@ -31,9 +31,10 @@ public class TextFragmentShader {
 			+ "    if (fragColor.a == 0) {"
 			+ "        discard;"
 			+ "    }"
+			+ "    fragColor = vec4(0, 0, 0, 1);"
 			+ "}";
 
-	public static Shader instance() {
+	public static FragmentShader instance() {
 		if (shader == null) {
 			shader = new FragmentShader()
 					.source(TEXT_FRAGMENT_SHADER_SOURCE)

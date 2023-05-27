@@ -1,5 +1,7 @@
 package visuals.rendering.texture;
 
+import static common.colour.Colour.rgb;
+
 import common.colour.Colour;
 import common.math.Matrix4f;
 import visuals.builtin.RectangleVertexArrayObject;
@@ -24,7 +26,7 @@ public class TextureRenderer {
 
 	private final GLContext glContext;
 
-	private int diffuse = -1;
+	private int diffuse = rgb(255, 255, 255);
 
 	public TextureRenderer(GLContext glContext) {
 		this.glContext = glContext;

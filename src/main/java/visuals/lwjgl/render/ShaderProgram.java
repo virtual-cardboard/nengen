@@ -27,10 +27,10 @@ import common.math.Vector2f;
 import common.math.Vector3f;
 import common.math.Vector4f;
 import common.misc.DataList;
-import common.misc.InputDataList;
 import visuals.lwjgl.GLContext;
 import visuals.lwjgl.ResourcePack;
 import visuals.lwjgl.render.shader.ShaderUniformData;
+import visuals.lwjgl.render.shader.ShaderUniformInputList;
 
 public class ShaderProgram extends GLRegularObject {
 
@@ -154,8 +154,8 @@ public class ShaderProgram extends GLRegularObject {
 		glUniformMatrix4fv(glGetUniformLocation(id, uniform), false, buffer);
 	}
 
-	public InputDataList<ShaderUniformData<?>, ShaderProgram> uniforms() {
-		return new InputDataList<>(uniforms, this, this::applyDataList);
+	public ShaderUniformInputList uniforms() {
+		return new ShaderUniformInputList(uniforms, this, this::applyDataList);
 	}
 
 	private void applyDataList(DataList<ShaderUniformData<?>> dataList) {

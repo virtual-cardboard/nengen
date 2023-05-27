@@ -24,6 +24,7 @@ public class TextureFragmentShader {
 			+ "    if (fragColor.a == 0) {"
 			+ "        discard;"
 			+ "    }"
+//			+ "    fragColor = vec4(texCoord.x, texCoord.y, 0, 1);"
 			+ "}";
 
 	public static Shader instance() {

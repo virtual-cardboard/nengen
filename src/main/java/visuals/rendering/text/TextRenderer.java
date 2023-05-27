@@ -1,11 +1,5 @@
 package visuals.rendering.text;
 
-import static common.colour.Colour.toRangedVector;
-import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.glClear;
-import static org.lwjgl.opengl.GL11.glClearColor;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,11 +9,12 @@ import visuals.builtin.RectangleVertexArrayObject;
 import visuals.builtin.TextFragmentShader;
 import visuals.builtin.TexturedTransformationVertexShader;
 import visuals.lwjgl.GLContext;
+import visuals.lwjgl.render.FragmentShader;
 import visuals.lwjgl.render.FrameBufferObject;
-import visuals.lwjgl.render.Shader;
 import visuals.lwjgl.render.ShaderProgram;
 import visuals.lwjgl.render.Texture;
 import visuals.lwjgl.render.VertexArrayObject;
+import visuals.lwjgl.render.VertexShader;
 import visuals.rendering.texture.TextureRenderer;
 
 /**
@@ -69,8 +64,8 @@ public class TextRenderer {
 		this.textureRenderer = new TextureRenderer(glContext);
 		this.glContext = glContext;
 		this.vao = RectangleVertexArrayObject.instance();
-		Shader vertex = TexturedTransformationVertexShader.instance();
-		Shader fragment = TextFragmentShader.instance();
+		VertexShader vertex = TexturedTransformationVertexShader.instance();
+		FragmentShader fragment = TextFragmentShader.instance();
 		this.shaderProgram = new ShaderProgram().attach(vertex, fragment).load();
 		Texture texture = new Texture().dimensions(512, 512).load();
 		this.fbo = new FrameBufferObject().texture(texture).load();
@@ -104,56 +99,66 @@ public class TextRenderer {
 	 * @return the number of lines of text rendered
 	 */
 	public int render(Matrix4f transform, String text, float lineWidth, GameFont font, float fontSize, int colour) {
-		fbo.bind();
-		font.texture().bind();
-		glClearColor(0, 0, 0, 0);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		shaderProgram.use(glContext);
+//		ShaderUniformInputList list =
+//				shaderProgram.uniforms()
+//						.set("textureSampler", 0)
+//						.set("texWidth", font.texture().width())
+//						.set("texHeight", font.texture().height())
+//						.set("fill", toRangedVector(colour));
+//				.complete();
 
-		shaderProgram.use();
-		shaderProgram.uniforms()
-				.set("textureSampler", 0)
-				.set("texWidth", font.texture().width())
-				.set("texHeight", font.texture().height())
-				.set("fill", toRangedVector(colour))
-				.complete();
-
-		int numLines;
-		if (lineWidth == 0) {
-			renderOneLine(0, 0, text, font, fontSize);
-			numLines = 1;
-		} else {
-			List<StringRenderWidth> stringPairs = convertToStringPairs(text, font, fontSize, lineWidth);
-			numLines = stringPairs.size();
-			if (hAlign == ALIGN_LEFT) {
-				for (int i = 0; i < stringPairs.size(); i++) {
-					StringRenderWidth pair = stringPairs.get(i);
-					renderOneLine(0, i * fontSize, pair.string, font, fontSize);
-				}
-			} else if (hAlign == ALIGN_CENTER) {
-				for (int i = 0; i < stringPairs.size(); i++) {
-					StringRenderWidth pair = stringPairs.get(i);
-					renderOneLine((lineWidth - pair.width) * 0.5f, i * fontSize, pair.string, font, fontSize);
-				}
-			} else if (hAlign == ALIGN_RIGHT) {
-				for (int i = 0; i < stringPairs.size(); i++) {
-					StringRenderWidth pair = stringPairs.get(i);
-					renderOneLine(lineWidth - pair.width, i * fontSize, pair.string, font, fontSize);
-				}
-			}
-		}
-		FrameBufferObject.unbind();
-		Texture tex = fbo.texture();
-		Matrix4f m = new Matrix4f()
-				.translate(-1, 1).scale(2 / glContext.width(), -2 / glContext.height())
-				.multiply(transform);
-		if (vAlign == ALIGN_CENTER) {
-			m = m.translate(0, -numLines * fontSize / 2);
-		} else if (vAlign == ALIGN_BOTTOM) {
-			m = m.translate(0, -numLines * fontSize);
-		}
-		m = m.scale(tex.width(), tex.height());
-		textureRenderer.render(tex, m);
-		return numLines;
+//		fbo.bind();
+//		font.texture().bind();
+//		glClearColor(0, 0, 0, 0);
+//		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//
+//		shaderProgram.use();
+//		shaderProgram.uniforms()
+//				.set("textureSampler", 0)
+//				.set("texWidth", font.texture().width())
+//				.set("texHeight", font.texture().height())
+//				.set("fill", toRangedVector(colour))
+//				.complete();
+//
+//		int numLines;
+//		if (lineWidth == 0) {
+//			renderOneLine(0, 0, text, font, fontSize);
+//			numLines = 1;
+//		} else {
+//			List<StringRenderWidth> stringPairs = convertToStringPairs(text, font, fontSize, lineWidth);
+//			numLines = stringPairs.size();
+//			if (hAlign == ALIGN_LEFT) {
+//				for (int i = 0; i < stringPairs.size(); i++) {
+//					StringRenderWidth pair = stringPairs.get(i);
+//					renderOneLine(0, i * fontSize, pair.string, font, fontSize);
+//				}
+//			} else if (hAlign == ALIGN_CENTER) {
+//				for (int i = 0; i < stringPairs.size(); i++) {
+//					StringRenderWidth pair = stringPairs.get(i);
+//					renderOneLine((lineWidth - pair.width) * 0.5f, i * fontSize, pair.string, font, fontSize);
+//				}
+//			} else if (hAlign == ALIGN_RIGHT) {
+//				for (int i = 0; i < stringPairs.size(); i++) {
+//					StringRenderWidth pair = stringPairs.get(i);
+//					renderOneLine(lineWidth - pair.width, i * fontSize, pair.string, font, fontSize);
+//				}
+//			}
+//		}
+//		FrameBufferObject.unbind();
+//		Texture tex = fbo.texture();
+//		Matrix4f m = new Matrix4f()
+//				.translate(-1, 1).scale(2 / glContext.width(), -2 / glContext.height())
+//				.multiply(transform);
+//		if (vAlign == ALIGN_CENTER) {
+//			m = m.translate(0, -numLines * fontSize / 2);
+//		} else if (vAlign == ALIGN_BOTTOM) {
+//			m = m.translate(0, -numLines * fontSize);
+//		}
+//		m = m.scale(tex.width(), tex.height());
+//		textureRenderer.render(tex, m);
+//		DefaultFrameBuffer.instance().bind();
+//		return numLines;
 	}
 
 	private void renderOneLine(float xOffset, float yOffset, String text, GameFont font, float fontSize) {

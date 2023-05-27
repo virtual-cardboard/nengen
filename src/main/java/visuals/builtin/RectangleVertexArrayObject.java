@@ -38,8 +38,8 @@ public class RectangleVertexArrayObject extends VertexArrayObject {
 	public static VertexArrayObject instance() {
 		if (vao == null) {
 			ElementBufferObject ebo = new ElementBufferObject().indices(INDICES).load();
-			VertexBufferObject positionsVBO = new VertexBufferObject().data(POSITIONS).dimensions(3).load();
-			VertexBufferObject textureCoordinatesVBO = new VertexBufferObject().data(TEXTURE_COORDINATES).dimensions(2).load();
+			VertexBufferObject positionsVBO = new VertexBufferObject().index(0).data(POSITIONS).dimensions(3).load();
+			VertexBufferObject textureCoordinatesVBO = new VertexBufferObject().index(1).data(TEXTURE_COORDINATES).dimensions(2).load();
 			vao = new VertexArrayObject().vbos(positionsVBO, textureCoordinatesVBO).ebo(ebo).load();
 		}
 		return vao;
