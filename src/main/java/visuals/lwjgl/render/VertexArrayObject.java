@@ -7,6 +7,7 @@ import static org.lwjgl.opengl.GL11.glDrawElements;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glDeleteVertexArrays;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
+import static org.lwjgl.opengl.GL31.glDrawElementsInstanced;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +47,12 @@ public class VertexArrayObject extends GLContainerObject {
 		bind(glContext);
 		ebo.bind(glContext);
 		glDrawElements(GL_TRIANGLES, ebo.size(), GL_UNSIGNED_INT, 0);
+	}
+
+	public void drawInstanced(GLContext glContext, int count) {
+		bind(glContext);
+		ebo.bind(glContext);
+		glDrawElementsInstanced(GL_TRIANGLES, ebo.size(), GL_UNSIGNED_INT, 0, count);
 	}
 
 	public void enableVertexAttribArrays() {

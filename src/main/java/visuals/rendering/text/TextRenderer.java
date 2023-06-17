@@ -1,10 +1,14 @@
 package visuals.rendering.text;
 
+import static common.colour.Colour.toRangedVector;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import common.colour.Colour;
 import common.math.Matrix4f;
+import common.math.Vector2f;
+import common.math.Vector4f;
 import visuals.builtin.RectangleVertexArrayObject;
 import visuals.builtin.TextFragmentShader;
 import visuals.builtin.TexturedTransformationVertexShader;
@@ -15,6 +19,7 @@ import visuals.lwjgl.render.ShaderProgram;
 import visuals.lwjgl.render.Texture;
 import visuals.lwjgl.render.VertexArrayObject;
 import visuals.lwjgl.render.VertexShader;
+import visuals.lwjgl.render.shader.ShaderUniformInputList;
 import visuals.rendering.texture.TextureRenderer;
 
 /**
@@ -108,19 +113,14 @@ public class TextRenderer {
 //						.set("fill", toRangedVector(colour));
 //				.complete();
 
-//		fbo.bind();
-//		font.texture().bind();
-//		glClearColor(0, 0, 0, 0);
-//		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//
-//		shaderProgram.use();
-//		shaderProgram.uniforms()
-//				.set("textureSampler", 0)
-//				.set("texWidth", font.texture().width())
-//				.set("texHeight", font.texture().height())
-//				.set("fill", toRangedVector(colour))
-//				.complete();
-//
+		for (int i = 0, m = text.length(); i < m; i++) {
+			char c = text.charAt(i);
+			CharacterData data = font.getCharacterDatas()[c];
+			shaderProgram.set("atlas[" + i + "]", new Vector4f(data.x(), data.y(), data.width(), data.height()));
+			shaderProgram.set("offset[" + i + "]", new Vector2f(data.xOffset(), data.yOffset()));
+		}
+		vao.drawInstanced(glContext, text.length());
+
 //		int numLines;
 //		if (lineWidth == 0) {
 //			renderOneLine(0, 0, text, font, fontSize);
@@ -159,6 +159,7 @@ public class TextRenderer {
 //		textureRenderer.render(tex, m);
 //		DefaultFrameBuffer.instance().bind();
 //		return numLines;
+		return 0;
 	}
 
 	private void renderOneLine(float xOffset, float yOffset, String text, GameFont font, float fontSize) {
