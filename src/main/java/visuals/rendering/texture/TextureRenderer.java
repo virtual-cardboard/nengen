@@ -82,7 +82,8 @@ public class TextureRenderer {
 				.translate(-1, 1)
 				.scale(2, -2)
 				.scale(1 / glContext.width(), 1 / glContext.height())
-				.translate(x, y).scale(w, h);
+				.translate(x, y)
+				.scale(w, h);
 		render(texture, matrix4f);
 	}
 
@@ -92,11 +93,11 @@ public class TextureRenderer {
 	 * @param texture  the texture to render
 	 * @param matrix4f the transformation matrix
 	 */
-	public void render(Texture texture, Matrix4f matrix4f) {
+	private void render(Texture texture, Matrix4f matrix4f) {
 		program.use(glContext);
 		texture.bind(glContext, 0);
 		program.uniforms()
-				.set("matrix4f", matrix4f)
+				.set("transform", matrix4f)
 				.set("textureSampler", 0)
 				.set("diffuseColour", Colour.toRangedVector(diffuse))
 				.complete();
