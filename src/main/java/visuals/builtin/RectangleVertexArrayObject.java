@@ -9,7 +9,7 @@ import visuals.lwjgl.render.VertexBufferObject;
  *
  * @author Lunkle
  */
-public class RectangleVertexArrayObject extends VertexArrayObject {
+public class RectangleVertexArrayObject {
 
 	private static VertexArrayObject vao;
 
@@ -37,12 +37,26 @@ public class RectangleVertexArrayObject extends VertexArrayObject {
 
 	public static VertexArrayObject instance() {
 		if (vao == null) {
-			ElementBufferObject ebo = new ElementBufferObject().indices(INDICES).load();
-			VertexBufferObject positionsVBO = new VertexBufferObject().index(0).data(POSITIONS).dimensions(3).load();
-			VertexBufferObject textureCoordinatesVBO = new VertexBufferObject().index(1).data(TEXTURE_COORDINATES).dimensions(2).load();
-			vao = new VertexArrayObject().vbos(positionsVBO, textureCoordinatesVBO).ebo(ebo).load();
+			vao = newInstance().load();
 		}
 		return vao;
+	}
+
+	/**
+	 * This version of the method is used to create a new {@link VertexArrayObject} every time it is called. It should
+	 * only be necessary to call this method if you need to mutate the {@link VertexArrayObject} in some way. Otherwise,
+	 * prefer to use the {@link #instance()} method instead.
+	 * <br><br>
+	 * Note that this method does not load the {@link VertexArrayObject}. You must call
+	 * {@link VertexArrayObject#load() load()} on the returned {@link VertexArrayObject}.
+	 *
+	 * @return
+	 */
+	public static VertexArrayObject newInstance() {
+		ElementBufferObject ebo = new ElementBufferObject().indices(INDICES).load();
+		VertexBufferObject positionsVBO = new VertexBufferObject().index(0).data(POSITIONS).dimensions(3).load();
+		VertexBufferObject textureCoordinatesVBO = new VertexBufferObject().index(1).data(TEXTURE_COORDINATES).dimensions(2).load();
+		return new VertexArrayObject().vbos(positionsVBO, textureCoordinatesVBO).ebo(ebo);
 	}
 
 }
