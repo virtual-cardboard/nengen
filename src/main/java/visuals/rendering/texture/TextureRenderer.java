@@ -78,6 +78,14 @@ public class TextureRenderer {
 	 * @param h       the height in pixels
 	 */
 	public void render(Texture texture, float x, float y, float w, float h) {
+		// By default, the rectangle VAO is positioned at (0, 0) in normalized device coordinates with the other corner
+		// at (1, 1) which is the top right corner.
+		// This matrix does the following:
+		//     1. translates the rectangle to (-1, 1) top left corner with other corner at (0, 2) off the screen.
+		//     2. scales it so the (0, 2) corner goes to (1, -1), the rectangle now covers the entire screen.
+		//     3. scales it so the rectangle is one pixel in size.
+		//     4. translates it to the correct position.
+		//     5. scales it to the correct size.
 		Matrix4f matrix4f = new Matrix4f()
 				.translate(-1, 1)
 				.scale(2, -2)
