@@ -20,9 +20,9 @@ import visuals.lwjgl.GLContext;
  */
 public class VertexBufferObject extends GLRegularObject {
 
-	private float[] data;
-	private int dimensions;
-	private int index;
+	protected float[] data;
+	protected int dimensions;
+	protected int index;
 
 	@Override
 	public void genID() {
