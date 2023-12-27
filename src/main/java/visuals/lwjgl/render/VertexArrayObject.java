@@ -35,6 +35,11 @@ public class VertexArrayObject extends GLContainerObject {
 		initialize();
 	}
 
+	/**
+	 * Initializes the VAO by binding it and enabling all attached VBOs.
+	 *
+	 * @return this
+	 */
 	public VertexArrayObject load() {
 		this.id = glGenVertexArrays();
 		glBindVertexArray(id);
@@ -69,7 +74,7 @@ public class VertexArrayObject extends GLContainerObject {
 	public void enableVertexAttribArrays(GLContext glContext) {
 		bind(glContext);
 		for (VertexBufferObject vbo : vbos) {
-			vbo.enableVertexAttribArray(glContext);
+			vbo.enableVertexAttribArray();
 		}
 	}
 

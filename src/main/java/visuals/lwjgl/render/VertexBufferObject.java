@@ -5,12 +5,14 @@ import static org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER;
 import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
 import static org.lwjgl.opengl.GL15.glBindBuffer;
 import static org.lwjgl.opengl.GL15.glBufferData;
+import static org.lwjgl.opengl.GL15.glBufferSubData;
 import static org.lwjgl.opengl.GL15.glDeleteBuffers;
 import static org.lwjgl.opengl.GL15.glGenBuffers;
 import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
+import static org.lwjgl.opengl.GL33.glVertexAttribDivisor;
 
-import visuals.lwjgl.GLContext;
+import visuals.lwjgl.render.vbo.VertexBufferObjectDivisorBuilder;
 
 /**
  * An object that contains data about the available vertices able to be used in a {@link VertexArrayObject}. Use
@@ -23,10 +25,15 @@ public class VertexBufferObject extends GLRegularObject {
 	protected float[] data;
 	protected int dimensions;
 	protected int index;
+	private int divisor;
 
 	@Override
 	public void genID() {
 		// TODO: Delete
+	}
+
+	private void bind() {
+		glBindBuffer(GL_ARRAY_BUFFER, id);
 	}
 
 	public VertexBufferObject data(float[] data) {
@@ -44,32 +51,31 @@ public class VertexBufferObject extends GLRegularObject {
 		return this;
 	}
 
+	public VertexBufferObjectDivisorBuilder divisor() {
+		return new VertexBufferObjectDivisorBuilder(this);
+	}
+
+	public void divisor(int divisor) {
+		this.divisor = divisor;
+	}
+
 	public VertexBufferObject load() {
 		id = glGenBuffers();
-		glBindBuffer(GL_ARRAY_BUFFER, id);
+		bind();
 		glBufferData(GL_ARRAY_BUFFER, data, GL_STATIC_DRAW);
 		return this;
 	}
 
-	protected void enableVertexAttribArray(GLContext glContext) {
-		bind(glContext);
-		glVertexAttribPointer(index, dimensions, GL_FLOAT, false, dimensions * Float.BYTES, 0);
-		glEnableVertexAttribArray(index);
-	}
-
 	protected void enableVertexAttribArray() {
-		glBindBuffer(GL_ARRAY_BUFFER, id);
+		bind();
 		glVertexAttribPointer(index, dimensions, GL_FLOAT, false, dimensions * Float.BYTES, 0);
 		glEnableVertexAttribArray(index);
+		glVertexAttribDivisor(index, divisor);
 	}
 
-	private void bind(GLContext glContext) {
-		verifyInitialized();
-		if (glContext.bufferID == id) {
-			return;
-		}
-		glBindBuffer(GL_ARRAY_BUFFER, id);
-		glContext.bufferID = id;
+	public void updateData() {
+		bind();
+		glBufferSubData(GL_ARRAY_BUFFER, 0, data);
 	}
 
 	public void delete() {

@@ -2,30 +2,26 @@ package visuals.rendering.text;
 
 import static common.colour.Colour.toRangedVector;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import common.colour.Colour;
 import common.math.Matrix4f;
-import common.math.Vector2f;
-import common.math.Vector4f;
 import visuals.builtin.RectangleVertexArrayObject;
 import visuals.builtin.TextFragmentShader;
-import visuals.builtin.TexturedTransformationVertexShader;
+import visuals.builtin.TextVertexShader;
 import visuals.lwjgl.GLContext;
 import visuals.lwjgl.render.FragmentShader;
-import visuals.lwjgl.render.FrameBufferObject;
+import visuals.lwjgl.render.InstancedVertexBufferObject;
 import visuals.lwjgl.render.ShaderProgram;
-import visuals.lwjgl.render.Texture;
 import visuals.lwjgl.render.VertexArrayObject;
+import visuals.lwjgl.render.VertexBufferObject;
 import visuals.lwjgl.render.VertexShader;
-import visuals.lwjgl.render.shader.ShaderUniformInputList;
 import visuals.rendering.texture.TextureRenderer;
 
 /**
  * @author Jay
  */
 public class TextRenderer {
+
+	private static final int MAX_CHARACTER_LENGTH = 1024;
 
 	private static final int ALIGN_LEFT = 0;
 	private static final int ALIGN_RIGHT = 1;
@@ -43,6 +39,8 @@ public class TextRenderer {
 	 * The {@link VertexArrayObject} to use when rendering text. It is a rectangle.
 	 */
 	private final VertexArrayObject vao;
+	private final VertexBufferObject atlasVBO;
+	private final VertexBufferObject offsetVBO;
 
 	private final GLContext glContext;
 
@@ -51,22 +49,15 @@ public class TextRenderer {
 
 	/**
 	 * Creates a TextRenderer
-	 *
-	 * @param shaderProgram the <code>TextShaderProgram</code>
-	 * @param vao           the <code>RectangleVertexArrayObject</code>
 	 */
-	public TextRenderer(GLContext glContext, TextureRenderer textureRenderer, ShaderProgram shaderProgram, VertexArrayObject vao) {
-		this.glContext = glContext;
-		this.textureRenderer = textureRenderer;
-		this.shaderProgram = shaderProgram;
-		this.vao = vao;
-	}
-
 	public TextRenderer(GLContext glContext) {
 		this.textureRenderer = new TextureRenderer(glContext);
 		this.glContext = glContext;
-		this.vao = RectangleVertexArrayObject.instance();
-		VertexShader vertex = TexturedTransformationVertexShader.instance();
+		this.vao = RectangleVertexArrayObject.newInstance();
+		atlasVBO = new InstancedVertexBufferObject().index(2).dimensions(4).data(new float[4 * MAX_CHARACTER_LENGTH]).divisor().perInstance().load();
+		offsetVBO = new InstancedVertexBufferObject().index(3).dimensions(2).data(new float[2 * MAX_CHARACTER_LENGTH]).divisor().perInstance().load();
+		vao.vbos(atlasVBO, offsetVBO).load();
+		VertexShader vertex = TextVertexShader.instance();
 		FragmentShader fragment = TextFragmentShader.instance();
 		this.shaderProgram = new ShaderProgram().attach(vertex, fragment).load();
 	}
@@ -84,7 +75,17 @@ public class TextRenderer {
 	 * @return the number of lines of text rendered
 	 */
 	public int render(float x, float y, String text, float lineWidth, GameFont font, float fontSize, int colour) {
-		return render(new Matrix4f().translate(x, y), text, lineWidth, font, fontSize, colour);
+		// By default, the rectangle VAO is positioned at (0, 0) in normalized device coordinates with the other corner
+		// at (1, 1) which is the top right corner.
+		// This matrix does the following:
+		//     1. translates the rectangle to (-1, 1) top left corner with other corner at (0, 2) off the screen.
+		//     2. scales it so the (0, 2) corner goes to (1, -1), the rectangle now covers the entire screen.
+		//     3. scales it so the rectangle is one pixel in size.
+		Matrix4f transform = new Matrix4f()
+				.translate(-1, 1f)
+				.scale(2, -2)
+				.scale(1 / glContext.width(), 1 / glContext.height());
+		return render(transform, x, y, text, lineWidth, font, fontSize, colour);
 	}
 
 	/**
@@ -98,32 +99,36 @@ public class TextRenderer {
 	 * @param colour    the {@link Colour} (int)
 	 * @return the number of lines of text rendered
 	 */
-	private int render(Matrix4f transform, String text, float lineWidth, GameFont font, float fontSize, int colour) {
+	private int render(Matrix4f transform, float x, float y, String text, float lineWidth, GameFont font, float fontSize, int colour) {
 		shaderProgram.use(glContext);
 		shaderProgram.set("transform", transform);
-		shaderProgram.set("textureSampler", 0);
+		shaderProgram.set("texture", 0);
+		shaderProgram.set("textureDim", font.texture().dimensions());
 		shaderProgram.set("fill", toRangedVector(colour));
-//		ShaderUniformInputList list =
-//				shaderProgram.uniforms()
-//						.set("textureSampler", 0)
-//						.set("texWidth", font.texture().width())
-//						.set("texHeight", font.texture().height())
-//						.set("fill", toRangedVector(colour));
-//				.complete();
+		shaderProgram.set("fontSize", fontSize);
+
+		float[] atlasData = new float[4 * text.length()];
+		float[] offsetData = new float[2 * text.length()];
 
 		float totalXOffset = 0;
 		float totalYOffset = 0;
 		for (int i = 0, m = text.length(); i < m; i++) {
 			char c = text.charAt(i);
 			CharacterData data = font.getCharacterDatas()[c];
-			shaderProgram.set("atlas[" + i + "]", new Vector4f(data.x(), data.y(), data.width(), data.height()));
-			shaderProgram.set("offset[" + i + "]", new Vector2f(totalXOffset + data.xOffset(), totalYOffset + data.yOffset()));
+			atlasData[4 * i] = data.x();
+			atlasData[4 * i + 1] = data.y();
+			atlasData[4 * i + 2] = data.width();
+			atlasData[4 * i + 3] = data.height();
+			offsetData[2 * i] = 0.5f;//totalXOffset + data.xOffset();
+			offsetData[2 * i + 1] = 0.5f;//totalYOffset + data.yOffset();
 			totalXOffset += data.xAdvance();
 			if (totalXOffset > lineWidth) {
 				totalXOffset = 0;
 				totalYOffset += fontSize;
 			}
 		}
+		atlasVBO.data(atlasData).updateData();
+		offsetVBO.data(offsetData).updateData();
 		vao.drawInstanced(glContext, text.length());
 
 //		int numLines;
