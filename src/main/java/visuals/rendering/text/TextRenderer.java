@@ -101,34 +101,34 @@ public class TextRenderer {
 	 */
 	private int render(Matrix4f transform, float x, float y, String text, float lineWidth, GameFont font, float fontSize, int colour) {
 		shaderProgram.use(glContext);
-		shaderProgram.set("transform", transform);
+		shaderProgram.set("transform", new Matrix4f());
 		shaderProgram.set("texture", 0);
 		shaderProgram.set("textureDim", font.texture().dimensions());
 		shaderProgram.set("fill", toRangedVector(colour));
 		shaderProgram.set("fontSize", fontSize);
 
-		float[] atlasData = new float[4 * text.length()];
-		float[] offsetData = new float[2 * text.length()];
+		float[] instanceAtlasData = new float[4 * text.length()];
+		float[] instanceOffsetData = new float[2 * text.length()];
 
 		float totalXOffset = 0;
 		float totalYOffset = 0;
 		for (int i = 0, m = text.length(); i < m; i++) {
 			char c = text.charAt(i);
 			CharacterData data = font.getCharacterDatas()[c];
-			atlasData[4 * i] = data.x();
-			atlasData[4 * i + 1] = data.y();
-			atlasData[4 * i + 2] = data.width();
-			atlasData[4 * i + 3] = data.height();
-			offsetData[2 * i] = 0.5f;//totalXOffset + data.xOffset();
-			offsetData[2 * i + 1] = 0.5f;//totalYOffset + data.yOffset();
+			instanceAtlasData[4 * i] = data.x();
+			instanceAtlasData[4 * i + 1] = data.y();
+			instanceAtlasData[4 * i + 2] = data.width();
+			instanceAtlasData[4 * i + 3] = data.height();
+			instanceOffsetData[2 * i] = totalXOffset + data.xOffset();
+			instanceOffsetData[2 * i + 1] = totalYOffset + data.yOffset();
 			totalXOffset += data.xAdvance();
 			if (totalXOffset > lineWidth) {
 				totalXOffset = 0;
 				totalYOffset += fontSize;
 			}
 		}
-		atlasVBO.data(atlasData).updateData();
-		offsetVBO.data(offsetData).updateData();
+		atlasVBO.data(instanceAtlasData).updateData();
+		offsetVBO.data(instanceOffsetData).updateData();
 		vao.drawInstanced(glContext, text.length());
 
 //		int numLines;

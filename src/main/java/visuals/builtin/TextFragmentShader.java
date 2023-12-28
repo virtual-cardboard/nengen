@@ -31,7 +31,7 @@ public class TextFragmentShader {
 //			+ "    newTexCoord.y = (texCoord.y * atlasDim.y + atlasPos.y) / texHeight;"
 //			+ "    fragColor = texture(textureSampler, newTexCoord) * fill;"
 //			+ "    if (fragColor.a == 0) {"
-			+ "        fragColor = vec4(1, 1, 0, 0);"
+			+ "        fragColor = vec4(1, 1, 0, 1);"
 //			+ "    }"
 //			+ "    "
 			+ "}";

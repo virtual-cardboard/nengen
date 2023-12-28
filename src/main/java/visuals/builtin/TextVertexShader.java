@@ -30,6 +30,7 @@ public class TextVertexShader {
 			+ "    mat4 scaleMatrix = scale(resize.x, resize.y, 1);\n"
 			+ "    gl_Position = scaleMatrix * transform * vec4(vertexPos, 1);\n"
 			+ "    texCoord = textureCoord;\n"
+//			+ "    gl_Position = vec4(vertexPos, 1);\n"
 			+ "}\n"
 			+ "\n"
 			+ "mat4 scale(float x, float y, float z) {\n"
