@@ -37,38 +37,6 @@ public class TextureRenderer {
 	}
 
 	/**
-	 * Renders a texture with default proportions in pixel coordinates.
-	 *
-	 * @param texture the {@link Texture} to render
-	 * @param centerX the x position in pixels of the center of the texture
-	 * @param centerY the y position in pixels of the center of the texture
-	 * @param scale   the scale of the texture
-	 */
-	public void render(Texture texture, float centerX, float centerY, float scale) {
-		renderDepth(texture, centerX, centerY, 0f, scale);
-	}
-
-	/**
-	 * Renders a texture with default proportions in pixel coordinates.
-	 *
-	 * @param texture the {@link Texture} to render
-	 * @param centerX the x position in pixels of the center of the texture
-	 * @param centerY the y position in pixels of the center of the texture
-	 * @param depth   the depth of the texture
-	 * @param scale   the scale of the texture
-	 */
-	public void renderDepth(Texture texture, float centerX, float centerY, float depth, float scale) {
-		Matrix4f matrix4f = new Matrix4f()
-				.translate(-1, 1, depth)
-				.scale(2, -2)
-				.scale(1 / glContext.width(), 1 / glContext.height())
-				.translate(centerX, centerY)
-				.scale(texture.width() * scale, texture.height() * scale)
-				.translate(-0.5f, -0.5f);
-		render(texture, matrix4f);
-	}
-
-	/**
 	 * Renders a texture in pixel coordinates.
 	 *
 	 * @param texture the {@link Texture} to render

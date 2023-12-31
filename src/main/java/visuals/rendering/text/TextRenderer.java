@@ -84,7 +84,9 @@ public class TextRenderer {
 		Matrix4f transform = new Matrix4f()
 				.translate(-1, 1f)
 				.scale(2, -2)
-				.scale(1 / glContext.width(), 1 / glContext.height());
+				.scale(1 / glContext.width(), 1 / glContext.height())
+				.translate(x, y);
+//		transform = transform.scale(10, 10);
 		return render(transform, x, y, text, lineWidth, font, fontSize, colour);
 	}
 
@@ -101,13 +103,20 @@ public class TextRenderer {
 	 */
 	private int render(Matrix4f transform, float x, float y, String text, float lineWidth, GameFont font, float fontSize, int colour) {
 		shaderProgram.use(glContext);
-		shaderProgram.set("transform", new Matrix4f());
+		shaderProgram.set("transform", transform);
 		shaderProgram.set("texture", 0);
 		shaderProgram.set("textureDim", font.texture().dimensions());
 		shaderProgram.set("fill", toRangedVector(colour));
 		shaderProgram.set("fontSize", fontSize);
 
+		// Atlas data is stored in the following format:
+		//     x, y, width, height
+		// representing the position and dimensions of the character in the atlas.
+		// Offset data is stored in the following format:
+		//     x, y
+		// representing the offset of the character from the top left corner of the text.
 		float[] instanceAtlasData = new float[4 * text.length()];
+
 		float[] instanceOffsetData = new float[2 * text.length()];
 
 		float totalXOffset = 0;
@@ -119,9 +128,10 @@ public class TextRenderer {
 			instanceAtlasData[4 * i + 1] = data.y();
 			instanceAtlasData[4 * i + 2] = data.width();
 			instanceAtlasData[4 * i + 3] = data.height();
-			instanceOffsetData[2 * i] = totalXOffset + data.xOffset();
-			instanceOffsetData[2 * i + 1] = totalYOffset + data.yOffset();
+			instanceOffsetData[2 * i] = x + totalXOffset;// + data.xOffset();
+			instanceOffsetData[2 * i + 1] = y + totalYOffset;// + data.yOffset();
 			totalXOffset += data.xAdvance();
+//			System.out.println(totalXOffset + " " + totalYOffset);
 			if (totalXOffset > lineWidth) {
 				totalXOffset = 0;
 				totalYOffset += fontSize;

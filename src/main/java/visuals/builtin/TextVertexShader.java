@@ -16,6 +16,7 @@ public class TextVertexShader {
 			+ "layout (location = 3) in vec2 offset;\n"
 			+ "\n"
 			+ "out vec2 texCoord;\n"
+			+ "out vec3 debug;\n"
 			+ "\n"
 			+ "uniform mat4 transform;\n"
 			+ "uniform float fontSize;\n"
@@ -28,9 +29,9 @@ public class TextVertexShader {
 			+ "    mat4 translateMatrix = translate(offset.x, offset.y, 0);\n"
 			+ "    vec2 resize = fontSize * atlas.zw / textureDim;\n"
 			+ "    mat4 scaleMatrix = scale(resize.x, resize.y, 1);\n"
-			+ "    gl_Position = scaleMatrix * transform * vec4(vertexPos, 1);\n"
-			+ "    texCoord = textureCoord;\n"
-//			+ "    gl_Position = vec4(vertexPos, 1);\n"
+			+ "    gl_Position = transform * translateMatrix * scaleMatrix * vec4(vertexPos, 1);\n"
+			+ "    texCoord = textureCoord * atlas.zw / textureDim + atlas.xy;\n"
+			+ "    debug = vec3(1, 0, 0);\n"
 			+ "}\n"
 			+ "\n"
 			+ "mat4 scale(float x, float y, float z) {\n"
@@ -43,11 +44,11 @@ public class TextVertexShader {
 			+ "\n"
 			+ "mat4 translate(float x, float y, float z) {\n"
 			+ "	   return mat4(\n"
-			+ "		   vec4(1, 0, 0, x),\n"
-			+ "		   vec4(0, 1, 0, y),\n"
-			+ "		   vec4(0, 0, 1, z),\n"
-			+ "		   vec4(0, 0, 0, 1));\n"
-			+ "}\n";
+			+ "		   vec4(1, 0, 0, 0),\n"
+			+ "		   vec4(0, 1, 0, 0),\n"
+			+ "		   vec4(0, 0, 1, 0),\n"
+			+ "		   vec4(x, y, z, 1));\n"
+			+ "}";
 
 	public static VertexShader instance() {
 		if (shader == null) {

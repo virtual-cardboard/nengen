@@ -98,7 +98,7 @@ public class NengenFileUtil {
 
 			// Read characters
 			CharacterData[] characters = gameFont.getCharacterDatas();
-//			DEBUG(" Char | X | Y | Width | Height | X Offset | Y Offset | X Advance | Page ");
+			DEBUG(" Char | X | Y | Width | Height | X Offset | Y Offset | X Advance | Page ");
 			for (int i = 0; i < numCharacters; i++) {
 				short c = readShort(fis);
 				short x = readShort(fis);
@@ -110,7 +110,17 @@ public class NengenFileUtil {
 				short xAdvance = readShort(fis);
 				short page = (short) fis.read();
 				CharacterData charData = new CharacterData(x, y, width, height, xOffset, yOffset, xAdvance, page);
+//				DEBUG("=====================");
 //				DEBUG(c + " " + x + " " + y + " " + width + " " + height + " " + xOffset + " " + yOffset + " " + xAdvance + " " + page);
+//				DEBUG("Character: " + (char) c);
+//				DEBUG("X: " + x);
+//				DEBUG("Y: " + y);
+//				DEBUG("Width: " + width);
+//				DEBUG("Height: " + height);
+//				DEBUG("X Offset: " + xOffset);
+//				DEBUG("Y Offset: " + yOffset);
+//				DEBUG("X Advance: " + xAdvance);
+//				DEBUG("Page: " + page);
 				characters[c] = charData;
 			}
 			CharacterData space = characters[' '];
