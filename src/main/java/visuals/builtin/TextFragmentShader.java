@@ -15,12 +15,16 @@ public class TextFragmentShader {
 
 	public static final String TEXT_FRAGMENT_SHADER_SOURCE = "#version 330 core\n"
 			+ "in vec2 texCoord;\n"
-			+ "in vec3 debug;\n"
 			+ "out vec4 fragColor;\n"
 			+ "\n"
 			+ "uniform sampler2D textureSampler;\n"
 			+ "uniform int texWidth, texHeight;\n"
 			+ "uniform vec4 fill;\n"
+			+ "\n"
+			+ "float amplify(float value) {\n"
+			+ "    return 1 / (1 + exp(100-200*value));\n"
+//			+ "    return 0;\n"
+			+ "}\n"
 			+ "\n"
 			+ "void main() {\n"
 //			+ "    vec4 atlasPosDim = atlas[gl_InstanceID];\n"
@@ -33,9 +37,7 @@ public class TextFragmentShader {
 			+ "    if (fragColor.a == 0) {"
 			+ "        fragColor = vec4(1, 1, 0, 1);"
 			+ "    }"
-			+ "    fragColor = vec4(texCoord.x, texCoord.y, 0, 1);"
-//			+ "    fragColor = vec4(debug, 1);"
-//			+ "    "
+			+ "    fragColor = vec4(amplify(texCoord.x), amplify(texCoord.y), 0, 1);"
 			+ "}";
 
 	public static FragmentShader instance() {

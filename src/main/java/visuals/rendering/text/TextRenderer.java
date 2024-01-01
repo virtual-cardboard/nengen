@@ -102,6 +102,8 @@ public class TextRenderer {
 	 * @return the number of lines of text rendered
 	 */
 	private int render(Matrix4f transform, float x, float y, String text, float lineWidth, GameFont font, float fontSize, int colour) {
+		fontSize /= font.getFontSize();
+
 		shaderProgram.use(glContext);
 		shaderProgram.set("transform", transform);
 		shaderProgram.set("texture", 0);
@@ -128,10 +130,9 @@ public class TextRenderer {
 			instanceAtlasData[4 * i + 1] = data.y();
 			instanceAtlasData[4 * i + 2] = data.width();
 			instanceAtlasData[4 * i + 3] = data.height();
-			instanceOffsetData[2 * i] = x + totalXOffset;// + data.xOffset();
-			instanceOffsetData[2 * i + 1] = y + totalYOffset;// + data.yOffset();
-			totalXOffset += data.xAdvance();
-//			System.out.println(totalXOffset + " " + totalYOffset);
+			instanceOffsetData[2 * i] = x + totalXOffset + data.xOffset() * fontSize;
+			instanceOffsetData[2 * i + 1] = y + totalYOffset + data.yOffset() * fontSize;
+			totalXOffset += data.xAdvance() * fontSize;
 			if (totalXOffset > lineWidth) {
 				totalXOffset = 0;
 				totalYOffset += fontSize;
