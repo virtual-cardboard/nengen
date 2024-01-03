@@ -29,7 +29,8 @@ public class TextVertexShader {
 			+ "    mat4 scaleMatrix = scale(vec3(fontSize * atlas.zw, 1));\n"
 			+ "    gl_Position = transform * translateMatrix * scaleMatrix * vec4(vertexPos, 1);\n"
 			+ "    \n"
-			+ "    texCoord = textureCoord * atlas.zw / textureDim + atlas.xy;\n"
+			+ "    vec2 newAtlasPos = vec2(atlas.x, textureDim.y - atlas.w - atlas.y);\n" // flip y because font metadata is upside down
+			+ "    texCoord = textureCoord * atlas.zw / textureDim + newAtlasPos / textureDim;\n"
 			+ "}\n"
 			+ "\n"
 			+ "mat4 scale(vec3 v) {\n"

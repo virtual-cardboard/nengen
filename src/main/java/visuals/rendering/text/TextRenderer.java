@@ -135,7 +135,7 @@ public class TextRenderer {
 			totalXOffset += data.xAdvance() * fontSize;
 			if (totalXOffset > lineWidth) {
 				totalXOffset = 0;
-				totalYOffset += fontSize;
+				totalYOffset += fontSize * font.getFontSize();
 			}
 		}
 		atlasVBO.data(instanceAtlasData).updateData();
