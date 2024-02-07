@@ -55,6 +55,7 @@ public class FrameBufferObject extends GLContainerObject {
 		return this;
 	}
 
+	// Unless for performance reasons, use the texture method instead. I don't fully understand RenderBufferObjects yet.
 	public void rbo(RenderBufferObject rbo) {
 		verifyInitialized();
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, rbo.formatType(), GL_RENDERBUFFER, rbo.id());

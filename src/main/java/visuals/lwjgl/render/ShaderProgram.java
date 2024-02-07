@@ -165,7 +165,11 @@ public class ShaderProgram extends GLRegularObject {
 			if (location == -1) {
 				throw new RuntimeException("Could not find uniform: " + name);
 			}
-			data.setForProgram(this);
+			try {
+				data.setForProgram(this);
+			} catch (Exception e) {
+				throw new RuntimeException("Could not set uniform: " + name + " to " + data, e);
+			}
 		}
 	}
 

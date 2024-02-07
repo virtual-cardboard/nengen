@@ -51,4 +51,13 @@ public class InputDataList<T extends Data, R> {
 		}
 	}
 
+	@Override
+	public String toString(){
+		StringBuilder string = new StringBuilder();
+		for (String s : dataList.parameterIndices.keySet()) {
+			string.append(" ").append(s);
+		}
+		return string.toString();
+	}
+
 }

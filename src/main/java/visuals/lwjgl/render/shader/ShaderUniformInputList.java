@@ -12,4 +12,9 @@ public class ShaderUniformInputList extends InputDataList<ShaderUniformData<?>, 
 		super(dataList, orginal, onCompletion);
 	}
 
+	public ShaderUniformInputList set(String name, Object value) {
+		super.set(name, value);
+		return this;
+	}
+
 }

@@ -112,7 +112,6 @@ public class GameWindow {
 		if (fullScreen)
 			windowDimensions = new Vector2i(vidmode.width(), vidmode.height());
 		windowId = glfwCreateWindow(windowDimensions.x(), windowDimensions.y(), windowTitle, fullScreen ? primaryMonitor : NULL, NULL); // Create the window
-		System.out.println(windowDimensions);
 		glContext.setWindowDim(windowDimensions);
 		assert windowId != NULL : "Failed to create the GLFW window";
 		glfwSetWindowPos(windowId, (vidmode.width() - windowDimensions.x()) / 2, (vidmode.height() - windowDimensions.y()) / 2); // Center the window

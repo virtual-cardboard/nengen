@@ -12,6 +12,7 @@ import visuals.lwjgl.render.Shader;
 import visuals.lwjgl.render.ShaderProgram;
 import visuals.lwjgl.render.Texture;
 import visuals.lwjgl.render.VertexArrayObject;
+import visuals.lwjgl.render.shader.ShaderUniformInputList;
 
 /**
  * @author Jay
@@ -34,6 +35,22 @@ public class TextureRenderer {
 		Shader fragment = TextureFragmentShader.instance();
 		this.program = new ShaderProgram().attach(vertex, fragment).load();
 		this.vao = RectangleVertexArrayObject.instance();
+	}
+
+	public void render(Texture texture, float x, float y, float w, float h, ShaderProgram program, ShaderUniformInputList uniforms) {
+		Matrix4f matrix4f = new Matrix4f()
+				.translate(-1, 1)
+				.scale(2, -2)
+				.scale(1 / glContext.width(), 1 / glContext.height())
+				.translate(x, y)
+				.scale(w, h);
+		program.use(glContext);
+		texture.bind();
+		uniforms
+				.set("transform", matrix4f)
+				.set("textureSampler", 0)
+				.complete();
+		vao.draw(glContext);
 	}
 
 	/**
@@ -71,7 +88,7 @@ public class TextureRenderer {
 	 */
 	private void render(Texture texture, Matrix4f matrix4f) {
 		program.use(glContext);
-		texture.bind(glContext, 0);
+		texture.bind();
 		program.uniforms()
 				.set("transform", matrix4f)
 				.set("textureSampler", 0)

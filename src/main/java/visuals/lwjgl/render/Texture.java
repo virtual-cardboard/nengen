@@ -37,12 +37,6 @@ public class Texture extends GLRegularObject {
 
 	private int width, height;
 
-	@Override
-	public void genID() {
-		this.id = glGenTextures();
-		initialize();
-	}
-
 	public Texture dimensions(Vector2i dimensions) {
 		return dimensions(dimensions.x(), dimensions.y());
 	}
@@ -94,6 +88,7 @@ public class Texture extends GLRegularObject {
 		this.id = glGenTextures();
 		initialize();
 		glBindTexture(GL_TEXTURE_2D, id);
+		System.out.println(id);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);

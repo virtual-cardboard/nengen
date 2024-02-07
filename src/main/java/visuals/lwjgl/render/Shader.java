@@ -39,29 +39,27 @@ public abstract class Shader extends GLRegularObject {
 	}
 
 	private void parseParameters() {
-		if (DEBUG) {
-			if (source == null)
-				throw new RuntimeException("Shader source cannot be null when parsing parameters");
-			DEBUG("Parsing parameters for shader");
-			String prefixRegex = "\\s*uniform";
-			String typeRegex = "\\s+(\\w+)";
-			String firstNameRegex = "\\s+(\\w+)(?:\\s+=\\s+.+)?";
-			String subsequentNamesRegex = "(,\\s+\\w+)*";
-			String regex = prefixRegex + typeRegex + firstNameRegex + subsequentNamesRegex + ";";
-			Matcher matcher = Pattern.compile(regex).matcher(source);
-			while (matcher.find()) {
-				String type = matcher.group(1);
-				List<String> names = new ArrayList<>();
-				names.add(matcher.group(2));
-				String subsequentNames = matcher.group(3);
-				if (subsequentNames != null) {
-					String[] split = subsequentNames.split(",\\s+");
-					names.addAll(asList(split).subList(1, split.length));
-				}
-				DEBUG("Found " + type + " parameters: " + names.stream().reduce((a, b) -> a + ", " + b).orElse(""));
-				for (String name : names) {
-					parameters.add(fromType(type, name));
-				}
+		if (source == null)
+			throw new RuntimeException("Shader source cannot be null when parsing parameters");
+		DEBUG("Parsing parameters for shader");
+		String prefixRegex = "\\s*uniform";
+		String typeRegex = "\\s+(\\w+)";
+		String firstNameRegex = "\\s+(\\w+)(?:\\s+=\\s+.+)?";
+		String subsequentNamesRegex = "(,\\s+\\w+)*";
+		String regex = prefixRegex + typeRegex + firstNameRegex + subsequentNamesRegex + ";";
+		Matcher matcher = Pattern.compile(regex).matcher(source);
+		while (matcher.find()) {
+			String type = matcher.group(1);
+			List<String> names = new ArrayList<>();
+			names.add(matcher.group(2));
+			String subsequentNames = matcher.group(3);
+			if (subsequentNames != null) {
+				String[] split = subsequentNames.split(",\\s+");
+				names.addAll(asList(split).subList(1, split.length));
+			}
+			DEBUG("Found " + type + " parameters: " + names.stream().reduce((a, b) -> a + ", " + b).orElse(""));
+			for (String name : names) {
+				parameters.add(fromType(type, name));
 			}
 		}
 	}

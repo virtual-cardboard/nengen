@@ -110,17 +110,17 @@ public class NengenFileUtil {
 				short xAdvance = readShort(fis);
 				short page = (short) fis.read();
 				CharacterData charData = new CharacterData(x, y, width, height, xOffset, yOffset, xAdvance, page);
-//				DEBUG("=====================");
-//				DEBUG(c + " " + x + " " + y + " " + width + " " + height + " " + xOffset + " " + yOffset + " " + xAdvance + " " + page);
-//				DEBUG("Character: " + (char) c);
-//				DEBUG("X: " + x);
-//				DEBUG("Y: " + y);
-//				DEBUG("Width: " + width);
-//				DEBUG("Height: " + height);
-//				DEBUG("X Offset: " + xOffset);
-//				DEBUG("Y Offset: " + yOffset);
-//				DEBUG("X Advance: " + xAdvance);
-//				DEBUG("Page: " + page);
+				DEBUG("=====================");
+				DEBUG(c + " " + x + " " + y + " " + width + " " + height + " " + xOffset + " " + yOffset + " " + xAdvance + " " + page);
+				DEBUG("Character: " + (char) c);
+				DEBUG("X: " + x);
+				DEBUG("Y: " + y);
+				DEBUG("Width: " + width);
+				DEBUG("Height: " + height);
+				DEBUG("X Offset: " + xOffset);
+				DEBUG("Y Offset: " + yOffset);
+				DEBUG("X Advance: " + xAdvance);
+				DEBUG("Page: " + page);
 				characters[c] = charData;
 			}
 			CharacterData space = characters[' '];

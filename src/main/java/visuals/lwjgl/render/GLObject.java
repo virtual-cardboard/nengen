@@ -10,7 +10,7 @@ public abstract class GLObject {
 	protected int id;
 	private boolean initialized;
 
-	public abstract void genID();
+	public void genID(){}
 
 	protected final void initialize() {
 		if (initialized) {

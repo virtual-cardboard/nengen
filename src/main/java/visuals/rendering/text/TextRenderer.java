@@ -104,6 +104,8 @@ public class TextRenderer {
 	private int render(Matrix4f transform, float x, float y, String text, float lineWidth, GameFont font, float fontSize, int colour) {
 		fontSize /= font.getFontSize();
 
+		font.texture().bind();
+
 		shaderProgram.use(glContext);
 		shaderProgram.set("transform", transform);
 		shaderProgram.set("texture", 0);
