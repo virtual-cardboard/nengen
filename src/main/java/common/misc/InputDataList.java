@@ -8,13 +8,13 @@ public class InputDataList<T extends Data, R> {
 
 	private final DataList<T> dataList;
 	private final boolean[] completed;
-	private final R orginal;
+	private final R original;
 	private final Consumer<DataList<T>> onCompletion;
 
-	public InputDataList(DataList<T> dataList, R orginal, Consumer<DataList<T>> onCompletion) {
+	public InputDataList(DataList<T> dataList, R original, Consumer<DataList<T>> onCompletion) {
 		this.dataList = dataList;
 		completed = new boolean[dataList.parameters.size()];
-		this.orginal = orginal;
+		this.original = original;
 		this.onCompletion = onCompletion;
 	}
 
@@ -32,7 +32,7 @@ public class InputDataList<T extends Data, R> {
 	public R complete() {
 		verifyCompleted();
 		onCompletion.accept(dataList);
-		return orginal;
+		return original;
 	}
 
 	private void verifyCompleted() {
