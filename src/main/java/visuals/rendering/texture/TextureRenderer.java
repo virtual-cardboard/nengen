@@ -37,19 +37,18 @@ public class TextureRenderer {
 		this.vao = RectangleVertexArrayObject.instance();
 	}
 
-	public void render(Texture texture, float x, float y, float w, float h, ShaderProgram program, ShaderUniformInputList uniforms) {
+	public void render(Texture texture, float x, float y, float w, float h, ShaderProgram program) {
 		Matrix4f matrix4f = new Matrix4f()
 				.translate(-1, 1)
 				.scale(2, -2)
 				.scale(1 / glContext.width(), 1 / glContext.height())
 				.translate(x, y)
 				.scale(w, h);
+		program
+				.set("transform", matrix4f)
+				.set("textureSampler", 0);
 		program.use(glContext);
 		texture.bind();
-		uniforms
-				.set("transform", matrix4f)
-				.set("textureSampler", 0)
-				.complete();
 		vao.draw(glContext);
 	}
 

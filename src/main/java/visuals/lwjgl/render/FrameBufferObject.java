@@ -14,6 +14,7 @@ import static org.lwjgl.opengl.GL30.glGenFramebuffers;
 
 import visuals.lwjgl.GLContext;
 import visuals.lwjgl.ResourcePack;
+import visuals.lwjgl.render.meta.RenderExecutable;
 
 public class FrameBufferObject extends GLContainerObject {
 
@@ -103,6 +104,12 @@ public class FrameBufferObject extends GLContainerObject {
 	@Override
 	public void putInto(String name, ResourcePack resourcePack) {
 		resourcePack.putFBO(name, this);
+	}
+
+	public void render(RenderExecutable renderExecutable) {
+		bind();
+		renderExecutable.render();
+		unbind();
 	}
 
 }

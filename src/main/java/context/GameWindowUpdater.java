@@ -48,7 +48,7 @@ public class GameWindowUpdater extends TimestepTimer implements Runnable {
 		int[] width = new int[1];
 		int[] height = new int[1];
 		glfwGetWindowSize(window.windowId(), width, height);
-		context.render();
+		context.render(alpha());
 		glfwSwapBuffers(window.windowId());
 	}
 

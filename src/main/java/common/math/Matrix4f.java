@@ -18,6 +18,7 @@ import java.nio.FloatBuffer;
 import derealizer.Derealizable;
 import derealizer.SerializationReader;
 import derealizer.SerializationWriter;
+import visuals.lwjgl.GLContext;
 
 /**
  * Holds a 4x4 float matrix.
@@ -35,6 +36,16 @@ public class Matrix4f implements Derealizable {
 
 	public Matrix4f(final Matrix4f src) {
 		load(src);
+	}
+
+	public Matrix4f(float x, float y, float w, float h, GLContext glContext) {
+		setIdentity();
+		this
+				.translate(-1, 1)
+				.scale(2, -2)
+				.scale(1 / glContext.width(), 1 / glContext.height())
+				.translate(x, y)
+				.scale(w, h);
 	}
 
 	public Matrix4f(byte[] bytes) {

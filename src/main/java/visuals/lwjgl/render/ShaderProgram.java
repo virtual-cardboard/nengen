@@ -29,6 +29,7 @@ import common.math.Vector4f;
 import common.misc.DataList;
 import visuals.lwjgl.GLContext;
 import visuals.lwjgl.ResourcePack;
+import visuals.lwjgl.render.meta.DrawFunction;
 import visuals.lwjgl.render.shader.ShaderUniformData;
 import visuals.lwjgl.render.shader.ShaderUniformInputList;
 
@@ -94,9 +95,16 @@ public class ShaderProgram extends GLRegularObject {
 		glUseProgram(id);
 	}
 
-	public void use() {
+	public ShaderProgram use() {
 		verifyInitialized();
 		glUseProgram(id);
+		return this;
+	}
+
+	public ShaderProgram use(DrawFunction drawFunction) {
+		glUseProgram(id);
+		drawFunction.draw();
+		return this;
 	}
 
 	public static void unbind() {
@@ -117,41 +125,55 @@ public class ShaderProgram extends GLRegularObject {
 		glDeleteProgram(id);
 	}
 
-	public void set(String uniform, boolean value) {
+	public ShaderProgram set(String uniform, boolean value) {
+		use();
 		verifyInitialized();
 		glUniform1f(glGetUniformLocation(id, uniform), value ? 1 : 0);
+		return this;
 	}
 
-	public void set(String uniform, int i) {
+	public ShaderProgram set(String uniform, int i) {
+		use();
 		verifyInitialized();
 		glUniform1i(glGetUniformLocation(id, uniform), i);
+		return this;
 	}
 
-	public void set(String uniform, float value) {
+	public ShaderProgram set(String uniform, float value) {
+		use();
 		verifyInitialized();
 		glUniform1f(glGetUniformLocation(id, uniform), value);
+		return this;
 	}
 
-	public void set(String uniform, Vector2f vec2) {
+	public ShaderProgram set(String uniform, Vector2f vec2) {
+		use();
 		verifyInitialized();
 		glUniform2f(glGetUniformLocation(id, uniform), vec2.x(), vec2.y());
+		return this;
 	}
 
-	public void set(String uniform, Vector3f vec3) {
+	public ShaderProgram set(String uniform, Vector3f vec3) {
+		use();
 		verifyInitialized();
 		glUniform3f(glGetUniformLocation(id, uniform), vec3.x(), vec3.y(), vec3.z());
+		return this;
 	}
 
-	public void set(String uniform, Vector4f vec4) {
+	public ShaderProgram set(String uniform, Vector4f vec4) {
+		use();
 		verifyInitialized();
 		glUniform4f(glGetUniformLocation(id, uniform), vec4.x(), vec4.y(), vec4.z(), vec4.w());
+		return this;
 	}
 
-	public void set(String uniform, Matrix4f mat4) {
+	public ShaderProgram set(String uniform, Matrix4f mat4) {
+		use();
 		verifyInitialized();
 		float[] buffer = new float[16];
 		mat4.store(buffer);
 		glUniformMatrix4fv(glGetUniformLocation(id, uniform), false, buffer);
+		return this;
 	}
 
 	public ShaderUniformInputList uniforms() {

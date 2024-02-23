@@ -28,7 +28,12 @@ public class GameContext {
 	protected void init() {
 	}
 
-	protected void render() {
+	/**
+	 * Renders the context with the given alpha value. The alpha value is the interpolation value between the previous
+	 * and next frame. It is used to smooth out the rendering of the context.
+	 * @param alpha
+	 */
+	protected void render(float alpha) {
 	}
 
 	protected void update() {

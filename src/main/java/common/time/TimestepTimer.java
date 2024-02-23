@@ -89,4 +89,13 @@ public abstract class TimestepTimer implements Runnable {
 		return framesElapsed;
 	}
 
+	/**
+	 * Returns the alpha value, which represents the proportion of the frame that has elapsed. It is calculated by
+	 * dividing the accumulation by the frame duration.
+	 * @return the alpha value
+	 */
+	public float alpha() {
+		return accumulator.alpha();
+	}
+
 }

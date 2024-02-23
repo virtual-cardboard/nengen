@@ -108,7 +108,7 @@ public class TextRenderer {
 
 		shaderProgram.use(glContext);
 		shaderProgram.set("transform", transform);
-		shaderProgram.set("texture", 0);
+		shaderProgram.set("textureSampler", 0);
 		shaderProgram.set("textureDim", font.texture().dimensions());
 		shaderProgram.set("fill", toRangedVector(colour));
 		shaderProgram.set("fontSize", fontSize);
