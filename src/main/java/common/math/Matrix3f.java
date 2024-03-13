@@ -15,16 +15,12 @@ package common.math;
 
 import java.nio.FloatBuffer;
 
-import derealizer.Derealizable;
-import derealizer.SerializationReader;
-import derealizer.SerializationWriter;
-
 /**
  * Holds a 3x3 matrix.
  *
  * @author Jay
  */
-public class Matrix3f implements Derealizable {
+public class Matrix3f {
 
 	public float m00, m01, m02, m10, m11, m12, m20, m21, m22;
 
@@ -44,10 +40,6 @@ public class Matrix3f implements Derealizable {
 	 */
 	public Matrix3f load(Matrix3f src) {
 		return load(src, this);
-	}
-
-	public Matrix3f(byte[] bytes) {
-		read(new SerializationReader(bytes));
 	}
 
 	/**
@@ -382,32 +374,6 @@ public class Matrix3f implements Derealizable {
 		m21 = 0.0f;
 		m22 = 0.0f;
 		return this;
-	}
-
-	@Override
-	public void read(SerializationReader reader) {
-		this.m00 = reader.readFloat();
-		this.m01 = reader.readFloat();
-		this.m02 = reader.readFloat();
-		this.m10 = reader.readFloat();
-		this.m11 = reader.readFloat();
-		this.m12 = reader.readFloat();
-		this.m20 = reader.readFloat();
-		this.m21 = reader.readFloat();
-		this.m22 = reader.readFloat();
-	}
-
-	@Override
-	public void write(SerializationWriter writer) {
-		writer.consume(m00);
-		writer.consume(m01);
-		writer.consume(m02);
-		writer.consume(m10);
-		writer.consume(m11);
-		writer.consume(m12);
-		writer.consume(m20);
-		writer.consume(m21);
-		writer.consume(m22);
 	}
 
 }

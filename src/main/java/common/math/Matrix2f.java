@@ -15,17 +15,13 @@ package common.math;
 
 import java.nio.FloatBuffer;
 
-import derealizer.Derealizable;
-import derealizer.SerializationReader;
-import derealizer.SerializationWriter;
-
 /**
  * Holds a 2x2 matrix
  *
  * @author Jay
  */
 
-public class Matrix2f implements Derealizable {
+public class Matrix2f {
 
 	public float m00, m01, m10, m11;
 
@@ -41,10 +37,6 @@ public class Matrix2f implements Derealizable {
 	 */
 	public Matrix2f(Matrix2f src) {
 		load(src);
-	}
-
-	public Matrix2f(byte[] bytes) {
-		read(new SerializationReader(bytes));
 	}
 
 	/**
@@ -352,28 +344,11 @@ public class Matrix2f implements Derealizable {
 		return this;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
 	 *
 	 */
 	public float determinant() {
 		return m00 * m11 - m01 * m10;
-	}
-
-	@Override
-	public void read(SerializationReader reader) {
-		this.m00 = reader.readFloat();
-		this.m01 = reader.readFloat();
-		this.m10 = reader.readFloat();
-		this.m11 = reader.readFloat();
-	}
-
-	@Override
-	public void write(SerializationWriter writer) {
-		writer.consume(m00);
-		writer.consume(m01);
-		writer.consume(m10);
-		writer.consume(m11);
 	}
 
 }

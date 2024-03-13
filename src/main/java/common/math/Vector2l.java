@@ -2,16 +2,12 @@ package common.math;
 
 import java.util.Objects;
 
-import derealizer.Derealizable;
-import derealizer.SerializationReader;
-import derealizer.SerializationWriter;
-
 /**
  * An immutable vector of two longs.
  *
  * @author Jay
  */
-public class Vector2l implements Derealizable {
+public class Vector2l {
 
 	long x;
 	long y;
@@ -29,10 +25,6 @@ public class Vector2l implements Derealizable {
 	public Vector2l(Vector2l src) {
 		this.x = src.x;
 		this.y = src.y;
-	}
-
-	public Vector2l(byte[] bytes) {
-		read(new SerializationReader(bytes));
 	}
 
 	public Vector2l negate() {
@@ -101,18 +93,6 @@ public class Vector2l implements Derealizable {
 			return false;
 		Vector2l other = (Vector2l) obj;
 		return x == other.x && y == other.y;
-	}
-
-	@Override
-	public void read(SerializationReader reader) {
-		this.x = reader.readLong();
-		this.y = reader.readLong();
-	}
-
-	@Override
-	public void write(SerializationWriter writer) {
-		writer.consume(x);
-		writer.consume(y);
 	}
 
 }

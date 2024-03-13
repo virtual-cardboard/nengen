@@ -2,16 +2,12 @@ package common.math;
 
 import java.util.Objects;
 
-import derealizer.Derealizable;
-import derealizer.SerializationReader;
-import derealizer.SerializationWriter;
-
 /**
  * An immutable vector of three ints.
  *
  * @author Jay
  */
-public class Vector3i implements Derealizable {
+public class Vector3i {
 
 	int x;
 	int y;
@@ -30,10 +26,6 @@ public class Vector3i implements Derealizable {
 		this.x = src.x;
 		this.y = src.y;
 		this.z = src.z;
-	}
-
-	public Vector3i(byte[] bytes) {
-		read(new SerializationReader(bytes));
 	}
 
 	/**
@@ -112,20 +104,6 @@ public class Vector3i implements Derealizable {
 
 	public int z() {
 		return z;
-	}
-
-	@Override
-	public void read(SerializationReader reader) {
-		this.x = reader.readInt();
-		this.y = reader.readInt();
-		this.z = reader.readInt();
-	}
-
-	@Override
-	public void write(SerializationWriter writer) {
-		writer.consume(x);
-		writer.consume(y);
-		writer.consume(z);
 	}
 
 }

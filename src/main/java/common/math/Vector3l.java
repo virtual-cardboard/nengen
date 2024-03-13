@@ -2,11 +2,7 @@ package common.math;
 
 import java.util.Objects;
 
-import derealizer.Derealizable;
-import derealizer.SerializationReader;
-import derealizer.SerializationWriter;
-
-public class Vector3l implements Derealizable {
+public class Vector3l {
 
 	long x;
 	long y;
@@ -25,10 +21,6 @@ public class Vector3l implements Derealizable {
 		this.x = src.x;
 		this.y = src.y;
 		this.z = src.z;
-	}
-
-	public Vector3l(byte[] bytes) {
-		read(new SerializationReader(bytes));
 	}
 
 	public Vector3l negate() {
@@ -98,20 +90,6 @@ public class Vector3l implements Derealizable {
 			return false;
 		Vector3l other = (Vector3l) obj;
 		return x == other.x && y == other.y && z == other.z;
-	}
-
-	@Override
-	public void read(SerializationReader reader) {
-		this.x = reader.readLong();
-		this.y = reader.readLong();
-		this.z = reader.readLong();
-	}
-
-	@Override
-	public void write(SerializationWriter writer) {
-		writer.consume(x);
-		writer.consume(y);
-		writer.consume(z);
 	}
 
 }

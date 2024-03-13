@@ -33,9 +33,10 @@ public class FrameBufferObject extends GLContainerObject {
 		glBindFramebuffer(GL_FRAMEBUFFER, id);
 		if (texture != null) {
 			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.id(), 0);
-		}
-		if (rbo != null) {
+		} else if (rbo != null) {
 			glFramebufferRenderbuffer(GL_FRAMEBUFFER, rbo.formatType(), GL_RENDERBUFFER, rbo.id());
+		} else {
+			throw new RuntimeException("FBO must have a texture or render buffer object attached to it.");
 		}
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
 			throw new RuntimeException("FBO failed to initialize properly, glFramebufferStatus: " + glCheckFramebufferStatus(GL_FRAMEBUFFER));

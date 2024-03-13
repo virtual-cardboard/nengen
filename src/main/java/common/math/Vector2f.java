@@ -2,10 +2,6 @@ package common.math;
 
 import java.util.Objects;
 
-import derealizer.Derealizable;
-import derealizer.SerializationReader;
-import derealizer.SerializationWriter;
-
 /**
  * <p>
  * An immutable vector of two floats.
@@ -15,7 +11,7 @@ import derealizer.SerializationWriter;
  *
  * @author Jay
  */
-public class Vector2f implements Derealizable {
+public class Vector2f  {
 
 	public static final Vector2f ORIGIN = new Vector2f(0, 0);
 
@@ -39,10 +35,6 @@ public class Vector2f implements Derealizable {
 	public Vector2f(Vector2f src) {
 		this.x = src.x();
 		this.y = src.y();
-	}
-
-	public Vector2f(byte[] bytes) {
-		read(new SerializationReader(bytes));
 	}
 
 	public Vector2f negate() {
@@ -155,18 +147,6 @@ public class Vector2f implements Derealizable {
 			return false;
 		Vector2f other = (Vector2f) obj;
 		return x() == other.x() && y() == other.y();
-	}
-
-	@Override
-	public void read(SerializationReader reader) {
-		this.x = reader.readFloat();
-		this.y = reader.readFloat();
-	}
-
-	@Override
-	public void write(SerializationWriter writer) {
-		writer.consume(x());
-		writer.consume(y());
 	}
 
 }

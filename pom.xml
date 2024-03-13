@@ -111,11 +111,11 @@
 	</dependencyManagement>
 
 	<dependencies>
-		<dependency>
-			<artifactId>derealizer</artifactId>
-			<groupId>virtual-cardboard</groupId>
-			<version>2</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<artifactId>derealizer</artifactId>-->
+<!--			<groupId>virtual-cardboard</groupId>-->
+<!--			<version>2</version>-->
+<!--		</dependency>-->
 		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>

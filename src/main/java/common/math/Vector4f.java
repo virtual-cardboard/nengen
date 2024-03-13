@@ -2,16 +2,12 @@ package common.math;
 
 import java.util.Objects;
 
-import derealizer.Derealizable;
-import derealizer.SerializationReader;
-import derealizer.SerializationWriter;
-
 /**
  * An immutable vector of four floats.
  *
  * @author Jay
  */
-public class Vector4f implements Derealizable {
+public class Vector4f {
 
 	float x;
 	float y;
@@ -37,10 +33,6 @@ public class Vector4f implements Derealizable {
 		this.y = src.y;
 		this.z = src.z;
 		this.w = src.w;
-	}
-
-	public Vector4f(byte[] bytes) {
-		read(new SerializationReader(bytes));
 	}
 
 	public Vector4f negate() {
@@ -122,22 +114,6 @@ public class Vector4f implements Derealizable {
 			return false;
 		Vector4f other = (Vector4f) obj;
 		return x == other.x && y == other.y && z == other.z && w == other.w;
-	}
-
-	@Override
-	public void read(SerializationReader reader) {
-		this.x = reader.readFloat();
-		this.y = reader.readFloat();
-		this.z = reader.readFloat();
-		this.w = reader.readFloat();
-	}
-
-	@Override
-	public void write(SerializationWriter writer) {
-		writer.consume(x);
-		writer.consume(y);
-		writer.consume(z);
-		writer.consume(w);
 	}
 
 }

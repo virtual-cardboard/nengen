@@ -15,15 +15,12 @@ package common.math;
 
 import java.nio.FloatBuffer;
 
-import derealizer.Derealizable;
-import derealizer.SerializationReader;
-import derealizer.SerializationWriter;
 import visuals.lwjgl.GLContext;
 
 /**
  * Holds a 4x4 float matrix.
  */
-public class Matrix4f implements Derealizable {
+public class Matrix4f {
 
 	public float m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33;
 
@@ -46,10 +43,6 @@ public class Matrix4f implements Derealizable {
 				.scale(1 / glContext.width(), 1 / glContext.height())
 				.translate(x, y)
 				.scale(w, h);
-	}
-
-	public Matrix4f(byte[] bytes) {
-		read(new SerializationReader(bytes));
 	}
 
 	/**
@@ -860,46 +853,6 @@ public class Matrix4f implements Derealizable {
 
 	public Matrix4f copy() {
 		return new Matrix4f(this);
-	}
-
-	@Override
-	public void read(SerializationReader reader) {
-		this.m00 = reader.readFloat();
-		this.m01 = reader.readFloat();
-		this.m02 = reader.readFloat();
-		this.m03 = reader.readFloat();
-		this.m10 = reader.readFloat();
-		this.m11 = reader.readFloat();
-		this.m12 = reader.readFloat();
-		this.m13 = reader.readFloat();
-		this.m20 = reader.readFloat();
-		this.m21 = reader.readFloat();
-		this.m22 = reader.readFloat();
-		this.m23 = reader.readFloat();
-		this.m30 = reader.readFloat();
-		this.m31 = reader.readFloat();
-		this.m32 = reader.readFloat();
-		this.m33 = reader.readFloat();
-	}
-
-	@Override
-	public void write(SerializationWriter writer) {
-		writer.consume(m00);
-		writer.consume(m01);
-		writer.consume(m02);
-		writer.consume(m03);
-		writer.consume(m10);
-		writer.consume(m11);
-		writer.consume(m12);
-		writer.consume(m13);
-		writer.consume(m20);
-		writer.consume(m21);
-		writer.consume(m22);
-		writer.consume(m23);
-		writer.consume(m30);
-		writer.consume(m31);
-		writer.consume(m32);
-		writer.consume(m33);
 	}
 
 }

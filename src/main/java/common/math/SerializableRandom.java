@@ -2,11 +2,7 @@ package common.math;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-import derealizer.Derealizable;
-import derealizer.SerializationReader;
-import derealizer.SerializationWriter;
-
-class SerializableRandom implements Derealizable {
+class SerializableRandom {
 
 	private AtomicLong seed;
 
@@ -19,10 +15,6 @@ class SerializableRandom implements Derealizable {
 
 	public SerializableRandom(long seed) {
 		this.seed = new AtomicLong(seed);
-	}
-
-	public SerializableRandom(byte[] bytes) {
-		read(new SerializationReader(bytes));
 	}
 
 	protected int next(int bits) {
@@ -59,16 +51,6 @@ class SerializableRandom implements Derealizable {
 	public long nextLong() {
 		// it's okay that the bottom word remains signed.
 		return ((long) (next(32)) << 32) + next(32);
-	}
-
-	@Override
-	public void read(SerializationReader reader) {
-		this.seed = new AtomicLong(reader.readLong());
-	}
-
-	@Override
-	public void write(SerializationWriter writer) {
-		writer.consume(seed.get());
 	}
 
 	public long seed() {

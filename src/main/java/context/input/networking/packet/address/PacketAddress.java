@@ -2,13 +2,8 @@ package context.input.networking.packet.address;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
-import java.net.UnknownHostException;
 
-import derealizer.Derealizable;
-import derealizer.SerializationReader;
-import derealizer.SerializationWriter;
-
-public class PacketAddress implements Derealizable {
+public class PacketAddress {
 
 	private InetAddress ip;
 	private short port;
@@ -25,27 +20,27 @@ public class PacketAddress implements Derealizable {
 		this(address.getAddress(), (short) address.getPort());
 	}
 
-	public PacketAddress(byte[] bytes) {
-		read(new SerializationReader(bytes));
-	}
-
-	@Override
-	public void read(SerializationReader reader) {
-		try {
-			this.ip = InetAddress.getByAddress(new byte[] { reader.readByte(), reader.readByte(), reader.readByte(), reader.readByte() });
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		}
-		this.port = reader.readShort();
-	}
-
-	@Override
-	public void write(SerializationWriter writer) {
-		for (byte b : ip.getAddress()) {
-			writer.consume(b);
-		}
-		writer.consume(port);
-	}
+//	public PacketAddress(byte[] bytes) {
+//		read(new SerializationReader(bytes));
+//	}
+//
+//	@Override
+//	public void read(SerializationReader reader) {
+//		try {
+//			this.ip = InetAddress.getByAddress(new byte[] { reader.readByte(), reader.readByte(), reader.readByte(), reader.readByte() });
+//		} catch (UnknownHostException e) {
+//			e.printStackTrace();
+//		}
+//		this.port = reader.readShort();
+//	}
+//
+//	@Override
+//	public void write(SerializationWriter writer) {
+//		for (byte b : ip.getAddress()) {
+//			writer.consume(b);
+//		}
+//		writer.consume(port);
+//	}
 
 	public InetAddress ip() {
 		return ip;

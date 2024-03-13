@@ -2,17 +2,13 @@ package common.math;
 
 import java.util.Objects;
 
-import derealizer.Derealizable;
-import derealizer.SerializationReader;
-import derealizer.SerializationWriter;
-
 /**
  * An immutable vector of two ints.
  *
  * @author Jay
  */
 
-public class Vector2i implements Derealizable {
+public class Vector2i  {
 
 	int x;
 	int y;
@@ -30,10 +26,6 @@ public class Vector2i implements Derealizable {
 	public Vector2i(Vector2i src) {
 		this.x = src.x;
 		this.y = src.y;
-	}
-
-	public Vector2i(byte[] bytes) {
-		read(new SerializationReader(bytes));
 	}
 
 	public Vector2i negate() {
@@ -118,18 +110,6 @@ public class Vector2i implements Derealizable {
 			return false;
 		Vector2i other = (Vector2i) obj;
 		return x == other.x && y == other.y;
-	}
-
-	@Override
-	public void read(SerializationReader reader) {
-		this.x = reader.readInt();
-		this.y = reader.readInt();
-	}
-
-	@Override
-	public void write(SerializationWriter writer) {
-		writer.consume(x);
-		writer.consume(y);
 	}
 
 }
