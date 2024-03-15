@@ -22,9 +22,8 @@ public class TextureFragmentShader {
 			+ "    fragColor = texture(textureSampler, texCoord);"
 			+ "    if (fragColor.a == 0) {"
 			+ "        fragColor = diffuseColour;"
-//			+ "        discard;"
+			+ "        discard;"
 			+ "    }"
-			+ "    fragColor.a = 1;"
 //			+ "    fragColor = vec4(texCoord.x, texCoord.y, 0, 1);"
 			+ "}";
 
