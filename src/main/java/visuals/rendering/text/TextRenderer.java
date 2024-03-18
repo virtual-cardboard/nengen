@@ -86,7 +86,6 @@ public class TextRenderer {
 				.scale(2, -2)
 				.scale(1 / glContext.width(), 1 / glContext.height())
 				.translate(x, y);
-//		transform = transform.scale(10, 10);
 		return render(transform, x, y, text, lineWidth, font, fontSize, colour);
 	}
 
@@ -132,8 +131,8 @@ public class TextRenderer {
 			instanceAtlasData[4 * i + 1] = data.y();
 			instanceAtlasData[4 * i + 2] = data.width();
 			instanceAtlasData[4 * i + 3] = data.height();
-			instanceOffsetData[2 * i] = x + totalXOffset + data.xOffset() * fontSize;
-			instanceOffsetData[2 * i + 1] = y + totalYOffset + data.yOffset() * fontSize;
+			instanceOffsetData[2 * i] = totalXOffset + data.xOffset() * fontSize;
+			instanceOffsetData[2 * i + 1] = totalYOffset + data.yOffset() * fontSize;
 			totalXOffset += data.xAdvance() * fontSize;
 			if (totalXOffset > lineWidth) {
 				totalXOffset = 0;
