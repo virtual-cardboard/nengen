@@ -44,7 +44,7 @@ public class TextRenderer {
 
 	private final GLContext glContext;
 
-	private int hAlign = ALIGN_LEFT;
+	private int hAlign = ALIGN_CENTER;
 	private int vAlign = ALIGN_TOP;
 
 	/**
@@ -103,15 +103,6 @@ public class TextRenderer {
 	private int render(Matrix4f transform, float x, float y, String text, float lineWidth, GameFont font, float fontSize, int colour) {
 		fontSize /= font.getFontSize();
 
-		font.texture().bind();
-
-		shaderProgram.use(glContext);
-		shaderProgram.set("transform", transform);
-		shaderProgram.set("textureSampler", 0);
-		shaderProgram.set("textureDim", font.texture().dimensions());
-		shaderProgram.set("fill", toRangedVector(colour));
-		shaderProgram.set("fontSize", fontSize);
-
 		// Atlas data is stored in the following format:
 		//     x, y, width, height
 		// representing the position and dimensions of the character in the atlas.
@@ -134,13 +125,26 @@ public class TextRenderer {
 			instanceOffsetData[2 * i] = totalXOffset + data.xOffset() * fontSize;
 			instanceOffsetData[2 * i + 1] = totalYOffset + data.yOffset() * fontSize;
 			totalXOffset += data.xAdvance() * fontSize;
-			if (totalXOffset > lineWidth) {
+			if (lineWidth > 0 && totalXOffset > lineWidth) {
 				totalXOffset = 0;
 				totalYOffset += fontSize * font.getFontSize();
 			}
 		}
 		atlasVBO.data(instanceAtlasData).updateData();
 		offsetVBO.data(instanceOffsetData).updateData();
+
+		font.texture().bind();
+
+		shaderProgram.use(glContext);
+		if(hAlign == ALIGN_CENTER) {
+			transform = transform.translate(-totalXOffset / 2, 0);
+		}
+		shaderProgram.set("transform", transform);
+		shaderProgram.set("textureSampler", 0);
+		shaderProgram.set("textureDim", font.texture().dimensions());
+		shaderProgram.set("fill", toRangedVector(colour));
+		shaderProgram.set("fontSize", fontSize);
+
 		vao.drawInstanced(glContext, text.length());
 
 //		int numLines;
