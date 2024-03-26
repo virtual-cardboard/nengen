@@ -1,6 +1,10 @@
 package visuals.lwjgl;
 
+import static visuals.constraint.posdim.CustomSupplierPosDimConstraint.custom;
+import static visuals.constraint.posdim.AbsolutePosDimConstraint.absolute;
+
 import common.math.Vector2i;
+import visuals.constraint.ConstraintBox;
 
 /**
  * This class is used to store OpenGL context data.
@@ -22,6 +26,12 @@ public class GLContext {
 	public int renderBufferID = 0;
 	public int shaderProgramID = 0;
 	public int[] textureIDs = new int[48];
+	public ConstraintBox screen = new ConstraintBox(
+			absolute(0),
+			absolute(0),
+			custom(this::width),
+			custom(this::height)
+	);
 
 	private Vector2i windowDim;
 
