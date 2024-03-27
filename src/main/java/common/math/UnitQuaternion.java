@@ -1,8 +1,5 @@
 package common.math;
 
-import common.math.Quaternion;
-import common.math.Vector3f;
-
 public class UnitQuaternion extends Quaternion {
 
 	public UnitQuaternion() {

@@ -1,9 +1,5 @@
 package common.math;
 
-import common.math.Matrix4f;
-import common.math.Vector3f;
-
-
 /**
  * Immutable Quaternion
  *

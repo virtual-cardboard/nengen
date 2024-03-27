@@ -4,7 +4,6 @@ import static visuals.constraint.posdim.AbsolutePosDimConstraint.absolute;
 
 import common.math.Vector2f;
 import visuals.constraint.dimension.DimensionConstraint;
-import visuals.constraint.posdim.AbsolutePosDimConstraint;
 import visuals.constraint.position.PositionConstraint;
 
 public class ConstraintBox {
