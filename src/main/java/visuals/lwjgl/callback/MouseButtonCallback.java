@@ -32,10 +32,10 @@ public class MouseButtonCallback extends GLFWMouseButtonCallback {
 	public void invoke(long window, int button, int action, int mods) {
 		switch (action) {
 			case GLFW_PRESS:
-				wrapper.context().input(new MousePressedInputEvent(button));
+				wrapper.context().input(new MousePressedInputEvent(wrapper.mouse(), button));
 				break;
 			case GLFW_RELEASE:
-				wrapper.context().input(new MouseReleasedInputEvent(button));
+				wrapper.context().input(new MouseReleasedInputEvent(wrapper.mouse(), button));
 				break;
 			case GLFW_REPEAT:
 				// We don't care about mouse repeats. Who even uses that?

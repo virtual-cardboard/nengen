@@ -22,7 +22,7 @@ public class MouseScrollCallback extends GLFWScrollCallback {
 	 */
 	@Override
 	public void invoke(long window, double xOffset, double yOffset) {
-		wrapper.context().input(new MouseScrolledInputEvent((int) xOffset, (int) yOffset));
+		wrapper.context().input(new MouseScrolledInputEvent(wrapper.mouse(), (int) xOffset, (int) yOffset));
 	}
 
 }

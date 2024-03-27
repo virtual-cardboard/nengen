@@ -3,6 +3,8 @@ package context;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import context.input.Mouse;
+import visuals.constraint.ConstraintCoordinate;
 import visuals.lwjgl.GLContext;
 
 /**
@@ -24,6 +26,8 @@ public class GameContextWrapper {
 	private GameContext context;
 
 	private final GLContext glContext;
+
+	private final Mouse mouse = new Mouse();
 
 	/**
 	 * This read-write lock is not a lock on the context itself. The read and write lock is on the accessibility of the
@@ -67,6 +71,10 @@ public class GameContextWrapper {
 
 	public GLContext glContext() {
 		return glContext;
+	}
+
+	public Mouse mouse() {
+		return mouse;
 	}
 
 }
