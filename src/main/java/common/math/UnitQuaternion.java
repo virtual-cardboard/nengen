@@ -15,6 +15,9 @@ public class UnitQuaternion extends Quaternion {
 
 	/**
 	 * Creates a unit quaternion with axis and angle as specified.
+	 *
+	 * @param axis the axis of rotation
+	 * @param theta the angle of rotation in radians
 	 */
 	public UnitQuaternion(Vector3f axis, float theta) {
 		double angle = Math.toRadians(theta);

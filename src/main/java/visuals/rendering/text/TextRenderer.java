@@ -86,7 +86,7 @@ public class TextRenderer {
 				.scale(2, -2)
 				.scale(1 / glContext.width(), 1 / glContext.height())
 				.translate(x, y);
-		return render(transform, x, y, text, lineWidth, font, fontSize, colour);
+		return render(transform, text, lineWidth, font, fontSize, colour);
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class TextRenderer {
 	 * @param colour    the {@link Colour} (int)
 	 * @return the number of lines of text rendered
 	 */
-	private int render(Matrix4f transform, float x, float y, String text, float lineWidth, GameFont font, float fontSize, int colour) {
+	public int render(Matrix4f transform, String text, float lineWidth, GameFont font, float fontSize, int colour) {
 		fontSize /= font.getFontSize();
 
 		// Atlas data is stored in the following format:

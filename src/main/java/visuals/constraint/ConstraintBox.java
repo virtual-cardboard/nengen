@@ -65,6 +65,14 @@ public class ConstraintBox {
 		return new ConstraintLine(y, h);
 	}
 
+	public ConstraintCoordinate coordinate() {
+		return new ConstraintCoordinate(x, y);
+	}
+
+	public ConstraintSize size() {
+		return new ConstraintSize(w, h);
+	}
+
 	public ConstraintBox translate(PositionConstraint x, PositionConstraint y) {
 		return new ConstraintBox(this.x.add(x), this.y.add(y), w, h);
 	}

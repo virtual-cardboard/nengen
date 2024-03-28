@@ -1,5 +1,7 @@
 package visuals.constraint;
 
+import common.math.Vector2f;
+
 /**
  * {@link ConstraintCoordinateValue} objects are temporary and are used to store the values of a
  * {@link ConstraintCoordinate} at a given time
@@ -32,6 +34,10 @@ public class ConstraintCoordinateValue {
 	 */
 	public float y() {
 		return y;
+	}
+
+	public Vector2f toVector() {
+		return new Vector2f(x, y);
 	}
 
 }
