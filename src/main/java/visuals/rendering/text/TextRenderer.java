@@ -44,7 +44,7 @@ public class TextRenderer {
 
 	private final GLContext glContext;
 
-	private int hAlign = ALIGN_CENTER;
+	private int hAlign = ALIGN_LEFT;
 	private int vAlign = ALIGN_TOP;
 
 	/**
@@ -118,17 +118,12 @@ public class TextRenderer {
 		for (int i = 0, m = text.length(); i < m; i++) {
 			char c = text.charAt(i);
 			CharacterData data = font.getCharacterDatas()[c];
-			instanceAtlasData[4 * i] = data.x();
-			instanceAtlasData[4 * i + 1] = data.y();
-			instanceAtlasData[4 * i + 2] = data.width();
-			instanceAtlasData[4 * i + 3] = data.height();
-			instanceOffsetData[2 * i] = totalXOffset + data.xOffset() * fontSize;
-			instanceOffsetData[2 * i + 1] = totalYOffset + data.yOffset() * fontSize;
-			totalXOffset += data.xAdvance() * fontSize;
-			if (lineWidth > 0 && totalXOffset > lineWidth) {
+			if (lineWidth > 0 && totalXOffset + data.xAdvance() * fontSize > lineWidth) {
 				totalXOffset = 0;
 				totalYOffset += fontSize * font.getFontSize();
 			}
+			insertCharacterData(instanceAtlasData, instanceOffsetData, i, data, fontSize, totalXOffset, totalYOffset);
+			totalXOffset += data.xAdvance() * fontSize;
 		}
 		atlasVBO.data(instanceAtlasData).updateData();
 		offsetVBO.data(instanceOffsetData).updateData();
@@ -147,120 +142,17 @@ public class TextRenderer {
 
 		vao.drawInstanced(glContext, text.length());
 
-//		int numLines;
-//		if (lineWidth == 0) {
-//			renderOneLine(0, 0, text, font, fontSize);
-//			numLines = 1;
-//		} else {
-//			List<StringRenderWidth> stringPairs = convertToStringPairs(text, font, fontSize, lineWidth);
-//			numLines = stringPairs.size();
-//			if (hAlign == ALIGN_LEFT) {
-//				for (int i = 0; i < stringPairs.size(); i++) {
-//					StringRenderWidth pair = stringPairs.get(i);
-//					renderOneLine(0, i * fontSize, pair.string, font, fontSize);
-//				}
-//			} else if (hAlign == ALIGN_CENTER) {
-//				for (int i = 0; i < stringPairs.size(); i++) {
-//					StringRenderWidth pair = stringPairs.get(i);
-//					renderOneLine((lineWidth - pair.width) * 0.5f, i * fontSize, pair.string, font, fontSize);
-//				}
-//			} else if (hAlign == ALIGN_RIGHT) {
-//				for (int i = 0; i < stringPairs.size(); i++) {
-//					StringRenderWidth pair = stringPairs.get(i);
-//					renderOneLine(lineWidth - pair.width, i * fontSize, pair.string, font, fontSize);
-//				}
-//			}
-//		}
-//		FrameBufferObject.unbind();
-//		Texture tex = fbo.texture();
-//		Matrix4f m = new Matrix4f()
-//				.translate(-1, 1).scale(2 / glContext.width(), -2 / glContext.height())
-//				.multiply(transform);
-//		if (vAlign == ALIGN_CENTER) {
-//			m = m.translate(0, -numLines * fontSize / 2);
-//		} else if (vAlign == ALIGN_BOTTOM) {
-//			m = m.translate(0, -numLines * fontSize);
-//		}
-//		m = m.scale(tex.width(), tex.height());
-//		textureRenderer.render(tex, m);
-//		DefaultFrameBuffer.instance().bind();
-//		return numLines;
 		return 0;
 	}
 
-//	private void renderOneLine(float xOffset, float yOffset, String text, GameFont font, float fontSize) {
-//		char[] chars = text.toCharArray();
-//		Matrix4f transform = new Matrix4f().translate(-1, -1).scale(2, 2).scale(1 / glContext.width(), 1 / glContext.height());
-//		float sizeMultiplier = fontSize / font.getFontSize();
-//
-//		CharacterData[] characterDataArray = font.getCharacterDatas();
-//		for (char ch : chars) {
-//			CharacterData c = characterDataArray[ch];
-//			int xAdvance = c.xAdvance();
-//			if (ch == ' ' || ch == '\t') {
-//				xOffset += xAdvance * sizeMultiplier;
-//				continue;
-//			}
-//			Matrix4f copy = transform.copy()
-//					.translate(xOffset + c.xOffset() * sizeMultiplier, yOffset + c.yOffset() * sizeMultiplier)
-//					.scale(c.width() * sizeMultiplier, c.height() * sizeMultiplier);
-//			shaderProgram.uniforms()
-//					.set("matrix4f", copy)
-//					.set("width", c.width())
-//					.set("height", c.height())
-//					.set("x", c.x())
-//					.set("y", c.y())
-//					.complete();
-//			vao.draw(glContext);
-//			xOffset += xAdvance * sizeMultiplier;
-//		}
-//	}
-//
-//	public int calculateNumLines(String text, GameFont font, float fontSize, float lineWidth) {
-//		return convertToStringPairs(text, font, fontSize, lineWidth).size();
-//	}
-//
-//	private List<StringRenderWidth> convertToStringPairs(String text, GameFont font, float fontSize, float lineWidth) {
-//		String[] splitByNewLines = text.split("\\n");
-//		List<StringRenderWidth> stringPairs = new ArrayList<>();
-//		for (String line : splitByNewLines) {
-//			stringPairs.addAll(convertParagraphToStringPairs(line, font, fontSize, lineWidth));
-//		}
-//		return stringPairs;
-//	}
-//
-//	private List<StringRenderWidth> convertParagraphToStringPairs(String text, GameFont font, float fontSize, float lineWidth) {
-//		CharacterData[] characterDatas = font.getCharacterDatas();
-//
-//		List<StringRenderWidth> pairs = new ArrayList<>();
-//
-//		String[] words = text.split(" ");
-//		float sizeMultiplier = fontSize / font.getFontSize();
-//
-//		float currentStringWidth = 0;
-//		StringBuilder currentString = new StringBuilder();
-//		for (String word : words) {
-//			float wordWidth = 0;
-//			for (int j = 0; j < word.length(); j++) {
-//				wordWidth += characterDatas[word.charAt(j)].xAdvance() * sizeMultiplier;
-//			}
-//
-//			if (currentStringWidth + wordWidth <= lineWidth) {
-//				if (currentString.length() > 0) {
-//					currentString.append(" ");
-//					currentStringWidth += characterDatas[' '].xAdvance() * sizeMultiplier;
-//				}
-//				currentStringWidth += wordWidth;
-//				currentString.append(word);
-//			} else {
-//				pairs.add(new StringRenderWidth(currentString.toString(), currentStringWidth));
-//				currentStringWidth = wordWidth;
-//				currentString = new StringBuilder(word);
-//			}
-//		}
-//		pairs.add(new StringRenderWidth(currentString.toString(), currentStringWidth));
-//		return pairs;
-//	}
+	private void insertCharacterData(float[] instanceAtlasData, float[] instanceOffsetData, int i, CharacterData data, float fontSize, float totalXOffset, float totalYOffset) {
+		instanceAtlasData[4 * i] = data.x();
+		instanceAtlasData[4 * i + 1] = data.y();
+		instanceAtlasData[4 * i + 2] = data.width();
+		instanceAtlasData[4 * i + 3] = data.height();
+		instanceOffsetData[2 * i] = totalXOffset + data.xOffset() * fontSize;
+		instanceOffsetData[2 * i + 1] = totalYOffset + data.yOffset() * fontSize;
+	}
 
 	public void alignLeft() {
 		hAlign = ALIGN_LEFT;
