@@ -9,6 +9,7 @@ import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glClearColor;
 
+import context.input.Mouse;
 import context.input.event.FrameResizedInputEvent;
 import context.input.event.KeyPressedInputEvent;
 import context.input.event.KeyReleasedInputEvent;
@@ -57,6 +58,10 @@ public class GameContext {
 	 */
 	void setWrapper(GameContextWrapper wrapper) {
 		this.wrapper = wrapper;
+	}
+
+	protected Mouse mouse() {
+		return wrapper.mouse();
 	}
 
 	public void input(KeyPressedInputEvent event) {
