@@ -1,7 +1,5 @@
 package visuals.rendering.texture;
 
-import static common.colour.Colour.rgb;
-
 import common.colour.Colour;
 import common.math.Matrix4f;
 import visuals.builtin.RectangleVertexArrayObject;
@@ -12,7 +10,8 @@ import visuals.lwjgl.render.Shader;
 import visuals.lwjgl.render.ShaderProgram;
 import visuals.lwjgl.render.Texture;
 import visuals.lwjgl.render.VertexArrayObject;
-import visuals.lwjgl.render.shader.ShaderUniformInputList;
+
+import static common.colour.Colour.rgb;
 
 /**
  * @author Jay
@@ -85,7 +84,7 @@ public class TextureRenderer {
 	 * @param texture  the texture to render
 	 * @param matrix4f the transformation matrix
 	 */
-	private void render(Texture texture, Matrix4f matrix4f) {
+	public void render(Texture texture, Matrix4f matrix4f) {
 		program.use(glContext);
 		texture.bind();
 		program.uniforms()
