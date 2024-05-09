@@ -1,10 +1,9 @@
 package visuals.constraint;
 
-import static visuals.constraint.posdim.AbsolutePosDimConstraint.absolute;
-
 import common.math.Vector2f;
-import visuals.constraint.dimension.DimensionConstraint;
 import visuals.constraint.position.PositionConstraint;
+
+import static visuals.constraint.posdim.AbsolutePosDimConstraint.absolute;
 
 public class ConstraintCoordinate {
 
@@ -28,6 +27,10 @@ public class ConstraintCoordinate {
 		return y;
 	}
 
+	public ConstraintCoordinate invert() {
+		return new ConstraintCoordinate(x.multiply(-1), y.multiply(-1));
+	}
+
 	public ConstraintCoordinate translate(PositionConstraint x, PositionConstraint y) {
 		return new ConstraintCoordinate(this.x.add(x), this.y.add(y));
 	}
@@ -38,6 +41,22 @@ public class ConstraintCoordinate {
 
 	public ConstraintCoordinate translate(Vector2f v) {
 		return translate(v.x(), v.y());
+	}
+
+    public ConstraintCoordinate translate(ConstraintCoordinate c) {
+		return translate(c.x, c.y);
+    }
+
+	public ConstraintCoordinate subtract(ConstraintCoordinate c) {
+		return translate(c.invert());
+	}
+
+	public ConstraintCoordinate subtract(Vector2f v) {
+		return translate(v.negate());
+	}
+
+	public ConstraintCoordinate multiply(float f) {
+		return new ConstraintCoordinate(x.multiply(f), y.multiply(f));
 	}
 
 }

@@ -1,7 +1,6 @@
 package visuals.constraint;
 
 import visuals.constraint.dimension.DimensionConstraint;
-import visuals.constraint.position.PositionConstraint;
 
 public class ConstraintSize {
 
@@ -23,6 +22,10 @@ public class ConstraintSize {
 
 	public DimensionConstraint h() {
 		return h;
+	}
+
+	public ConstraintSize scale(float f) {
+		return new ConstraintSize(w.multiply(f), h.multiply(f));
 	}
 
 }

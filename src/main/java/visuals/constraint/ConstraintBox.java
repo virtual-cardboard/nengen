@@ -1,10 +1,10 @@
 package visuals.constraint;
 
-import static visuals.constraint.posdim.AbsolutePosDimConstraint.absolute;
-
 import common.math.Vector2f;
 import visuals.constraint.dimension.DimensionConstraint;
 import visuals.constraint.position.PositionConstraint;
+
+import static visuals.constraint.posdim.AbsolutePosDimConstraint.absolute;
 
 public class ConstraintBox {
 
@@ -53,8 +53,12 @@ public class ConstraintBox {
 	}
 
 	public boolean contains(ConstraintCoordinate coordinate) {
-		return x.get() <= coordinate.x().get() && coordinate.x().get() <= x.get() + w.get() &&
-				y.get() <= coordinate.y().get() && coordinate.y().get() <= y.get() + h.get();
+		return contains(coordinate.value().toVector());
+	}
+
+	public boolean contains(Vector2f point) {
+		return x.get() <= point.x() && point.x() <= x.get() + w.get() &&
+				y.get() <= point.y() && point.y() <= y.get() + h.get();
 	}
 
 	public ConstraintLine horizontal() {
