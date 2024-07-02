@@ -1,5 +1,7 @@
 package visuals.constraint;
 
+import common.math.Vector2f;
+
 /**
  * {@link ConstraintSizeValue} objects are temporary and are used to store the values of a {@link ConstraintBox} at a
  * given time
@@ -33,5 +35,9 @@ public class ConstraintSizeValue {
 	public float h() {
 		return h;
 	}
-	
+
+	public Vector2f toVector() {
+		return new Vector2f(w, h);
+	}
+
 }

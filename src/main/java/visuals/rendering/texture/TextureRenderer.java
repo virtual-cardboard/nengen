@@ -5,6 +5,7 @@ import common.math.Matrix4f;
 import visuals.builtin.RectangleVertexArrayObject;
 import visuals.builtin.TextureFragmentShader;
 import visuals.builtin.TexturedTransformationVertexShader;
+import visuals.constraint.ConstraintBox;
 import visuals.lwjgl.GLContext;
 import visuals.lwjgl.render.Shader;
 import visuals.lwjgl.render.ShaderProgram;
@@ -49,6 +50,10 @@ public class TextureRenderer {
 		program.use(glContext);
 		texture.bind();
 		vao.draw(glContext);
+	}
+
+	public void render(Texture texture, ConstraintBox constraintBox) {
+		render(texture, constraintBox.x().get(), constraintBox.y().get(), constraintBox.w().get(), constraintBox.h().get());
 	}
 
 	/**

@@ -81,8 +81,9 @@ public class Vector2f  {
 		float len = length();
 		if (len != 0f) {
 			return scale(1f / len);
-		} else
+		} else {
 			throw new IllegalStateException("Zero length vector");
+		}
 	}
 
 	public float lengthSquared() {
