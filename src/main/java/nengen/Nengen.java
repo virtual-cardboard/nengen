@@ -49,7 +49,9 @@ public class Nengen {
 		GameContextWrapper wrapper = new GameContextWrapper(context, glContext);
 
 		Thread renderThread = new Thread(new GameWindowUpdater(config, wrapper, glContext));
+		renderThread.setName("Render Thread");
 		Thread tickThread = new Thread(new GameTickUpdater(config, wrapper));
+		tickThread.setName("Tick Thread");
 		tickThread.start();
 		renderThread.start();
 	}
