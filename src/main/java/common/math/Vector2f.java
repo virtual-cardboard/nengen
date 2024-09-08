@@ -77,6 +77,14 @@ public class Vector2f  {
 		return new Vector2f(x() * scale, y() * scale);
 	}
 
+	public Vector2f scale(float x, float y) {
+		return new Vector2f(this.x() * x, this.y() * y);
+	}
+
+	public Vector2f scale(Vector2f vector) {
+		return new Vector2f(x() * vector.x(), y() * vector.y());
+	}
+
 	public Vector2f normalise() {
 		float len = length();
 		if (len != 0f) {
