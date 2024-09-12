@@ -48,12 +48,18 @@ public class Nengen {
 		EngineConfiguration config = configuration.build();
 		GameContextWrapper wrapper = new GameContextWrapper(context, glContext);
 
-		Thread renderThread = new Thread(new GameWindowUpdater(config, wrapper, glContext));
-		renderThread.setName("Render Thread");
+//		Thread renderThread = new Thread(new GameWindowUpdater(config, wrapper, glContext));
+//		renderThread.setName("Render Thread");
+//		Thread tickThread = new Thread(new GameTickUpdater(config, wrapper));
+//		tickThread.setName("Tick Thread");
+//		tickThread.start();
+//		renderThread.start();
+
+		Runnable renderThread = new GameWindowUpdater(config, wrapper, glContext);
 		Thread tickThread = new Thread(new GameTickUpdater(config, wrapper));
 		tickThread.setName("Tick Thread");
 		tickThread.start();
-		renderThread.start();
+		renderThread.run();
 	}
 
 }
