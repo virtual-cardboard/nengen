@@ -51,7 +51,12 @@ public abstract class TimestepTimer implements Runnable {
 				}
 				Thread.yield();
 			}
-		} finally {
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		finally {
 			endActions();
 		}
 	}
