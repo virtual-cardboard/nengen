@@ -53,7 +53,7 @@ public class Vector3f {
 
 	public Vector3f normalise() {
 		float len = length();
-		if (len != 0f) {
+		if (Math.abs(len) > 0.0001f) {
 			return scale(1f / len);
 		} else
 			throw new IllegalStateException("Zero length vector");
