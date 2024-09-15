@@ -51,12 +51,9 @@ public abstract class TimestepTimer implements Runnable {
 				}
 				Thread.yield();
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-
-		}
-		finally {
+		} finally {
 			endActions();
 		}
 	}
@@ -97,6 +94,7 @@ public abstract class TimestepTimer implements Runnable {
 	/**
 	 * Returns the alpha value, which represents the proportion of the frame that has elapsed. It is calculated by
 	 * dividing the accumulation by the frame duration.
+	 *
 	 * @return the alpha value
 	 */
 	public float alpha() {
