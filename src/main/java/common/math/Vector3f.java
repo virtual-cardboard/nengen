@@ -55,8 +55,9 @@ public class Vector3f {
 		float len = length();
 		if (Math.abs(len) > 0.0001f) {
 			return scale(1f / len);
-		} else
-			throw new IllegalStateException("Zero length vector");
+		} else {
+			return new Vector3f();
+		}
 	}
 
 	public float lengthSquared() {
