@@ -81,4 +81,35 @@ public class NengenConfiguration {
 		return new EngineConfiguration(this);
 	}
 
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public int getFrameRate() {
+		return frameRate;
+	}
+
+	public int getTickRate() {
+		return tickRate;
+	}
+
+	public boolean isResizable() {
+		return resizable;
+	}
+
+	public boolean isFullscreen() {
+		return fullscreen;
+	}
+
+	public String getWindowName() {
+		return windowName;
+	}
+
+	public String toString() {
+		return "NengenConfiguration [width=" + width + ", height=" + height + ", frameRate=" + frameRate + ", tickRate=" + tickRate + ", resizable=" + resizable + ", fullscreen=" + fullscreen + ", windowName=" + windowName + "]";
+	}
 }
