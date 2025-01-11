@@ -1,6 +1,7 @@
 package context.input.event;
 
 import context.input.Mouse;
+import org.lwjgl.glfw.GLFW;
 
 public final class MousePressedInputEvent extends GameInputEvent {
 
@@ -16,6 +17,27 @@ public final class MousePressedInputEvent extends GameInputEvent {
 		return mouse;
 	}
 
+	/**
+	 * The button that was pressed.
+	 * <br><br>
+	 * This is one of the following:
+	 * <ul>
+	 *     <li>{@link GLFW#GLFW_MOUSE_BUTTON_1}</li>
+	 *     <li>{@link GLFW#GLFW_MOUSE_BUTTON_2}</li>
+	 *     <li>{@link GLFW#GLFW_MOUSE_BUTTON_3}</li>
+	 *     <li>{@link GLFW#GLFW_MOUSE_BUTTON_4}</li>
+	 *     <li>{@link GLFW#GLFW_MOUSE_BUTTON_5}</li>
+	 *     <li>{@link GLFW#GLFW_MOUSE_BUTTON_6}</li>
+	 *     <li>{@link GLFW#GLFW_MOUSE_BUTTON_7}</li>
+	 *     <li>{@link GLFW#GLFW_MOUSE_BUTTON_8}</li>
+	 *     <li>{@link GLFW#GLFW_MOUSE_BUTTON_LEFT}</li>
+	 *     <li>{@link GLFW#GLFW_MOUSE_BUTTON_RIGHT}</li>
+	 *     <li>{@link GLFW#GLFW_MOUSE_BUTTON_MIDDLE}</li>
+	 *     <li>{@link GLFW#GLFW_MOUSE_BUTTON_LAST}</li>
+	 * </ul>
+	 *
+	 * @return the button that was pressed
+	 */
 	public int button() {
 		return button;
 	}

@@ -4,6 +4,7 @@ import static common.colour.Colour.toRangedVector;
 
 import common.colour.Colour;
 import common.math.Matrix4f;
+import common.math.Vector2f;
 import visuals.builtin.RectangleVertexArrayObject;
 import visuals.builtin.TextFragmentShader;
 import visuals.builtin.TextVertexShader;
@@ -117,8 +118,13 @@ public class TextRenderer {
 		float totalYOffset = 0;
 		for (int i = 0, m = text.length(); i < m; i++) {
 			char c = text.charAt(i);
+			if (c == '\n') {
+				totalXOffset = 0;
+				totalYOffset += fontSize * font.getFontSize();
+				continue;
+			}
 			CharacterData data = font.getCharacterDatas()[c];
-			if (lineWidth > 0 && totalXOffset + data.xAdvance() * fontSize > lineWidth) {
+			if (lineWidth > 0 && totalXOffset + data.xAdvance() * fontSize > lineWidth && totalXOffset != 0) {
 				totalXOffset = 0;
 				totalYOffset += fontSize * font.getFontSize();
 			}
@@ -131,8 +137,11 @@ public class TextRenderer {
 		font.texture().bind();
 
 		shaderProgram.use(glContext);
-		if(hAlign == ALIGN_CENTER) {
+		if (hAlign == ALIGN_CENTER) {
 			transform = transform.translate(-totalXOffset / 2, 0);
+		}
+		if (vAlign == ALIGN_CENTER) {
+			transform = transform.translate(0, -(totalYOffset + fontSize * font.getFontSize()) / 2);
 		}
 		shaderProgram.set("transform", transform);
 		shaderProgram.set("textureSampler", 0);
@@ -143,6 +152,24 @@ public class TextRenderer {
 		vao.drawInstanced(glContext, text.length());
 
 		return 0;
+	}
+
+	public static Vector2f calculateTextSize(String text, float lineWidth, GameFont font, float fontSize) {
+		fontSize /= font.getFontSize();
+		float maxXOffset = 0;
+		float totalXOffset = 0;
+		float totalYOffset = 0;
+		for (int i = 0, m = text.length(); i < m; i++) {
+			char c = text.charAt(i);
+			CharacterData data = font.getCharacterDatas()[c];
+			if (lineWidth > 0 && totalXOffset + data.xAdvance() * fontSize > lineWidth && totalXOffset != 0 || c == '\n') {
+				maxXOffset = Math.max(maxXOffset, totalXOffset);
+				totalXOffset = 0;
+				totalYOffset += fontSize * font.getFontSize();
+			}
+			totalXOffset += data.xAdvance() * fontSize;
+		}
+		return new Vector2f(maxXOffset, totalYOffset + fontSize * font.getFontSize());
 	}
 
 	private void insertCharacterData(float[] instanceAtlasData, float[] instanceOffsetData, int i, CharacterData data, float fontSize, float totalXOffset, float totalYOffset) {

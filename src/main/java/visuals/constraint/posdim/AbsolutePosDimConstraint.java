@@ -20,4 +20,8 @@ public class AbsolutePosDimConstraint implements PosDimConstraint {
 		return new AbsolutePosDimConstraint(value);
 	}
 
+	public static PosDimConstraint zero() {
+		return absolute(0);
+	}
+
 }

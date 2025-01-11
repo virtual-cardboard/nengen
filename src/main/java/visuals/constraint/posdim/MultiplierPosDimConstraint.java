@@ -1,9 +1,9 @@
 package visuals.constraint.posdim;
 
 import visuals.constraint.Constraint;
-import visuals.constraint.dimension.DimensionConstraint;
 
 /**
+ *
  */
 public class MultiplierPosDimConstraint implements PosDimConstraint {
 

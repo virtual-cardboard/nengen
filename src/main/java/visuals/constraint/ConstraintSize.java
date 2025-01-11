@@ -1,5 +1,8 @@
 package visuals.constraint;
 
+import static visuals.constraint.posdim.AbsolutePosDimConstraint.absolute;
+
+import common.math.Vector2f;
 import visuals.constraint.dimension.DimensionConstraint;
 
 public class ConstraintSize {
@@ -10,6 +13,10 @@ public class ConstraintSize {
 	public ConstraintSize(DimensionConstraint w, DimensionConstraint h) {
 		this.w = w;
 		this.h = h;
+	}
+
+	public ConstraintSize(Vector2f dimensions) {
+		this(absolute(dimensions.x()), absolute(dimensions.y()));
 	}
 
 	public ConstraintSizeValue value() {

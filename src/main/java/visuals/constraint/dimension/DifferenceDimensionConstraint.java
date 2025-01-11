@@ -5,12 +5,12 @@ import visuals.constraint.position.PositionConstraint;
 /**
  * A {@link DimensionConstraint} that is the difference between two {@link PositionConstraint}s.
  */
-public class PositionToPositionDimensionConstraint implements DimensionConstraint {
+public class DifferenceDimensionConstraint implements DimensionConstraint {
 
 	private final PositionConstraint start;
 	private final PositionConstraint end;
 
-	public PositionToPositionDimensionConstraint(PositionConstraint start, PositionConstraint end) {
+	public DifferenceDimensionConstraint(PositionConstraint start, PositionConstraint end) {
 		this.start = start;
 		this.end = end;
 	}
@@ -21,7 +21,7 @@ public class PositionToPositionDimensionConstraint implements DimensionConstrain
 	}
 
 	public static DimensionConstraint between(PositionConstraint start, PositionConstraint end) {
-		return new PositionToPositionDimensionConstraint(start, end);
+		return new DifferenceDimensionConstraint(start, end);
 	}
 
 }

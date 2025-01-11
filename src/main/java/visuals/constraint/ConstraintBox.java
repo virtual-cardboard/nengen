@@ -1,10 +1,10 @@
 package visuals.constraint;
 
+import static visuals.constraint.posdim.AbsolutePosDimConstraint.absolute;
+
 import common.math.Vector2f;
 import visuals.constraint.dimension.DimensionConstraint;
 import visuals.constraint.position.PositionConstraint;
-
-import static visuals.constraint.posdim.AbsolutePosDimConstraint.absolute;
 
 public class ConstraintBox {
 
@@ -73,6 +73,10 @@ public class ConstraintBox {
 		return new ConstraintCoordinate(x, y);
 	}
 
+	public ConstraintSize dimensions() {
+		return new ConstraintSize(w, h);
+	}
+
 	public ConstraintSize size() {
 		return new ConstraintSize(w, h);
 	}
@@ -87,6 +91,17 @@ public class ConstraintBox {
 
 	public ConstraintBox translate(Vector2f v) {
 		return translate(v.x(), v.y());
+	}
+
+	/**
+	 * Treats the
+	 *
+	 * @param box the sub-box that is embedded into this
+	 * @return new constraint box representing the embedded constraint box
+	 */
+	public ConstraintBox embed(ConstraintBox box) {
+		return null;
+//		return new ConstraintBox();
 	}
 
 }
