@@ -16,6 +16,13 @@ public final class GameFont {
 		this.texture = texture;
 	}
 
+	public GameFont(String name, int fontSize, CharacterData[] characterDatas) {
+		this.name = name;
+		this.fontSize = fontSize;
+		this.characterDatas = characterDatas;
+		this.texture = null;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -33,7 +40,9 @@ public final class GameFont {
 	}
 
 	public void delete() {
-		texture.delete();
+		if (texture != null) {
+			texture.delete();
+		}
 	}
 
 }

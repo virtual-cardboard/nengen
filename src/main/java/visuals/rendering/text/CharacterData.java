@@ -57,6 +57,10 @@ public final class CharacterData {
 		this(x, y, width, height, xOffset, yOffset, xAdvance, (int) page);
 	}
 
+	public CharacterData(int x, int y, int width, int height, int xOffset, int yOffset, int xAdvance) {
+		this(x, y, width, height, xOffset, yOffset, xAdvance, 0);
+	}
+
 	public int x() {
 		return x;
 	}

@@ -20,6 +20,12 @@ import visuals.rendering.text.CharacterData;
 import visuals.rendering.text.GameFont;
 import visuals.rendering.texture.Image;
 
+import org.lwjgl.freetype.FreeType;
+import org.lwjgl.freetype.FT_Face;
+import org.lwjgl.freetype.FT_Library;
+import org.lwjgl.freetype.FT_GlyphSlot;
+import org.lwjgl.freetype.FT_Bitmap;
+
 public class NengenFileUtil {
 
 	private NengenFileUtil() {
@@ -130,6 +136,51 @@ public class NengenFileUtil {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public static GameFont loadTTF(File ttfFile, int fontSize) {
+		FT_Library ftLibrary = FreeType.FT_Init_FreeType();
+		if (ftLibrary == null) {
+			throw new RuntimeException("Failed to initialize FreeType library");
+		}
+
+		FT_Face ftFace = FreeType.FT_New_Face(ftLibrary, ttfFile.getAbsolutePath(), 0);
+		if (ftFace == null) {
+			throw new RuntimeException("Failed to load font: " + ttfFile.getAbsolutePath());
+		}
+
+		FreeType.FT_Set_Pixel_Sizes(ftFace, 0, fontSize);
+
+		GameFont gameFont = new GameFont(ttfFile.getName(), fontSize, null);
+		CharacterData[] characters = gameFont.getCharacterDatas();
+
+		for (int c = 0; c < 128; c++) {
+			if (FreeType.FT_Load_Char(ftFace, c, FreeType.FT_LOAD_RENDER) != 0) {
+				System.err.println("Failed to load Glyph for character: " + (char) c);
+				continue;
+			}
+
+			FT_GlyphSlot glyph = ftFace.glyph();
+			FT_Bitmap bitmap = glyph.bitmap();
+
+			CharacterData charData = new CharacterData(
+					(short) glyph.bitmap_left(),
+					(short) glyph.bitmap_top(),
+					(short) bitmap.width(),
+					(short) bitmap.rows(),
+					(short) glyph.bitmap_left(),
+					(short) glyph.bitmap_top(),
+					(short) glyph.advance().x(),
+					0
+			);
+
+			characters[c] = charData;
+		}
+
+		FreeType.FT_Done_Face(ftFace);
+		FreeType.FT_Done_FreeType(ftLibrary);
+
+		return gameFont;
 	}
 
 	private static short readShort(FileInputStream fis) throws IOException {
