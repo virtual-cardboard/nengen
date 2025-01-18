@@ -32,6 +32,13 @@ public final class GameFont {
 		this.fontIndex = fontIndex;
 	}
 
+	public GameFont(String name, int fontSize, CharacterData[] characterDatas) {
+		this.name = name;
+		this.fontSize = fontSize;
+		this.characterDatas = characterDatas;
+		this.texture = null;
+	}
+
 	public String getName() {
 		return name;
 	}

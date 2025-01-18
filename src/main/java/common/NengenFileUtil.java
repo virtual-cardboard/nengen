@@ -7,7 +7,6 @@ import static nengen.EngineConfiguration.DEBUG;
 import static org.lwjgl.stb.STBImage.stbi_failure_reason;
 import static org.lwjgl.stb.STBImage.stbi_load;
 import static org.lwjgl.stb.STBImage.stbi_set_flip_vertically_on_load;
-import static org.lwjgl.util.freetype.FreeType.FT_Init_FreeType;
 import static org.lwjgl.util.freetype.FreeType.FT_New_Face;
 import static visuals.rendering.text.GameFont.getFontIndex;
 
@@ -18,15 +17,19 @@ import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
 import org.lwjgl.PointerBuffer;
+import org.lwjgl.freetype.FT_Bitmap;
+import org.lwjgl.freetype.FT_Face;
+import org.lwjgl.freetype.FT_GlyphSlot;
+import org.lwjgl.freetype.FreeType;
 import org.lwjgl.system.MemoryStack;
 import org.lwjgl.util.freetype.FT_Bitmap;
 import org.lwjgl.util.freetype.FT_Face;
 import org.lwjgl.util.freetype.FT_GlyphSlot;
 import org.lwjgl.util.freetype.FreeType;
+
+import javafx.scene.image.Image;
 import visuals.lwjgl.render.Texture;
-import visuals.rendering.text.CharacterData;
 import visuals.rendering.text.GameFont;
-import visuals.rendering.texture.Image;
 
 public class NengenFileUtil {
 
@@ -144,7 +147,6 @@ public class NengenFileUtil {
 
 	public static GameFont loadTTF(String ttfFile, int fontSize) {
 		PointerBuffer ftLibrary = PointerBuffer.allocateDirect(10000);
-		FTLibrar
 		FT_Init_FreeType(ftLibrary);
 
 		PointerBuffer ftFaceBuffer = PointerBuffer.allocateDirect(1);
@@ -182,7 +184,6 @@ public class NengenFileUtil {
 					(short) glyph.bitmap_top(),
 					(short) glyph.advance().x(),
 					texture);
-
 			characters[c] = charData;
 		}
 
