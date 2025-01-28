@@ -46,7 +46,7 @@ public class Nengen {
 		GLContext glContext = new GLContext();
 
 		EngineConfiguration config = configuration.build();
-		GameContextWrapper wrapper = new GameContextWrapper(context, glContext);
+		GameContextWrapper wrapper = new GameContextWrapper(context, glContext, configuration);
 
 //		Thread renderThread = new Thread(new GameWindowUpdater(config, wrapper, glContext));
 //		renderThread.setName("Render Thread");

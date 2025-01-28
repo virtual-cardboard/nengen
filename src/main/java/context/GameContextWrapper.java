@@ -4,7 +4,7 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import context.input.Mouse;
-import visuals.constraint.ConstraintCoordinate;
+import nengen.NengenConfiguration;
 import visuals.lwjgl.GLContext;
 
 /**
@@ -27,6 +27,8 @@ public class GameContextWrapper {
 
 	private final GLContext glContext;
 
+	private final NengenConfiguration config;
+
 	private final Mouse mouse = new Mouse();
 
 	/**
@@ -40,9 +42,10 @@ public class GameContextWrapper {
 	 *
 	 * @param context the context to wrap
 	 */
-	public GameContextWrapper(GameContext context, GLContext glContext) {
+	public GameContextWrapper(GameContext context, GLContext glContext, NengenConfiguration config) {
 		setContext(context);
 		this.glContext = glContext;
+		this.config = config;
 	}
 
 	/**
@@ -71,6 +74,10 @@ public class GameContextWrapper {
 
 	public GLContext glContext() {
 		return glContext;
+	}
+
+	public NengenConfiguration config() {
+		return config;
 	}
 
 	public Mouse mouse() {
