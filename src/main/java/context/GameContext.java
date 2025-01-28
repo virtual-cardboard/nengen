@@ -19,6 +19,7 @@ import context.input.event.MousePressedInputEvent;
 import context.input.event.MouseReleasedInputEvent;
 import context.input.event.MouseScrolledInputEvent;
 import context.input.event.PacketReceivedInputEvent;
+import nengen.NengenConfiguration;
 import visuals.lwjgl.GLContext;
 
 public class GameContext {
@@ -32,6 +33,7 @@ public class GameContext {
 	/**
 	 * Renders the context with the given alpha value. The alpha value is the interpolation value between the previous
 	 * and next frame. It is used to smooth out the rendering of the context.
+	 *
 	 * @param alpha
 	 */
 	protected void render(float alpha) {
@@ -58,6 +60,10 @@ public class GameContext {
 	 */
 	void setWrapper(GameContextWrapper wrapper) {
 		this.wrapper = wrapper;
+	}
+
+	public NengenConfiguration config() {
+		return wrapper.config();
 	}
 
 	protected Mouse mouse() {
