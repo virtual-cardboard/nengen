@@ -1,7 +1,10 @@
 package visuals.rendering.text;
 
+import visuals.lwjgl.render.Texture;
+
 /**
- * Information about a character in a bitmap font. The fields are all in pixels, except for {@link CharacterData#page}.
+ * Information about a character in a bitmap font. The fields are all in pixels,
+ * except for {@link CharacterData#page}.
  *
  * @author Jay
  */
@@ -24,12 +27,14 @@ public final class CharacterData {
 	 */
 	private final int height;
 	/**
-	 * The horizontal offset of the character when it is displayed. This is usually a small number.
+	 * The horizontal offset of the character when it is displayed. This is usually
+	 * a small number.
 	 */
 	private final int xOffset;
 	/**
 	 * The vertical offset of the character when it is displayed.
-	 * For example, the letter 'g' has a larger yOffset than 'l' because it is offset downwards.
+	 * For example, the letter 'g' has a larger yOffset than 'l' because it is
+	 * offset downwards.
 	 */
 	private final int yOffset;
 	/**
@@ -39,8 +44,18 @@ public final class CharacterData {
 	private final int xAdvance;
 	/**
 	 * The index of the bitmap image that this character is on. This is usually 0.
+	 * <br>
+	 * <br>
+	 * Mutually exclusive with {@link CharacterData#texture}.
 	 */
-	private final int page;
+	private int page;
+	/**
+	 * The texture that this character is on.
+	 * <br>
+	 * <br>
+	 * Mutually exclusive with {@link CharacterData#page}.
+	 */
+	private Texture texture;
 
 	public CharacterData(int x, int y, int width, int height, int xOffset, int yOffset, int xAdvance, int page) {
 		this.x = x;
@@ -53,8 +68,24 @@ public final class CharacterData {
 		this.page = page;
 	}
 
-	public CharacterData(short x, short y, short width, short height, short xOffset, short yOffset, short xAdvance, short page) {
+	public CharacterData(int x, int y, int width, int height, int xOffset, int yOffset, int xAdvance, Texture texture) {
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
+		this.xOffset = xOffset;
+		this.yOffset = yOffset;
+		this.xAdvance = xAdvance;
+		this.texture = texture;
+	}
+
+	public CharacterData(short x, short y, short width, short height, short xOffset, short yOffset, short xAdvance,
+			short page) {
 		this(x, y, width, height, xOffset, yOffset, xAdvance, (int) page);
+	}
+
+	public CharacterData(int x, int y, int width, int height, int xOffset, int yOffset, int xAdvance) {
+		this(x, y, width, height, xOffset, yOffset, xAdvance, 0);
 	}
 
 	public int x() {
