@@ -97,6 +97,10 @@ public class NengenConfiguration {
 		return tickRate;
 	}
 
+	public int getMillisPerTick() {
+		return 1000 / tickRate;
+	}
+
 	public boolean isResizable() {
 		return resizable;
 	}
@@ -112,4 +116,5 @@ public class NengenConfiguration {
 	public String toString() {
 		return "NengenConfiguration [width=" + width + ", height=" + height + ", frameRate=" + frameRate + ", tickRate=" + tickRate + ", resizable=" + resizable + ", fullscreen=" + fullscreen + ", windowName=" + windowName + "]";
 	}
+
 }
