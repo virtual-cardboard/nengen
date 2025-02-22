@@ -22,6 +22,12 @@ jobs:
       - name: Build with Maven
         run: mvn clean install
 
+      - name: Run Maven Assembly
+        run: mvn clean compile assembly:single
+
+      - name: Copy JAR to top level
+        run: cp target/*.jar .
+
       - name: Publish to GitHub Packages
         run: mvn deploy
         env:
