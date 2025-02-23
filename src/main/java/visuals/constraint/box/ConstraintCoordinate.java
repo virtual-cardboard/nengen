@@ -1,16 +1,16 @@
-package visuals.constraint;
+package visuals.constraint.box;
 
-import static visuals.constraint.posdim.AbsolutePosDimConstraint.absolute;
+import static visuals.constraint.posdim.AbsoluteConstraint.absolute;
 
 import common.math.Vector2f;
-import visuals.constraint.position.PositionConstraint;
+import visuals.constraint.Constraint;
 
 public class ConstraintCoordinate {
 
-	private final PositionConstraint x;
-	private final PositionConstraint y;
+	private final Constraint x;
+	private final Constraint y;
 
-	public ConstraintCoordinate(PositionConstraint x, PositionConstraint y) {
+	public ConstraintCoordinate(Constraint x, Constraint y) {
 		this.x = x;
 		this.y = y;
 	}
@@ -19,11 +19,11 @@ public class ConstraintCoordinate {
 		return new ConstraintCoordinateValue(x.get(), y.get());
 	}
 
-	public PositionConstraint x() {
+	public Constraint x() {
 		return x;
 	}
 
-	public PositionConstraint y() {
+	public Constraint y() {
 		return y;
 	}
 

@@ -1,18 +1,18 @@
 package visuals.rendering.texture;
 
+import static common.colour.Colour.rgb;
+
 import common.colour.Colour;
 import common.math.Matrix4f;
 import visuals.builtin.RectangleVertexArrayObject;
 import visuals.builtin.TextureFragmentShader;
 import visuals.builtin.TexturedTransformationVertexShader;
-import visuals.constraint.ConstraintBox;
+import visuals.constraint.box.ConstraintBox;
 import visuals.lwjgl.GLContext;
 import visuals.lwjgl.render.Shader;
 import visuals.lwjgl.render.ShaderProgram;
 import visuals.lwjgl.render.Texture;
 import visuals.lwjgl.render.VertexArrayObject;
-
-import static common.colour.Colour.rgb;
 
 /**
  * @author Jay

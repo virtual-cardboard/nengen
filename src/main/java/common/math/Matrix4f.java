@@ -15,8 +15,8 @@ package common.math;
 
 import java.nio.FloatBuffer;
 
-import visuals.constraint.ConstraintBox;
-import visuals.constraint.ConstraintCoordinate;
+import visuals.constraint.box.ConstraintBox;
+import visuals.constraint.box.ConstraintCoordinate;
 import visuals.lwjgl.GLContext;
 
 /**

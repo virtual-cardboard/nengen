@@ -1,4 +1,4 @@
-package visuals.constraint;
+package visuals.constraint.box;
 
 import common.math.Vector2f;
 
