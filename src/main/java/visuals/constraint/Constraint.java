@@ -2,6 +2,7 @@ package visuals.constraint;
 
 import visuals.constraint.posdim.AdditiveConstraint;
 import visuals.constraint.posdim.MultiplierConstraint;
+import visuals.constraint.posdim.NegativeConstraint;
 
 /**
  * A GUIConstraint is used to calculate the x, y, width, or height of a GUI component, given the start and end of the
@@ -17,7 +18,11 @@ public interface Constraint {
 
 
 	default Constraint multiply(float factor) {
-		return new MultiplierConstraint(factor, this);
+		return new MultiplierConstraint(factor, this).flatten();
+	}
+
+	default Constraint neg() {
+		return new NegativeConstraint(this).flatten();
 	}
 
 	/**
@@ -31,5 +36,4 @@ public interface Constraint {
 	default Constraint flatten() {
 		return this;
 	}
-
 }

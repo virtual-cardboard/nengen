@@ -63,4 +63,8 @@ public class ConstraintCoordinate {
 		return new ConstraintCoordinate(x.multiply(f), y.multiply(f));
 	}
 
+	public ConstraintCoordinate neg() {
+		return new ConstraintCoordinate(x.neg(), y.neg());
+	}
+
 }
