@@ -89,15 +89,4 @@ public class ConstraintBox {
 		return translate(v.x(), v.y());
 	}
 
-	/**
-	 * Treats the
-	 *
-	 * @param box the sub-box that is embedded into this
-	 * @return new constraint box representing the embedded constraint box
-	 */
-	public ConstraintBox embed(ConstraintBox box) {
-		return null;
-		//		return new ConstraintBox();
-	}
-
 }

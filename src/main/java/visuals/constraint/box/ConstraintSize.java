@@ -39,8 +39,8 @@ public class ConstraintSize {
 		return new ConstraintSize(w.add(other.w), h.add(other.h));
 	}
 
-	public ConstraintSize subtract(ConstraintSize other) {
-		return new ConstraintSize(w.sub(other.w), h.subtract(other.h));
+	public ConstraintSize neg() {
+		return new ConstraintSize(w.neg(), h.neg());
 	}
 
 }
