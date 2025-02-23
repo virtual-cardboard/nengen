@@ -29,6 +29,8 @@ public class MultiplierConstraint implements Constraint {
 		if (constraint instanceof MultiplierConstraint) {
 			MultiplierConstraint constraint = (MultiplierConstraint) this.constraint;
 			return new MultiplierConstraint(this.factor * constraint.factor, constraint.constraint);
+		} else if (constraint instanceof NegativeConstraint) {
+			return new MultiplierConstraint(-factor, ((NegativeConstraint) constraint).constraint);
 		}
 		return this;
 	}
