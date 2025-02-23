@@ -1,9 +1,8 @@
 package context.input;
 
-import static visuals.constraint.posdim.AbsolutePosDimConstraint.absolute;
+import static visuals.constraint.posdim.AbsoluteConstraint.absolute;
 
-import visuals.constraint.ConstraintCoordinate;
-import visuals.constraint.posdim.AbsolutePosDimConstraint;
+import visuals.constraint.box.ConstraintCoordinate;
 
 public class Mouse {
 
