@@ -1,10 +1,10 @@
 package visuals.lwjgl;
 
-import common.math.Vector2i;
-import visuals.constraint.ConstraintBox;
+import static visuals.constraint.posdim.AbsoluteConstraint.absolute;
+import static visuals.constraint.posdim.CustomSupplierConstraint.custom;
 
-import static visuals.constraint.posdim.AbsolutePosDimConstraint.absolute;
-import static visuals.constraint.posdim.CustomSupplierPosDimConstraint.custom;
+import common.math.Vector2i;
+import visuals.constraint.box.ConstraintBox;
 
 /**
  * This class is used to store OpenGL context data.

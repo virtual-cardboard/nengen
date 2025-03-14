@@ -1,19 +1,15 @@
-package visuals.constraint;
+package visuals.constraint.box;
 
-import static visuals.constraint.posdim.AbsolutePosDimConstraint.absolute;
+import static visuals.constraint.posdim.AbsoluteConstraint.absolute;
 
 import common.math.Vector2f;
-import visuals.constraint.dimension.DimensionConstraint;
-import visuals.constraint.position.PositionConstraint;
+import visuals.constraint.Constraint;
 
 public class ConstraintBox {
 
-	private final PositionConstraint x;
-	private final PositionConstraint y;
-	private final DimensionConstraint w;
-	private final DimensionConstraint h;
+	private final Constraint x, y, w, h;
 
-	public ConstraintBox(PositionConstraint x, PositionConstraint y, DimensionConstraint w, DimensionConstraint h) {
+	public ConstraintBox(Constraint x, Constraint y, Constraint w, Constraint h) {
 		this.x = x;
 		this.y = y;
 		this.w = w;
@@ -24,11 +20,11 @@ public class ConstraintBox {
 		this(coordinate.x(), coordinate.y(), size.w(), size.h());
 	}
 
-	public ConstraintBox(PositionConstraint x, PositionConstraint y, ConstraintSize size) {
+	public ConstraintBox(Constraint x, Constraint y, ConstraintSize size) {
 		this(x, y, size.w(), size.h());
 	}
 
-	public ConstraintBox(ConstraintCoordinate coordinate, DimensionConstraint w, DimensionConstraint h) {
+	public ConstraintBox(ConstraintCoordinate coordinate, Constraint w, Constraint h) {
 		this(coordinate.x(), coordinate.y(), w, h);
 	}
 
@@ -36,19 +32,19 @@ public class ConstraintBox {
 		return new ConstraintBoxValue(x.get(), y.get(), w.get(), h.get());
 	}
 
-	public PositionConstraint x() {
+	public Constraint x() {
 		return x;
 	}
 
-	public PositionConstraint y() {
+	public Constraint y() {
 		return y;
 	}
 
-	public DimensionConstraint w() {
+	public Constraint w() {
 		return w;
 	}
 
-	public DimensionConstraint h() {
+	public Constraint h() {
 		return h;
 	}
 
@@ -81,7 +77,7 @@ public class ConstraintBox {
 		return new ConstraintSize(w, h);
 	}
 
-	public ConstraintBox translate(PositionConstraint x, PositionConstraint y) {
+	public ConstraintBox translate(Constraint x, Constraint y) {
 		return new ConstraintBox(this.x.add(x), this.y.add(y), w, h);
 	}
 
@@ -91,17 +87,6 @@ public class ConstraintBox {
 
 	public ConstraintBox translate(Vector2f v) {
 		return translate(v.x(), v.y());
-	}
-
-	/**
-	 * Treats the
-	 *
-	 * @param box the sub-box that is embedded into this
-	 * @return new constraint box representing the embedded constraint box
-	 */
-	public ConstraintBox embed(ConstraintBox box) {
-		return null;
-//		return new ConstraintBox();
 	}
 
 }

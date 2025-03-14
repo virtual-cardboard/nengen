@@ -1,13 +1,15 @@
 package visuals.constraint.posdim;
 
+import visuals.constraint.Constraint;
+
 /*
  * A {@link PosDimConstraint} that represents an absolute {@link Float} value.
  */
-public class AbsolutePosDimConstraint implements PosDimConstraint {
+public class AbsoluteConstraint implements Constraint {
 
 	private final float value;
 
-	public AbsolutePosDimConstraint(float value) {
+	public AbsoluteConstraint(float value) {
 		this.value = value;
 	}
 
@@ -16,11 +18,11 @@ public class AbsolutePosDimConstraint implements PosDimConstraint {
 		return value;
 	}
 
-	public static PosDimConstraint absolute(float value) {
-		return new AbsolutePosDimConstraint(value);
+	public static Constraint absolute(float value) {
+		return new AbsoluteConstraint(value);
 	}
 
-	public static PosDimConstraint zero() {
+	public static Constraint zero() {
 		return absolute(0);
 	}
 
