@@ -39,14 +39,17 @@ public class ConstraintCoordinate {
 		return new ConstraintCoordinate(this.x.add(x), this.y.add(y));
 	}
 
+	@Deprecated
 	public ConstraintCoordinate translate(float x, float y) {
 		return translate(absolute(x), absolute(y));
 	}
 
+	@Deprecated
 	public ConstraintCoordinate translate(Vector2f v) {
 		return translate(v.x(), v.y());
 	}
 
+	@Deprecated
 	public ConstraintCoordinate translate(ConstraintCoordinate c) {
 		return translate(c.x, c.y);
 	}
@@ -59,8 +62,24 @@ public class ConstraintCoordinate {
 		return translate(v.negate());
 	}
 
-	public ConstraintCoordinate multiply(float f) {
-		return new ConstraintCoordinate(x.multiply(f), y.multiply(f));
+	public ConstraintSize scale(float f) {
+		return scale(f, f);
+	}
+
+	public ConstraintSize scale(float f1, float f2) {
+		return new ConstraintSize(x.multiply(f1), x.multiply(f2));
+	}
+
+	public ConstraintSize add(ConstraintSize other) {
+		return add(other.w(), other.h());
+	}
+
+	public ConstraintSize add(Vector2f v) {
+		return add(absolute(v.x()), absolute(v.y()));
+	}
+
+	public ConstraintSize add(Constraint cw, Constraint ch) {
+		return new ConstraintSize(x.add(cw), x.add(ch));
 	}
 
 	public ConstraintCoordinate neg() {

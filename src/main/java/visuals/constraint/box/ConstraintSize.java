@@ -32,11 +32,19 @@ public class ConstraintSize {
 	}
 
 	public ConstraintSize scale(float f) {
-		return new ConstraintSize(w.multiply(f), h.multiply(f));
+		return scale(f, f);
+	}
+
+	public ConstraintSize scale(float f1, float f2) {
+		return new ConstraintSize(w.multiply(f1), h.multiply(f2));
 	}
 
 	public ConstraintSize add(ConstraintSize other) {
-		return new ConstraintSize(w.add(other.w), h.add(other.h));
+		return add(other.w(), other.h());
+	}
+
+	public ConstraintSize add(Constraint cw, Constraint ch) {
+		return new ConstraintSize(w.add(cw), h.add(ch));
 	}
 
 	public ConstraintSize neg() {
