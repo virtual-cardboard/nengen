@@ -16,7 +16,7 @@ package common.math;
 import java.nio.FloatBuffer;
 
 import visuals.constraint.box.ConstraintBox;
-import visuals.constraint.box.ConstraintCoordinate;
+import visuals.constraint.box.ConstraintPair;
 import visuals.lwjgl.GLContext;
 
 /**
@@ -51,7 +51,7 @@ public class Matrix4f {
 		this(box.x().get(), box.y().get(), box.w().get(), box.h().get(), glContext);
 	}
 
-	public Matrix4f(ConstraintCoordinate coord, GLContext glContext) {
+	public Matrix4f(ConstraintPair coord, GLContext glContext) {
 		this(coord.x().get(), coord.y().get(), 1, 1, glContext);
 	}
 
@@ -872,7 +872,7 @@ public class Matrix4f {
 				.scale(1 / glContext.width(), 1 / glContext.height());
 	}
 
-	public Matrix4f translate(ConstraintCoordinate translate) {
+	public Matrix4f translate(ConstraintPair translate) {
 		return translate(translate.x().get(), translate.y().get());
 	}
 
