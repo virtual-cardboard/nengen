@@ -2,7 +2,7 @@ package context.input;
 
 import static visuals.constraint.posdim.AbsoluteConstraint.absolute;
 
-import visuals.constraint.box.ConstraintCoordinate;
+import visuals.constraint.box.ConstraintPair;
 
 public class Mouse {
 
@@ -17,8 +17,8 @@ public class Mouse {
 		return y;
 	}
 
-	public ConstraintCoordinate coordinate() {
-		return new ConstraintCoordinate(absolute(x), absolute(y));
+	public ConstraintPair coordinate() {
+		return new ConstraintPair(absolute(x), absolute(y));
 	}
 
 	public void x(int x) {

@@ -16,19 +16,19 @@ public class ConstraintBox {
 		this.h = h;
 	}
 
-	public ConstraintBox(ConstraintCoordinate coordinate, ConstraintSize size) {
-		this(coordinate.x(), coordinate.y(), size.w(), size.h());
+	public ConstraintBox(ConstraintPair coordinate, ConstraintPair size) {
+		this(coordinate.x(), coordinate.y(), size.x(), size.y());
 	}
 
-	public ConstraintBox(Constraint x, Constraint y, ConstraintSize size) {
-		this(x, y, size.w(), size.h());
+	public ConstraintBox(Constraint x, Constraint y, ConstraintPair size) {
+		this(x, y, size.x(), size.y());
 	}
 
-	public ConstraintBox(ConstraintCoordinate coordinate, Constraint w, Constraint h) {
+	public ConstraintBox(ConstraintPair coordinate, Constraint w, Constraint h) {
 		this(coordinate.x(), coordinate.y(), w, h);
 	}
 
-	public ConstraintBoxValue value() {
+	public ConstraintBoxValue get() {
 		return new ConstraintBoxValue(x.get(), y.get(), w.get(), h.get());
 	}
 
@@ -48,8 +48,8 @@ public class ConstraintBox {
 		return h;
 	}
 
-	public boolean contains(ConstraintCoordinate coordinate) {
-		return contains(coordinate.value().toVector());
+	public boolean contains(ConstraintPair coordinate) {
+		return contains(coordinate.vector());
 	}
 
 	public boolean contains(Vector2f point) {
@@ -65,16 +65,12 @@ public class ConstraintBox {
 		return new ConstraintLine(y, h);
 	}
 
-	public ConstraintCoordinate coordinate() {
-		return new ConstraintCoordinate(x, y);
+	public ConstraintPair coordinate() {
+		return new ConstraintPair(x, y);
 	}
 
-	public ConstraintSize dimensions() {
-		return new ConstraintSize(w, h);
-	}
-
-	public ConstraintSize size() {
-		return new ConstraintSize(w, h);
+	public ConstraintPair dimensions() {
+		return new ConstraintPair(w, h);
 	}
 
 	public ConstraintBox translate(Constraint x, Constraint y) {
