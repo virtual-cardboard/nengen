@@ -4,3 +4,7 @@ The 4th iteration of virtual cardboard's Java game engine. This LWJGL-based engi
 ## Automatic Deployment to GitHub Packages
 
 This project is configured to automatically deploy to GitHub Packages using GitHub Actions on each commit to the `main` branch. No manual deployment steps are required.
+
+## Automatic Release Creation
+
+This project is configured to automatically create a new release using GitHub Actions on each commit to the `main` branch. No manual release steps are required.
