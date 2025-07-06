@@ -1,5 +1,13 @@
 package visuals.constraint.posdim;
 
+import static java.util.Arrays.asList;
+import static visuals.constraint.posdim.AbsoluteConstraint.absolute;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
 import visuals.constraint.Constraint;
 
 /**
@@ -7,32 +15,71 @@ import visuals.constraint.Constraint;
  */
 public class MultiplierConstraint implements Constraint {
 
-	private final float factor;
-	private final Constraint constraint;
+	private final List<Constraint> constraints = new ArrayList<>();
 
-	public MultiplierConstraint(float factor, Constraint constraint) {
-		this.factor = factor;
-		this.constraint = constraint;
+	private MultiplierConstraint(List<Constraint> constraints) {
+		Queue<Constraint> toProcess = new LinkedList<>(constraints);
+		float absolutes = 1;
+		while (!toProcess.isEmpty()) {
+			Constraint c = toProcess.poll();
+			if (c instanceof AbsoluteConstraint) {
+				AbsoluteConstraint constraint = (AbsoluteConstraint) c;
+				absolutes *= constraint.get();
+			} else if (c instanceof MultiplierConstraint) {
+				MultiplierConstraint constraint = (MultiplierConstraint) c;
+				toProcess.addAll(constraint.constraints);
+			} else {
+				this.constraints.add(c);
+			}
+		}
+		if (absolutes != 1) {
+			this.constraints.add(absolute(absolutes));
+		}
+	}
+
+	/**
+	 * Constructs a new {@link MultiplierConstraint} from a list of {@link Constraint}s.
+	 *
+	 * @param constraints the constraints to multiply together
+	 */
+	public MultiplierConstraint(Constraint... constraints) {
+		this(asList(constraints));
+		if (constraints.length == 0) {
+			throw new IllegalArgumentException("Must have at least one constraint");
+		}
 	}
 
 	@Override
 	public float get() {
-		return constraint.get() * factor;
-	}
-
-	public static Constraint factor(Constraint constraint, float factor) {
-		return new MultiplierConstraint(factor, constraint);
+		float product = 1;
+		for (Constraint c : constraints) {
+			product *= c.get();
+		}
+		return product;
 	}
 
 	@Override
-	public MultiplierConstraint flatten() {
-		if (constraint instanceof MultiplierConstraint) {
-			MultiplierConstraint constraint = (MultiplierConstraint) this.constraint;
-			return new MultiplierConstraint(this.factor * constraint.factor, constraint.constraint);
-		} else if (constraint instanceof NegativeConstraint) {
-			return new MultiplierConstraint(-factor, ((NegativeConstraint) constraint).constraint);
+	public Constraint neg() {
+		List<Constraint> constraints = new ArrayList<>(this.constraints);
+		constraints.add(absolute(-1));
+		return new MultiplierConstraint(constraints).flatten();
+	}
+
+	@Override
+	public Constraint flatten() {
+		if (this.constraints.size() == 1) {
+			return this.constraints.get(0).flatten();
 		}
 		return this;
+	}
+
+	@Override
+	public int size() {
+		int size = 1;
+		for (Constraint c : constraints) {
+			size += c.size();
+		}
+		return size;
 	}
 
 }

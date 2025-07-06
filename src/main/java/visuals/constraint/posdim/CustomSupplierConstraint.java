@@ -11,9 +11,11 @@ import visuals.constraint.Constraint;
  */
 public class CustomSupplierConstraint implements Constraint {
 
+	private final String name;
 	private final Supplier<Float> supplier;
 
-	public CustomSupplierConstraint(Supplier<Float> supplier) {
+	public CustomSupplierConstraint(String name, Supplier<Float> supplier) {
+		this.name = name;
 		this.supplier = supplier;
 	}
 
@@ -22,8 +24,13 @@ public class CustomSupplierConstraint implements Constraint {
 		return supplier.get();
 	}
 
-	public static Constraint custom(Supplier<Float> supplier) {
-		return new CustomSupplierConstraint(supplier);
+	public static Constraint custom(String name, Supplier<Float> supplier) {
+		return new CustomSupplierConstraint(name, supplier);
+	}
+
+	@Override
+	public String toString() {
+		return name;
 	}
 
 }

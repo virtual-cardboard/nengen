@@ -13,6 +13,8 @@ public class ConstraintPair {
 	public ConstraintPair(Constraint x, Constraint y) {
 		this.x = x;
 		this.y = y;
+		System.out.println(x().size());
+		System.out.println(y().size());
 	}
 
 	public ConstraintPair(Vector2f absolute) {
@@ -21,6 +23,7 @@ public class ConstraintPair {
 
 	/**
 	 * Calculates the value of this {@link ConstraintPair} at a given time and returns it in a {@link Vector2f}.
+	 *
 	 * @return The value of this {@link ConstraintPair} as a {@link Vector2f}
 	 */
 	public Vector2f vector() {

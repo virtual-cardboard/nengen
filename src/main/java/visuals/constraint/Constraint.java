@@ -1,5 +1,7 @@
 package visuals.constraint;
 
+import static visuals.constraint.posdim.AbsoluteConstraint.absolute;
+
 import visuals.constraint.posdim.AdditiveConstraint;
 import visuals.constraint.posdim.MultiplierConstraint;
 import visuals.constraint.posdim.NegativeConstraint;
@@ -16,9 +18,16 @@ public interface Constraint {
 		return new AdditiveConstraint(this, c).flatten();
 	}
 
+	default Constraint add(float f) {
+		return add(absolute(f));
+	}
 
-	default Constraint multiply(float factor) {
-		return new MultiplierConstraint(factor, this).flatten();
+	default Constraint multiply(Constraint c) {
+		return new MultiplierConstraint(c, this).flatten();
+	}
+
+	default Constraint multiply(float f) {
+		return multiply(absolute(f));
 	}
 
 	default Constraint neg() {
@@ -36,4 +45,14 @@ public interface Constraint {
 	default Constraint flatten() {
 		return this;
 	}
+
+	/**
+	 * Get the size of the constraint, i.e. the number of constraints it depends on.
+	 *
+	 * @return the size of the constraint
+	 */
+	default int size() {
+		return 1;
+	}
+
 }

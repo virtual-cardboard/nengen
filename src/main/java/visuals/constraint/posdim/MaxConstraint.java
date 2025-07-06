@@ -21,4 +21,9 @@ public class MaxConstraint implements Constraint {
 		return new MaxConstraint(c1, c2);
 	}
 
+	@Override
+	public int size() {
+		return 1 + c1.size() + c2.size();
+	}
+
 }

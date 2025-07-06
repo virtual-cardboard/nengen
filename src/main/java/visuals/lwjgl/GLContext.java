@@ -29,8 +29,8 @@ public class GLContext {
 	public ConstraintBox screen = new ConstraintBox(
 			absolute(0),
 			absolute(0),
-			custom(this::width),
-			custom(this::height)
+			custom("window_width", this::width),
+			custom("window_height", this::height)
 	);
 
 	private Vector2i windowDim;
