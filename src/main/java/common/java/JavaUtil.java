@@ -1,9 +1,23 @@
 package common.java;
 
 import static java.lang.System.arraycopy;
-import static java.util.Arrays.*;
+import static java.util.Arrays.copyOf;
+
+import java.util.Map;
 
 public class JavaUtil {
+
+	public static <A, B> Iterable<Pair<A, B>> pairs(Map<A, B> map) {
+		return new PairIterable<>(map);
+	}
+
+	public static <A, B> Pair<A, B> pair(A a, B b) {
+		return new Pair<>(a, b);
+	}
+
+	public static <A, B, C> Triple<A, B, C> triple(A a, B b, C c) {
+		return new Triple<>(a, b, c);
+	}
 
 	public static <T> T[] concat(T[] first, T[] second) {
 		T[] result = copyOf(first, first.length + second.length);
@@ -44,110 +58,6 @@ public class JavaUtil {
 			}
 		}
 		return result;
-	}
-
-	public static class Pair<A, B> {
-		public A a;
-		public B b;
-
-		public Pair(A a, B b) {
-			this.a = a;
-			this.b = b;
-		}
-
-		public A a() {
-			return a;
-		}
-
-		public B b() {
-			return b;
-		}
-
-		public A x() {
-			return a;
-		}
-
-		public B y() {
-			return b;
-		}
-
-		public A first() {
-			return a;
-		}
-
-		public B second() {
-			return b;
-		}
-
-		public A left() {
-			return a;
-		}
-
-		public B right() {
-			return b;
-		}
-
-	}
-
-	public static class Triple<A, B, C> {
-		public A a;
-		public B b;
-		public C c;
-
-		public Triple(A a, B b, C c) {
-			this.a = a;
-			this.b = b;
-			this.c = c;
-		}
-
-		public A a() {
-			return a;
-		}
-
-		public B b() {
-			return b;
-		}
-
-		public C c() {
-			return c;
-		}
-
-		public A x() {
-			return a;
-		}
-
-		public B y() {
-			return b;
-		}
-
-		public C z() {
-			return c;
-		}
-
-		public A first() {
-			return a;
-		}
-
-		public B second() {
-			return b;
-		}
-
-		public C third() {
-			return c;
-		}
-
-		public A left() {
-			return a;
-		}
-
-		public B middle() {
-			return b;
-		}
-
-		public C right() {
-			return c;
-		}
-
 	}
 
 }

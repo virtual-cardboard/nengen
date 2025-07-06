@@ -1,13 +1,19 @@
 package visuals.constraint.posdim;
 
+import static common.java.JavaUtil.pair;
+import static common.java.JavaUtil.pairs;
 import static java.util.Arrays.asList;
 import static visuals.constraint.posdim.AbsoluteConstraint.absolute;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
+import java.util.function.Supplier;
 
+import common.java.Pair;
 import visuals.constraint.Constraint;
 
 /**
@@ -22,6 +28,7 @@ public class AdditiveConstraint implements Constraint {
 	private AdditiveConstraint(List<Constraint> constraints) {
 		Queue<Constraint> toProcess = new LinkedList<>(constraints);
 		float absolutes = 0;
+		Map<Supplier<Float>, Pair<String, Float>> customSuppliers = new HashMap<>();
 		while (!toProcess.isEmpty()) {
 			Constraint c = toProcess.poll();
 			if (c instanceof AbsoluteConstraint) {
@@ -30,12 +37,19 @@ public class AdditiveConstraint implements Constraint {
 			} else if (c instanceof AdditiveConstraint) {
 				AdditiveConstraint constraint = (AdditiveConstraint) c;
 				toProcess.addAll(constraint.constraints);
+			} else if (c instanceof CustomSupplierConstraint) {
+				CustomSupplierConstraint constraint = (CustomSupplierConstraint) c;
+				float multiplier = customSuppliers.getOrDefault(constraint.supplier(), pair(constraint.name(), 0f)).second();
+				customSuppliers.put(constraint.supplier(), pair(constraint.name(), multiplier + constraint.multiplier()));
 			} else {
 				this.constraints.add(c);
 			}
 		}
 		if (absolutes != 0) {
 			this.constraints.add(absolute(absolutes));
+		}
+		for (Pair<Supplier<Float>, Pair<String, Float>> pair : pairs(customSuppliers)) {
+			this.constraints.add(new CustomSupplierConstraint(pair.b.a, pair.b.b, pair.a));
 		}
 	}
 
