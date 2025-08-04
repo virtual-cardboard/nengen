@@ -70,4 +70,14 @@ public class ConstraintBoxValue {
 		return new Vector2f(w, h);
 	}
 
+	@Override
+	public String toString() {
+		return "ConstraintBoxValue{" +
+				"x=" + x +
+				", y=" + y +
+				", w=" + w +
+				", h=" + h +
+				'}';
+	}
+
 }

@@ -13,8 +13,6 @@ public class ConstraintPair {
 	public ConstraintPair(Constraint x, Constraint y) {
 		this.x = x;
 		this.y = y;
-		System.out.println(x().size());
-		System.out.println(y().size());
 	}
 
 	public ConstraintPair(Vector2f absolute) {
