@@ -35,7 +35,7 @@ public class CustomSupplierConstraint implements Constraint {
 
 	@Override
 	public float get() {
-		return supplier.get();
+		return multiplier * supplier.get();
 	}
 
 	@Override
