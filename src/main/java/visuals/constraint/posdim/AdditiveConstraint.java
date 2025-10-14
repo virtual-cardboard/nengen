@@ -33,7 +33,7 @@ public class AdditiveConstraint implements Constraint {
 			Constraint c = toProcess.poll();
 			if (c instanceof AbsoluteConstraint) {
 				AbsoluteConstraint constraint = (AbsoluteConstraint) c;
-				absolutes *= constraint.get();
+				absolutes += constraint.get();
 			} else if (c instanceof AdditiveConstraint) {
 				AdditiveConstraint constraint = (AdditiveConstraint) c;
 				toProcess.addAll(constraint.constraints);
